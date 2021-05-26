@@ -1,24 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function Login() {
+export default function LoginPage() {
     return (
         <>
             <main className="main-signup">
-            <header className="landing-header">
-                    <div>
-                        <Link to="/">
-                            <img src="./logo.svg" />
-                        </Link>
-                    </div>
-                    <div className="signup-button">
-                        <div className="signup-acc">No account?</div>
-                            <Link to="/signup">
-                                <div className="landing-login" >Signup</div>
+                <header className="landing-header">
+                        <div>
+                            <Link to="/">
+                                <img src="./logo.svg" />
                             </Link>
-                            
-                    </div>
+                        </div>
+                        <div className="signup-button">
+                            <div className="signup-acc">No account?</div>
+                                <Link to="/signup">
+                                    <div className="landing-login" >Signup</div>
+                                </Link>
+                                
+                        </div>
                 </header>
+
                 <section className="login-section1">
                     <h3 className="login-h3">Welcome Back</h3>
 
@@ -43,7 +44,6 @@ export default function Login() {
 
                 </section>
 
-                
             </main>   
         </>
     )

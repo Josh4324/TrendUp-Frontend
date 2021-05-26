@@ -12,7 +12,7 @@ export default function Login(props) {
     return (
         
         <>
-             <main className="modal-login" onClick={ontoggle}>
+             <main className="modal-login" >
                 <section className="login-section1">
                     <h3 className="login-h3">Welcome Back</h3>
 
