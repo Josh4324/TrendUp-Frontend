@@ -24,7 +24,10 @@ export default function SignUp() {
                     </div>
                     <div className="signup-button">
                         <div className="signup-acc">Already have an account?</div>
-                            <div className="landing-login" onClick={onClickLogin}>Login</div>
+                            <Link to="/login">
+                                <div className="landing-login">Login</div>
+                            </Link>
+                            
                     </div>
                 </header>
 

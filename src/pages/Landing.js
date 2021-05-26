@@ -24,7 +24,10 @@ export default function Landing(props) {
                         </Link>
                     </div>
                     <div className="landing-button">
-                            <div className="landing-login" onClick={onClickLogin}>Login</div>
+                            <Link to="/login">
+                                <div className="landing-login">Login</div>
+                            </Link>
+                           
                         <span>
                         <Link to="/signup">
                             <button className="landing-signup">

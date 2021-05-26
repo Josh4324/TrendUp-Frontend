@@ -4,7 +4,21 @@ import { Link } from 'react-router-dom';
 export default function Login() {
     return (
         <>
-            <main className="modal-login">
+            <main className="main-signup">
+            <header className="landing-header">
+                    <div>
+                        <Link to="/">
+                            <img src="./logo.svg" />
+                        </Link>
+                    </div>
+                    <div className="signup-button">
+                        <div className="signup-acc">No account?</div>
+                            <Link to="/signup">
+                                <div className="landing-login" >Signup</div>
+                            </Link>
+                            
+                    </div>
+                </header>
                 <section className="login-section1">
                     <h3 className="login-h3">Welcome Back</h3>
 
@@ -23,7 +37,7 @@ export default function Login() {
 
                     <input placeholder="Email Address" className="login-input"/>
 
-                    <input placeholder="Password" type="password" className="none"/>
+                    <input placeholder="Password" type="password" className="login-input"/>
 
                     <button className="signup-submit-button">Continue with email</button>
 
