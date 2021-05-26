@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Route, Switch, HashRouter } from 'react-router-dom';
+import {Login, Dashboard,Landing,SignUp, Onboard1, Onboard2} from './pages/index';
+import "./custom.css";
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <HashRouter basename="/">
+        <Switch>
+        <Route exact path="/" component={Landing} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/step1" component={Onboard1} />
+          <Route exact path="/step2" component={Onboard2} />
+          <Route exact path="/dashboard" component={Dashboard} />
+
+        </Switch>
+      </HashRouter>
     </div>
   );
 }

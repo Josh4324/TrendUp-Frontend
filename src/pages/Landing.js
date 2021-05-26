@@ -1,0 +1,62 @@
+import React, {useState} from 'react';
+import { Link } from 'react-router-dom';
+import Login from '../components/Login';
+
+export default function Landing(props) {
+    const [loginToggle, setLoginToggle] = useState(false);
+
+    const onClickLogin = () => {
+        const Toggle = !loginToggle;
+        setLoginToggle(Toggle); 
+    }
+
+
+    return (
+        <>
+            {
+                loginToggle === true ? <Login toggle={onClickLogin} /> : null
+            }
+            <main className="main">
+                <header className="landing-header">
+                    <div>
+                        <Link to="/">
+                            <img src="./logo.svg" />
+                        </Link>
+                    </div>
+                    <div className="landing-button">
+                            <div className="landing-login" onClick={onClickLogin}>Login</div>
+                        <span>
+                        <Link to="/signup">
+                            <button className="landing-signup">
+                                <span className="landing-button-signup"> 
+                                    SignUp
+                                </span>
+                            </button>
+                        </Link>
+                        </span>
+                    </div>
+                </header>
+
+                <section className="landing-section1">
+                    <p className="landing-section1-p1">
+                    Easiest way for your audience to say thanks.
+                    </p>
+                    <p className="landing-section1-p2">
+                    It’s absolutely free, and takes less than a minute
+                    </p>
+                </section>
+
+                <section className="landing-section2">
+                    <div className="landing-input">
+                        <h4 className="landing-input-h4">trendupp.com/</h4>
+                        <div contentEditable className="landing-input-h4" placeholder="myusername"></div>
+                    </div>
+
+                    <button className="landing-section2-button">
+                        Create my account
+                    </button>
+                </section>
+            </main> 
+        </>
+    )
+}

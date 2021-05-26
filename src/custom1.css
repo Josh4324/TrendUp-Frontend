@@ -1,0 +1,526 @@
+body {
+  color: #222;
+  font-family: Montserrat;
+  font-size: 14px;
+}
+
+/**Widget Elements Styles**/
+.form-header {
+    font-size: 14px;
+    font-weight: 600;
+}
+.form-group .style2-input {
+    height: 50px;
+    line-height: 1;
+    display: block;
+    border: 2px #eee solid;
+    border-radius: 7px;
+    background-color: rgba(34, 34, 34, 0.05);
+}
+.form-control {
+  margin-bottom: 20px;
+  color: #222;
+}
+.form-control:focus {
+  border-color: var(--theme-color);
+  color: #222;
+}
+
+.form-select {
+    line-height: 1;
+}
+.form-group {
+    position: relative;
+}
+.form-group .style2-input::-webkit-input-placeholder {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 60px;
+}
+.form-group .style2-input::-moz-placeholder {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 60px;
+}
+.form-group .style2-input:-ms-input-placeholder {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 60px;
+}
+.form-group .style2-input:-moz-placeholder {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 60px;
+}
+
+.form-group .style2-main-button, .style2-main-button {
+  background: #c84076;
+  border: 0;
+  text-align: center;
+  color: #fff;
+  padding: 0;
+  font-weight: 600;
+  font-size: 16px;
+}
+.form-group .style2-main-button i {
+  top: 1px;
+}
+.form-group.icon-input i {
+    top: 15px;
+}
+
+.form-group.form-group-icon .form-control {
+    padding-left: 50px;
+}
+
+.form-group.form-group-icon .input-icon {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    bottom: 2px;
+    width: 40px;
+    border-radius: 7px 0 0 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.form-group.form-group-icon .input-icon img {
+    height: 15px;
+}
+
+.form-group.form-group-icon .input-icon-e {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: #e8e8e8;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 900;
+    color: #fff;
+    padding-top: 4px;
+    padding-left: 3px;
+  }
+
+  .form-group.form-group-icon a.copy-button.input-icon-e {
+    font-weight: 400;
+    border-radius: 5px;
+    line-height: 1;
+    padding: 5px 10px 5px 10px;
+    height: auto;
+    color: #a2a2a2;
+}
+/* .form-group.form-group-icon a.copy-button.input-icon-e::before {
+    display: block;
+    font-family: 'themify';
+    content: "\e64c";
+
+} */
+.form-input-btn {
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  font-size: 14px;
+  color: #5b5b5b;
+  font-weight: 600;
+}
+.form-input-btn:hover {
+  color: #5b5b5b;
+}
+.form-desc {
+  font-size: 14px;
+  color: #adb5bd;
+  text-align: center;
+}
+.form-text {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #909090;
+}
+.input-file + .js-labelFile i.large-icon {
+    margin-bottom: 10px;
+}
+.input-file + .js-labelFile {
+    white-space: inherit;
+    line-height: 1.7 !important;
+}
+label {
+    font-weight: 600;
+}
+.upload-input {
+    max-width: 250px;
+    margin: 0 auto;
+}
+@media (max-width: 991.98px) {
+  .form-group .style2-input {
+    height: 50px;
+    line-height: 1;
+  }
+  .form-group.icon-input i {
+    top: 15px;
+  }
+  .form-input-btn {
+    top: 12px;
+  }
+
+  .login-card .form-group {
+    margin-bottom: 16px;
+  }
+}
+/***Navigation***/
+.nav-header {
+  padding: 0 60px;
+  position: relative;
+}
+@media (max-width: 991.98px) {
+  .nav-header {
+    padding: 0 16px;
+  }
+}
+.nav-header .nav-top a.logo {
+  padding-left: 0;
+  margin-right: auto;
+}
+
+.nav-header .nav-top a.logo img {
+  height: 45px;
+  transition: all 0.4s ease;
+}
+
+.nav-header .nav-top .header-link--descr {
+  display: inline-block;
+}
+.nav-header .nav-top a.header-link {
+  color: #222;
+  font-weight: 600;
+  padding-left: 5px;
+  display: inline-block;
+  width: auto;
+  line-height: inherit;
+}
+@media (max-width: 991.98px) {
+  .nav-header {
+    height: 76px;
+    box-shadow: none !important;
+  }
+  .nav-header .nav-top .header-link--descr {
+    display: none;
+  }
+}
+
+/*** Login Card ***/
+.login-card {
+  min-width: auto;
+  max-width: 400px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.login-card-title {
+  font-size: 32px;
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+.login-card .form-group {
+  margin-bottom: 24px;
+}
+.social-login {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.social-login-icon {
+  display: inline-block;
+  color: #222;
+  font-size: 15px;
+  margin-right: 20px;
+  text-align: center;
+  min-width: 60px;
+}
+.social-login-icon:last-child {
+  margin-right: 0;
+}
+.social-login-icon img {
+  display: inline-block;
+  height: 35px;
+  margin-bottom: 10px;
+}
+.social-login-icon span {
+  display: block;
+}
+.social-login-divider {
+  text-align: center;
+  color: #adb5bd;
+  font-size: 14px;
+  font-weight: 400;
+  position: relative;
+  margin-bottom: 40px;
+}
+.social-login-divider::after {
+  content: "";
+  display: block;
+  /* background: #adb5bd; */
+  border-top: 1px solid #ccc;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  top: 8px;
+}
+.social-login-divider span {
+  background: #fff;
+  display: inline-block;
+  z-index: 10;
+  position: relative;
+  padding: 0 20px;
+}
+@media (max-width: 991.98px) {
+  .login-card {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+/***User Onboard**/
+.step-header {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 0px;
+}
+.step-header .step-header-item {
+  flex: 0 0 33.3333%;
+  text-align: center;
+  font-size: 14px;
+  position: relative;
+}
+.step-header .step-header-item::after,
+.step-header .step-header-item::before {
+  content: "";
+  display: block;
+  background: #ececec;
+  height: 2px;
+  width: 50%;
+  position: absolute;
+  top: 15px;
+}
+.step-header .step-header-item::after {
+  right: -1px;
+}
+.step-header .step-header-item::before {
+  left: 0;
+}
+.step-header .step-header-item:first-child::before {
+  display: none;
+}
+.step-header .step-header-item:last-child:after {
+  display: none;
+}
+.step-header .step-header-item .step-header-circle {
+  width: 55px;
+  height: 35px;
+  background: #ececec;
+  border-left: 10px solid #fff;
+  border-right: 10px solid #fff;
+  border-radius: 50%;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 10;
+}
+.step-header .step-header-item.step-header-current .step-header-circle,
+.step-header .step-header-item.step-header-complete .step-header-circle {
+  background: #c4326d;
+}
+.step-header .step-header-item.step-header-current::after,
+.step-header .step-header-item.step-header-current::before,
+.step-header .step-header-item.step-header-complete::after,
+.step-header .step-header-item.step-header-complete::before {
+  background: #c4326d;
+}
+
+.step-header .step-header-item.step-header-complete .step-header-circle::after {
+  font-family: "themify";
+  content: "\e64c";
+  color: #fff;
+  font-size: 16px;
+  position: absolute;
+  font-weight: 600;
+  top: 4px;
+  left: 9px;
+}
+.step-header .step-header-item .step-header-text {
+  color: #909090;
+}
+
+.useronboard-title {
+  font-size: 32px;
+  text-align: center;
+  font-weight: 700;
+  margin-top: 60px;
+}
+
+.useronboard-subtitle {
+  text-align: center;
+  margin: 0 auto;
+  line-height: 1.7;
+  margin-top: 20px;
+  color: #6c757d;
+}
+
+.creator-onboard-options {
+  display: flex;
+  justify-content: space-around;
+  max-width: 500px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+.creator-onboard-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #f0f0f0;
+  border-radius: 8px;
+  width: 200px;
+  height: 200px;
+}
+.creator-onboard-option img {
+  height: 90px;
+}
+.creator-onboard-option span {
+  display: block;
+  color: #222;
+  margin-top: 20px;
+  font-size: 16px;
+}
+.creator-onboard-option:hover {
+  border: 2px solid #c4326d;
+}
+.creator-onboard-option:hover span {
+  color: #c4326d;
+}
+
+.choose-link-onboard .useronboard-subtitle {
+  max-width: 400px;
+}
+
+.choose-link-onboard-form {
+  max-width: 400px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+
+.choose-link-input {
+  position: relative;
+}
+
+.choose-link-input .choose-link-input-text {
+  position: absolute;
+  top: 13px;
+  left: 40px;
+  font-weight: 600;
+}
+
+.choose-link-input.form-group.form-group-icon .form-control {
+  padding-left: 150px;
+}
+
+.choose-link-input .choose-link-input-check {
+  
+}
+/* .choose-link-input .choose-link-input-check::before {
+    margin-right: 5px;
+} */
+
+/**Onboarding User Details***/
+.userdetails-onboard-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.social-platform-input .input-icon {
+    background: #eeeeee;
+    border-right: 2px #eeeeee solid;
+}
+
+.social-platform-input-text {
+    position: absolute;
+    top: 14px;
+    left: 49px;
+    font-size: 12px;
+    color: #000;
+}
+.social-platform-input.form-group-icon .form-control {
+    padding-left: 61px;
+}
+
+/**Onboarding verify bank account**/
+.verifybank-onboard .useronboard-subtitle {
+    max-width: 450px;
+}
+.verifybank-onboard .verifybank-onboard-form {
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+/**Onboarding Success***/
+.complete-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    width: 70px;
+    border-radius: 50px;
+    background-color: #10d876;
+    font-size: 40px;
+    color: #fff;
+    margin: 0 auto;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.onboard-complete {
+    max-width: 500px;
+    margin: 0 auto;
+}
+.onboard-complete-share-section {
+    text-align: center;
+}
+.onboard-complete-share-section .share-button {
+    margin: 0 15px;
+}
+.onboard-complete-share-section .share-button img {
+    width: 30px;
+}
+@media (max-width: 991.98px) {
+  .user-onboard {
+    margin-top: 30px;
+    padding: 0 30px;
+  }
+  .creator-onboard-option {
+    width: 150px;
+    height: 150px;
+  }
+  .creator-onboard-option img {
+    height: 70px;
+  }
+  .creator-onboard-option span {
+    margin-top: 15px;
+    font-size: 14px;
+  }
+  .choose-link-input .choose-link-input-icon {
+    top: 14px;
+  }
+  .choose-link-input .choose-link-input-text {
+    top: 14px;
+  }
+  .choose-link-input .choose-link-input-check {
+    top: 15px;
+  }
+}
