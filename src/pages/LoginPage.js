@@ -1,7 +1,30 @@
-import React from 'react';
+import React, {useState, useRef} from 'react';
 import { Link } from 'react-router-dom';
+import {loginCall} from '../utils/apiCalls';
+import { useHistory } from "react-router-dom";
+import {connect} from 'react-redux';
 
-export default function LoginPage() {
+function LoginPage(props) {
+    console.log(props);
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState(false);
+    const [loader, setLoader] = useState(false);
+    const emailRef = useRef("");
+    const passwordRef = useRef("");
+   
+    let history = useHistory();
+
+    const login = async(evt) => {
+        evt.preventDefault();
+    
+        const cred = {
+            email: emailRef.current.value,
+            password: passwordRef.current.value
+        }
+
+        const result = await loginCall(cred, props.dispatch, setLoader, setError, history);
+    }
+
     return (
         <>
             <main className="main-signup">
@@ -36,11 +59,18 @@ export default function LoginPage() {
                     </div>
                    
 
-                    <input placeholder="Email Address" className="login-input"/>
+                    <input placeholder="Email Address" ref={emailRef} className="login-input"/>
 
-                    <input placeholder="Password" type="password" className="login-input"/>
+                    <input placeholder="Password" type="password" ref={passwordRef} className="login-input"/>
 
-                    <button className="signup-submit-button">Continue with email</button>
+                    <div className={ error.length > 0 ? "alert alert-danger" : "none" }>
+                        <div >{error}</div>
+                    </div>
+                    <div className={ loader === true ? "loader" : "none"}>
+                        <div >Loading...</div>
+                    </div>
+
+                    <button onClick={login} className="signup-submit-button">Continue with email</button>
 
                 </section>
 
@@ -48,3 +78,5 @@ export default function LoginPage() {
         </>
     )
 }
+
+export default connect()(LoginPage);
