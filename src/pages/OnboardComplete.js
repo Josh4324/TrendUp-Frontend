@@ -8,7 +8,7 @@ export default function OnboardComplete() {
 
                  <header className="landing-header">
                     <Link to="/">
-                            <img src="./logo.svg" />
+                            <img src="./logo.svg"/>
                      </Link>
                 </header>
 
