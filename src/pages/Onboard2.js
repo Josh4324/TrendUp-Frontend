@@ -23,13 +23,7 @@ function Onboard2(props) {
     const token = props.user.user.token
     let history = useHistory();
     const onboard = Number(props.user.user.onboardingStep)
-    if (onboard !== 2){
-        if (onboard === 4){
-            history.push("/dashboard")
-        }else{
-            history.push(`step${onboard}`);
-        }
-    }
+    
     const [loader1, setLoader1] = useState(false);
     const [error, setError] = useState("");
     const [loader, setLoader] = useState(false);

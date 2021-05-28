@@ -20,12 +20,8 @@ function Onboard1(props) {
     console.log(props);
     const token = props.user.user.token;
     const onboard = Number(props.user.user.onboardingStep)
-    if (onboard !== 1){
-        if (onboard === 4){
-            history.push("/dashboard")
-        }else{
-            history.push(`step${onboard}`);
-        }
+    if (onboard > 1){
+        history.push(`step${onboard}`);
     }
     
     const selectCreator = () => {

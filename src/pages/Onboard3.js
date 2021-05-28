@@ -25,14 +25,6 @@ function Onboard3(props) {
 
     const onboard = Number(props.user.user.onboardingStep);
 
-    if (onboard !== 3){
-        if (onboard === 4){
-            history.push("/dashboard")
-        }else{
-            history.push(`step${onboard}`);
-        }
-    }
-
 
     const submit = async(evt) => {
         evt.preventDefault();

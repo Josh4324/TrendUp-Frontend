@@ -48,7 +48,7 @@ export default function OnboardComplete() {
 
             <div class="form-group text-center mt-5">
 
-            <a href="#" class="bg-current text-center text-white font-xsss fw-600 p-3 w175 rounded-3 d-inline-block">View your page</a>
+            <Link to="/dashboard" class="bg-current text-center text-white font-xsss fw-600 p-3 w175 rounded-3 d-inline-block">View your page</Link>
             </div>
 
         </div>
