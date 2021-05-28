@@ -17,7 +17,7 @@ export const loginCall = async (userCredential, dispatch, setLoader, setError, h
         let onboard = Number(res.data.data.onboardingStep);
         history.push("/step2")
     }
-    dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+    dispatch({ type: "LOGIN_SUCCESS", payload: res.data.data });
   } catch (err) {
     dispatch({ type: "LOGIN_FAILURE", payload: err });
         console.log(err.response.data);
@@ -109,4 +109,19 @@ export const onboard2ImageCall = async (userCredential, setLoader, token) => {
     }
 };
 
+
+export const onboard3Call = async (userCredential, setLoader, history, token) => {
+    try {
+       setLoader(true)
+        axios.defaults.headers.common['Authorization'] = "JWT " + token;
+        const res = await axios.patch(`${http}/api/v1/user`, userCredential);
+        if (res){
+           setLoader(false);
+           history.push("/step4")
+        }
+    }catch(err){
+        console.log(err.response)
+        setLoader(false)
+    }
+};
 

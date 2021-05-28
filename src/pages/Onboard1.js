@@ -18,12 +18,16 @@ function Onboard1(props) {
     let history = useHistory();
     const userRef = useRef("");
     console.log(props);
-    const token = props.user.user.data.token;
-    const onboard = Number(props.user.user.data.onboardingStep)
-    if (props.user.user.data.onboardingStep){
-        history.push(`step${onboard}`)
+    const token = props.user.user.token;
+    const onboard = Number(props.user.user.onboardingStep)
+    if (onboard !== 1){
+        if (onboard === 4){
+            history.push("/dashboard")
+        }else{
+            history.push(`step${onboard}`);
+        }
     }
-    console.log(token);
+    
     const selectCreator = () => {
         setCreator(true);
         setFan(false);

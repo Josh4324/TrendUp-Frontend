@@ -1,11 +1,84 @@
-import React from 'react';
+import React, {useState, useRef} from 'react';
 import { Link } from 'react-router-dom';
+import banks from "../utils/bank";
+import { useHistory } from "react-router-dom";
+import {onboard3Call} from '../utils/apiCalls';
 import "../themify-icons.css";
 import "../feather.css";
 import "../style1.css";
 import "../custom1.css";
+import axios from "axios";
+import {connect} from 'react-redux';
 
-export default function Onboard3() {
+function Onboard3(props) {
+    const token = "sk_test_fe5d07ae5f83bbc809ec64ada3efb3e9caa1338c"
+    const JWT = "Bearer " + token;
+    let history = useHistory();
+    const [error, setError] = useState("");
+    const [loader, setLoader] = useState(false);
+    const [loader1, setLoader1] = useState(false);
+    const [accountName, setAccountName] = useState("");
+    const token2 = props.user.user.token
+    console.log(token2)
+    const bankRef = useRef("");
+    const accountRef = useRef("");
+
+    const onboard = Number(props.user.user.onboardingStep);
+
+    if (onboard !== 3){
+        if (onboard === 4){
+            history.push("/dashboard")
+        }else{
+            history.push(`step${onboard}`);
+        }
+    }
+
+
+    const submit = async(evt) => {
+        evt.preventDefault();
+       
+        const bankCode = bankRef.current.value;
+        const accountCode = accountRef.current.value;
+        setLoader(true);
+        fetch(`https://api.paystack.co/bank/resolve?account_number=${accountCode}&bank_code=${bankCode}`, {
+            method: 'GET', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: JWT
+            },
+        }).then(response => response.json())
+        .then(data => {
+            setLoader(false);
+          console.log('Success:', data);
+          setAccountName(data.data.account_name)
+          //setData(data.data);
+          //setLoading(false);
+        })
+        .catch((error) => {
+            setLoader(false);
+          console.error('Error:', error);
+        });
+        
+        //const link = `https://api.paystack.co/bank/resolve?account_number=${accountCode}&bank_code=${bankCode}`;
+        //const res = await axios.get(link);
+        //console.log(res);
+
+       
+    }
+
+    const confirm = async(evt) => {
+        evt.preventDefault();
+        const cred = {
+            accNumber: accountRef.current.value,
+            accName: accountName,
+            bankName: bankRef.current.value,
+            onboardingStep: 4,
+        }
+
+        console.log(cred)
+        const result = await onboard3Call(cred, setLoader1, history, token2);
+    }
+    
     return (
         <div>
                 <div className="main main-wrap">
@@ -48,27 +121,36 @@ export default function Onboard3() {
                                     <div className="col-12 mb-2">
                                         <div className="form-group">
                                             
-                                            <select name="" id="" className="form-control form-select style2-input">
-                                                <option value="Access Bank">Access Bank</option>
-                                                <option value="First Bank">First Bank</option>
-                                                <option value="GT Bank">GT Bank</option>
-                                                <option value="Sterling Bank">Sterling Bank</option>
+                                            <select name="" id="" ref={bankRef} className="form-control form-select style2-input">
+                                                {
+                                                    Object.entries(banks).map((item) => {
+                                                        return <option value={item[1]}>{item[0]}</option>
+                                                    })
+                                                }
+                                               
                                             </select>
                                         </div>
                                     </div>
                                     <div className="col-12 mb-2">
                                         <div className="form-group">
-                                            <input type="text" className="form-control style2-input" placeholder="Account Number"/>
+                                            <input type="text" ref={accountRef} className="form-control style2-input" placeholder="Account Number"/>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div className={ error.length > 0 ? "alert alert-danger" : "none" }>
+                                <div >{error}</div>
+                                </div>
+                                <div className={ loader === true ? "loader" : "none"}>
+                                    <div >Loading...</div>
                                 </div>
 
                                 <div className="row">
 
                                     <div className="col-lg-12">
 
-                                        <button type="submit"
-                                            className="form-control style2-input style2-main-button">Verify Account</button>
+                                        <button type="submit" onClick={submit}
+                                            className="form-control  style2-input style2-main-button">Verify Account</button>
                                     </div>
                                 </div>
 
@@ -77,8 +159,11 @@ export default function Onboard3() {
 
                                     <div className="col-lg-12">
                                         <label className="mb-2">Account Name</label>
-                                        <h2 className="mb-4">Chiamaka Olubankole</h2>
-                                        <button type="submit"
+                                        <h2 className="mb-4">{accountName}</h2>
+                                        <div className={ loader1 === true ? "loader" : "none"}>
+                                            <div >Loading...</div>
+                                         </div>
+                                        <button type="submit" onClick={confirm}
                                             className="form-control style2-input style2-main-button">Confirm Account Details</button>
                                     </div>
                                 </div>
@@ -92,3 +177,11 @@ export default function Onboard3() {
         </div>
     )
 }
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.auth,
+    }
+  }
+  
+  export default connect(mapStateToProps)(Onboard3);
