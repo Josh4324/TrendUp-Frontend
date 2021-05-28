@@ -15,7 +15,7 @@ export const loginCall = async (userCredential, dispatch, setLoader, setError, h
         setLoader(false);
         localStorage.setItem('trend-user', JSON.stringify(res.data.data))
         let onboard = Number(res.data.data.onboardingStep);
-        history.push("/step2")
+        history.push("/step1")
     }
     dispatch({ type: "LOGIN_SUCCESS", payload: res.data.data });
   } catch (err) {
