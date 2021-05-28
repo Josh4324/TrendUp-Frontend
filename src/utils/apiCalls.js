@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NotificationManager} from 'react-notifications';
-const http = "http://localhost:8080";
-//const http = "http://159.65.48.80";
+//const http = "http://localhost:8080";
+const http = "http://159.65.48.80";
 
 
 export const loginCall = async (userCredential, dispatch, setLoader, setError, history) => {
