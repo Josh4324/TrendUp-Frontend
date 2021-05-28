@@ -57,21 +57,22 @@ function LoginPage(props) {
 
                         <div className="login-back">Or login with email</div>
                     </div>
-                   
+                    <form onSubmit={login}>
+                        <input placeholder="Email Address" ref={emailRef} className="login-input"/>
 
-                    <input placeholder="Email Address" ref={emailRef} className="login-input"/>
+                        <input placeholder="Password" type="password" ref={passwordRef} className="login-input"/>
 
-                    <input placeholder="Password" type="password" ref={passwordRef} className="login-input"/>
+                        <div className={ error.length > 0 ? "alert alert-danger" : "none" }>
+                            <div >{error}</div>
+                        </div>
+                        <div className={ loader === true ? "loader" : "none"}>
+                            <div >Loading...</div>
+                        </div>
 
-                    <div className={ error.length > 0 ? "alert alert-danger" : "none" }>
-                        <div >{error}</div>
-                    </div>
-                    <div className={ loader === true ? "loader" : "none"}>
-                        <div >Loading...</div>
-                    </div>
+                        <button className="signup-submit-button">Continue with email</button>
 
-                    <button onClick={login} className="signup-submit-button">Continue with email</button>
-
+                    </form>
+                    
                 </section>
 
             </main>   

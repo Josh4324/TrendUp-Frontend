@@ -1,11 +1,68 @@
-import React from 'react';
+import React, {useState, useRef} from 'react';
 import { Link } from 'react-router-dom';
-import "../custom1.css";
+import { NotificationManager} from 'react-notifications';
+import {onboard1Call} from '../utils/apiCalls';
+import { useHistory } from "react-router-dom";
+import {connect} from 'react-redux';
+import "../themify-icons.css";
 import "../feather.css";
 import "../style1.css";
-import "../themify-icons.css";
+import "../custom1.css";
 
-export default function Onboard1() {
+function Onboard1(props) {
+    
+    const [creator, setCreator] = useState(false);
+    const [fan, setFan] = useState(false);
+    const [error, setError] = useState("");
+    const [loader, setLoader] = useState(false);
+    let history = useHistory();
+    const userRef = useRef("");
+    console.log(props);
+    const token = props.user.user.data.token;
+    const onboard = Number(props.user.user.data.onboardingStep)
+    if (props.user.user.data.onboardingStep){
+        history.push(`step${onboard}`)
+    }
+    console.log(token);
+    const selectCreator = () => {
+        setCreator(true);
+        setFan(false);
+    }
+
+    const selectFan = () => {
+        setFan(true);
+        setCreator(false);
+    }
+
+    const submit = async(evt) => {
+        evt.preventDefault();
+        let userType;
+        if (creator === true){
+            userType = "creator"
+        }else if(fan === true){
+            userType = "fan"
+        }else{
+            userType = "";
+        }
+
+        if (userType === ""){
+            return NotificationManager.error("You must select a user type", "Error")
+        }
+
+        if (userRef.current.value.length === 0){
+            return NotificationManager.error("You must enter your username", "Error")
+        }
+        
+        
+        const cred = {
+            onboardingStep: 2,
+            userType,
+            userName: userRef.current.value
+        }
+
+        const result = await onboard1Call(cred, setLoader, setError, history, token);
+
+    }
     return (
         <div>
 
@@ -38,14 +95,14 @@ export default function Onboard1() {
                     <div className="creator-onboard-option-sec">
                         <h2 className="useronboard-title">Are you a creator?</h2>
                         <div className="creator-onboard-options">
-                            <a href="user_onboard2.html" className="creator-onboard-option">
+                            <span onClick={selectCreator}  className={ !creator ? "creator-onboard-option" : "creator-onboard-option creator-hover" } >
                                 <img src="./images/creator-opt-1.png" alt="I'm a creator" />
                                 <span>Yes, I'm a creator</span>
-                            </a>
-                            <a href="user_onboard2.html" className="creator-onboard-option">
+                            </span>
+                            <span onClick={selectFan} className={ !fan ? "creator-onboard-option" : "creator-onboard-option creator-hover" }>
                                 <img src="./images/creator-opt-2.png" alt="I'm a fan" />
                                 <span>I'm a fan</span>
-                            </a>
+                            </span>
                         </div>
                     </div>
                     <div className="choose-link-onboard-section">
@@ -58,16 +115,22 @@ export default function Onboard1() {
                                 <span className="choose-link-input-icon input-icon"><img src="images/trendupp-icon.png"
                                         alt=""/></span>
                                 <span className="choose-link-input-text">trendupp.com/</span>
-                                <input type="text" className="form-control style2-input" placeholder="yournamehere" />
+                                <input type="text" className="form-control style2-input" ref={userRef} placeholder="yournamehere" />
                                 <i className="choose-link-input-check input-icon-e ti-check"></i>
                             </div>
 
-                            <div className="col-sm-12 p-0">
-                                <div className="form-group mb-1">
+                            <div className={ error.length > 0 ? "alert alert-danger" : "none" }>
+                                <div >{error}</div>
+                            </div>
+                            <div className={ loader === true ? "loader" : "none"}>
+                                <div >Loading...</div>
+                            </div>
 
-                                    <button type="submit" className="form-control style2-input style2-main-button arrow-display">
-                                        <span>Continue</span>
-                                        <i className="ti-arrow-right arrow"></i></button>
+                            <div class="col-sm-12 p-0">
+                                <div class="form-group mb-1">
+
+                                    <button type="submit" onClick={submit} class="form-control style2-input style2-main-button">Continue
+                                        <i class="ti-arrow-right" style={{paddingLeft:"5px"}}></i></button>
                                 </div>
                             </div>
                         </form>
@@ -84,3 +147,11 @@ export default function Onboard1() {
         </div>
     )
 }
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.auth,
+    }
+  }
+  
+  export default connect(mapStateToProps)(Onboard1);

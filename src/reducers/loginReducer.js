@@ -1,5 +1,5 @@
 const loginReducerDefaultState = {
-    user:JSON.parse(localStorage.getItem("user")) || null,
+    user: JSON.parse(localStorage.getItem("trend-user")) || null,
     isFetching: false,
     error: false,
 }
@@ -22,7 +22,7 @@ const loginReducer = (state = loginReducerDefaultState, action) => {
             return {
                 user: action.payload,
                 isFetching: false,
-                error: true
+                error: false
             }
         default:
             return state;

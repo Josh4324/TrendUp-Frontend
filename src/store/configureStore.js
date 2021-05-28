@@ -5,7 +5,7 @@ import loginReducer from "../reducers/loginReducer";
 
 export default () => {
     const store = createStore(combineReducers({
-        login: loginReducer,
+        auth: loginReducer,
         //filters: filterReducer
     }));
     return store;

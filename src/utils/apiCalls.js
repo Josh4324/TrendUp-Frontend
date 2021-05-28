@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NotificationManager} from 'react-notifications';
-//const http = "http://localhost:8080";
-const http = "http://159.65.48.80";
+const http = "http://localhost:8080";
+//const http = "http://159.65.48.80";
 
 
 export const loginCall = async (userCredential, dispatch, setLoader, setError, history) => {
@@ -14,7 +14,8 @@ export const loginCall = async (userCredential, dispatch, setLoader, setError, h
     if (res.data.code === 200){
         setLoader(false);
         localStorage.setItem('trend-user', JSON.stringify(res.data.data))
-        history.push("/step1")
+        let onboard = Number(res.data.data.onboardingStep);
+        history.push("/step2")
     }
     dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
   } catch (err) {
@@ -59,4 +60,53 @@ export const verificationCall = async (userCredential, setLoader, setError, hist
         
     }
 };
+
+export const onboard1Call = async (userCredential, setLoader, setError, history, token) => {
+    try {
+       setLoader(true)
+        axios.defaults.headers.common['Authorization'] = "JWT " + token;
+        const res = await axios.patch(`${http}/api/v1/user`, userCredential);
+        if (res){
+           setLoader(false);
+           history.push("/step2")
+        }
+    }catch(err){
+        console.log(err.response)
+        setLoader(false)
+        setError(err.response.data.message);
+    }
+};
+
+export const onboard2Call = async (userCredential, setLoader, setError, history, token) => {
+    try {
+       setLoader(true)
+        axios.defaults.headers.common['Authorization'] = "JWT " + token;
+        const res = await axios.patch(`${http}/api/v1/user`, userCredential);
+        if (res){
+           setLoader(false);
+           history.push("/step3")
+        }
+    }catch(err){
+        console.log(err.response)
+        setLoader(false)
+        setError(err.response.data.message);
+    }
+};
+
+export const onboard2ImageCall = async (userCredential, setLoader, token) => {
+    try {
+       setLoader(true)
+        axios.defaults.headers.common['Authorization'] = "JWT " + token;
+        const res = await axios.patch(`${http}/api/v1/user/image`, userCredential);
+        console.log(res)
+        if (res){
+           setLoader(false);
+           NotificationManager.success("image uploaded successfully", "Success")
+        }
+    }catch(err){
+        console.log(err.response)
+        setLoader(false)
+    }
+};
+
 

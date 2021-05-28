@@ -26,7 +26,8 @@ export default function SignUp() {
     
         const cred = {
             email: emailRef.current.value,
-            password: passwordRef.current.value
+            password: passwordRef.current.value,
+            onboardingStep: 1,
         }
 
         const result = await signupCall(cred, setLoader, setError, setSuccess, setSignUp);
