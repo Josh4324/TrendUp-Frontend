@@ -40,6 +40,20 @@ export const signupCall = async (userCredential, setLoader, setError, setSuccess
     }catch(err){
         console.log(err.response.data);
         setLoader(false);
+        let errorMessage = ""
+        if (err.response.data.message === "Validation Error"){
+            if (err.response.data.data.length === 2){
+                errorMessage = err.response.data.data[0].email + " | " + err.response.data.data[1].password;
+            }else if(err.response.data.data[0].password) {
+                errorMessage = err.response.data.data[0].password
+            }else{
+                errorMessage = err.response.data.data[0].email
+            }
+
+            return setError(errorMessage);
+        }
+           
+        
         setError(err.response.data.message);
     }
 };
