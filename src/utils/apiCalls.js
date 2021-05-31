@@ -3,6 +3,9 @@ import { NotificationManager} from 'react-notifications';
 //const http = "http://localhost:8080";
 const http = "http://159.65.48.80";
 
+//const front = "http://localhost:3000";
+const front = "http://159.65.48.80";
+
 
 export const loginCall = async (userCredential, dispatch, setLoader, setError, history) => {
   dispatch({ type: "LOGIN_START" });
@@ -15,7 +18,13 @@ export const loginCall = async (userCredential, dispatch, setLoader, setError, h
         setLoader(false);
         localStorage.setItem('trend-user', JSON.stringify(res.data.data))
         let onboard = Number(res.data.data.onboardingStep);
-        history.push("/step1")
+        console.log(onboard)
+        if (onboard === 4){
+            window.location.href = `${front}/#/dashboard`
+        }else{
+            window.location.href = `${front}/#/step${onboard}`
+        }
+        
     }
     dispatch({ type: "LOGIN_SUCCESS", payload: res.data.data });
   } catch (err) {
@@ -107,21 +116,44 @@ export const onboard2Call = async (userCredential, setLoader, setError, history,
     }
 };
 
-export const onboard2ImageCall = async (userCredential, setLoader, token) => {
+export const onboard2ImageCall = async (userCredential, setLoader, token, setImage) => {
     try {
        setLoader(true)
         axios.defaults.headers.common['Authorization'] = "JWT " + token;
         const res = await axios.patch(`${http}/api/v1/user/image`, userCredential);
         console.log(res)
         if (res){
+            console.log(res.data)
            setLoader(false);
-           NotificationManager.success("image uploaded successfully", "Success")
+           NotificationManager.success("image uploaded successfully", "Success");
+           setImage(res.data.data);
         }
     }catch(err){
         console.log(err.response)
         setLoader(false)
     }
 };
+
+
+export const getCall = async (setOnboard, token, ) => {
+    try {
+      //setLoader(true);
+      //setError(false);
+      axios.defaults.headers.common['Authorization'] = "JWT " + token;
+      const res = await axios.get(`${http}/api/v1/user`);
+      if (res.data.code === 200){
+          //setLoader(false);
+          setOnboard(res.data.data.onboardingStep);
+          //setImage(res.data.data.picture);
+      }
+      
+    } catch (err) {
+          console.log(err.response.data);
+          //setLoader(false);
+          //setError(err.response.data.message);
+    }
+  };
+
 
 
 export const onboard3Call = async (userCredential, setLoader, history, token) => {
@@ -131,7 +163,7 @@ export const onboard3Call = async (userCredential, setLoader, history, token) =>
         const res = await axios.patch(`${http}/api/v1/user`, userCredential);
         if (res){
            setLoader(false);
-           history.push("/step4")
+           history.push("/dashboard")
         }
     }catch(err){
         console.log(err.response)

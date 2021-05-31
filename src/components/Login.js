@@ -21,6 +21,8 @@ export default function Login(props) {
                         <img className="signup-img" src="./google.svg" alt="google"/>
                         <img className="signup-img" src="./twitter.svg" alt="titter"/>
                     </div>
+
+                    
                     
                     <div>
                         <hr className="signup-hr"/>

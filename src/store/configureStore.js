@@ -1,12 +1,12 @@
 import {createStore, combineReducers} from 'redux';
 import loginReducer from "../reducers/loginReducer";
-//import filterReducer from "../reducers/filters";
+import userReducer from "../reducers/userReducer";
 
 
 export default () => {
     const store = createStore(combineReducers({
         auth: loginReducer,
-        //filters: filterReducer
+        user: userReducer
     }));
     return store;
 }

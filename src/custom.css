@@ -349,3 +349,9 @@ a {
 .creator-hover{
     border: 2px solid #c4326d;
 }
+
+.pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}

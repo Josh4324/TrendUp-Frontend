@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch, HashRouter, Router } from 'react-router-dom';
-import {LoginPage, Dashboard,Landing,SignUp, Onboard1, Onboard2, Onboard3, PrivateRoute, OnboardComplete} from './pages/index';
+import {LoginPage, Dashboard,Landing,SignUp, Onboard1, Onboard2, Onboard3,
+   PrivateRoute, NotFound, OnboardComplete} from './pages/index';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import {connect} from 'react-redux';
 import 'react-notifications/lib/notifications.css';
@@ -27,6 +28,7 @@ function App(props) {
           <PrivateRoute path="/step3" component={Onboard3} />
           <PrivateRoute path="/step4" component={OnboardComplete} />
           <PrivateRoute path="/dashboard" component={Dashboard} />
+          <Route  component={NotFound} />
 
         </Switch>
         <NotificationContainer/>

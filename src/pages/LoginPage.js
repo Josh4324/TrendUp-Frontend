@@ -44,23 +44,41 @@ function LoginPage(props) {
                 </header>
 
                 <section className="login-section1">
-                    <h3 className="login-h3">Welcome Back</h3>
+                <h2 className="login-card-title">Welcome Back</h2>
 
-                    <div className="signup-social"> 
-                        <img className="signup-img" src="./facebook.svg" alt="facebook"/>
-                        <img className="signup-img" src="./google.svg" alt="google"/>
-                        <img className="signup-img" src="./twitter.svg" alt="titter"/>
+                    <div className="col-sm-12 social-login">
+                        
+                        <a href="#" className="social-login-icon">
+                            <img src="images/icon-google.svg" alt="google icon" className="" />
+                        
+                        </a>
+                        <a href="#" className="social-login-icon">
+                            <img src="images/icon-facebook.svg" alt="google icon" className=""/>
+                            
+                        </a>
+                        <a href="#" className="social-login-icon">
+                            <img src="images/icon-twitter.svg" alt="google icon" className=""/>
+                            
+                        </a>
                     </div>
-                    
-                    <div>
-                        <hr className="signup-hr"/>
 
-                        <div className="login-back">Or login with email</div>
-                    </div>
+                    <h6 className="social-login-divider">
+                                <span>Or, login with email</span> </h6>
                     <form onSubmit={login}>
-                        <input placeholder="Email Address" ref={emailRef} className="login-input"/>
-
-                        <input placeholder="Password" type="password" ref={passwordRef} className="login-input"/>
+                            <div className="form-group icon-input">
+                                <i className="font-sm ti-email text-grey-500 pe-0"></i>
+                                <input type="text" className="form-control style2-input ps-5" ref={emailRef} placeholder="Your Email Address"/>
+                                <div className="invalid-feedback">
+                                    Please fill in your email address
+                                  </div>                        
+                            </div>
+                            <div className="form-group icon-input">
+                                <input type="Password" className="form-control style2-input ps-5" ref={passwordRef} placeholder="Password"/>
+                                <i className="font-sm ti-lock text-grey-500 pe-0"></i>
+                                <div className="invalid-feedback">
+                                    Please fill in your password
+                                  </div>  
+                            </div>
 
                         <div className={ error.length > 0 ? "alert alert-danger" : "none" }>
                             <div >{error}</div>
@@ -69,7 +87,7 @@ function LoginPage(props) {
                             <div >Loading...</div>
                         </div>
 
-                        <button className="signup-submit-button">Continue with email</button>
+                        <button type="submit" className="form-control style2-input style2-main-button">Continue with email</button>
 
                     </form>
                     

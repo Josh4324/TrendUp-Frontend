@@ -1,7 +1,7 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { NotificationManager} from 'react-notifications';
-import {onboard1Call} from '../utils/apiCalls';
+import {onboard1Call, getCall} from '../utils/apiCalls';
 import { useHistory } from "react-router-dom";
 import {connect} from 'react-redux';
 import "../themify-icons.css";
@@ -12,14 +12,21 @@ import "../custom1.css";
 function Onboard1(props) {
     
     const [creator, setCreator] = useState(false);
+    const [onboard, setOnboard] = useState(null);
     const [fan, setFan] = useState(false);
     const [error, setError] = useState("");
     const [loader, setLoader] = useState(false);
     let history = useHistory();
     const userRef = useRef("");
-    console.log(props);
     const token = props.user.user.token;
-    const onboard = Number(props.user.user.onboardingStep)
+
+    useEffect(() => {
+        getCall(setOnboard, token)
+        return () => {
+           
+        }
+    }, [])
+
     if (onboard > 1){
         history.push(`step${onboard}`);
     }
@@ -49,16 +56,21 @@ function Onboard1(props) {
             return NotificationManager.error("You must select a user type", "Error")
         }
 
-        if (userRef.current.value.length === 0){
-            return NotificationManager.error("You must enter your username", "Error")
+        let cred;
+
+        if (creator){
+            cred = {
+                onboardingStep: 2,
+                userType,
+                userName: userRef.current.value
+            }
+        }else {
+            cred = {
+                onboardingStep: 2,
+                userType,
+            } 
         }
         
-        
-        const cred = {
-            onboardingStep: 2,
-            userType,
-            userName: userRef.current.value
-        }
 
         const result = await onboard1Call(cred, setLoader, setError, history, token);
 
@@ -105,19 +117,33 @@ function Onboard1(props) {
                             </span>
                         </div>
                     </div>
+                    
                     <div className="choose-link-onboard-section">
-                        <h2 className="useronboard-title">Choose your link</h2>
-                        <h4 className="useronboard-subtitle">Pick a simple shareable link for your page.<br/>You can always
+                        {
+                            creator ? (
+                                <div>
+                                <h2 className="useronboard-title">Choose your link</h2>
+                                <h4 className="useronboard-subtitle">Pick a simple shareable link for your page.<br/>You can always
                             change this later </h4>
+                            </div>
+                            ) : null
+                        }
+                        
                         <form className="choose-link-onboard-form" action="user_onboard2.html" method="GET">
 
-                            <div className="form-group form-group-icon choose-link-input">
-                                <span className="choose-link-input-icon input-icon"><img src="images/trendupp-icon.png"
-                                        alt=""/></span>
-                                <span className="choose-link-input-text">trendupp.com/</span>
-                                <input type="text" className="form-control style2-input" ref={userRef} placeholder="yournamehere" />
-                                <i className="choose-link-input-check input-icon-e ti-check"></i>
-                            </div>
+                            {
+                                creator ? (
+                                    <div className="form-group form-group-icon choose-link-input">
+                                    <span className="choose-link-input-icon input-icon"><img src="images/trendupp-icon.png"
+                                            alt=""/></span>
+                                    <span className="choose-link-input-text">trendupp.com/</span>
+                                    <input type="text" className="form-control style2-input" style={{paddingLeft: "140px"}} ref={userRef} placeholder="yournamehere" />
+                                    <i className="choose-link-input-check input-icon-e ti-check"></i>
+                                </div>
+                                ) : null
+                            }
+
+                           
 
                             <div className={ error.length > 0 ? "alert alert-danger" : "none" }>
                                 <div >{error}</div>

@@ -1,6 +1,6 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import {onboard2Call, onboard2ImageCall} from '../utils/apiCalls';
+import {onboard2Call, onboard2ImageCall, getCall} from '../utils/apiCalls';
 import {connect} from 'react-redux';
 import { useHistory } from "react-router-dom";
 import "../custom1.css";
@@ -22,11 +22,24 @@ function Onboard2(props) {
     const youtubeRef = useRef("");
     const token = props.user.user.token
     let history = useHistory();
-    const onboard = Number(props.user.user.onboardingStep)
     
     const [loader1, setLoader1] = useState(false);
     const [error, setError] = useState("");
     const [loader, setLoader] = useState(false);
+    const [onboard, setOnboard] = useState(null);
+    const [image, setImage] = useState(null);
+
+
+    useEffect(() => {
+        getCall(setOnboard, token)
+        return () => {
+           
+        }
+    }, [])
+
+    if (onboard > 2){
+        history.push(`step${onboard}`);
+    }
 
     const imageSubmit = async(evt) => {
         evt.preventDefault();
@@ -37,7 +50,7 @@ function Onboard2(props) {
         formData.append("picture", file);
 
 
-        const result = await onboard2ImageCall(formData, setLoader1, token);
+        const result = await onboard2ImageCall(formData, setLoader1, token,setImage);
     }
 
     const submit = async(evt) => {
@@ -101,8 +114,13 @@ function Onboard2(props) {
                 <input type="file" name="file" onChange={imageSubmit} id="file" ref={imageRef} class="input-file" />
                 <label for="file"
                     class="rounded-3 text-center bg-white btn-tertiary js-labelFile p-4 w-100 border-dashed">
-                    <i class="ti-camera large-icon me-3 d-block"></i>
-                    <span class="js-fileName">Upload profile picture</span>
+                        {
+                            image ?  <img src={image} className="pic" />  : <div>
+                            <i class="ti-camera large-icon me-3 d-block"></i>
+                            <span class="js-fileName">Upload profile picture</span>
+                            </div>
+                        }
+                   
                 </label>
             </div>
             <div className={ loader1 === true ? "loader" : "none"}>
@@ -139,7 +157,7 @@ function Onboard2(props) {
             <div class="row">
                 <div class="col-lg-12 mb-2">
                     <div class="form-group">
-                        <input type="text" required class="form-control style2-input" ref={websiteUrlRef} placeholder="Website URL"/>
+                        <input type="text" class="form-control style2-input" ref={websiteUrlRef} placeholder="Website URL"/>
                     </div>
                 </div>
             </div>

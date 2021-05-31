@@ -1,8 +1,8 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import banks from "../utils/bank";
 import { useHistory } from "react-router-dom";
-import {onboard3Call} from '../utils/apiCalls';
+import {onboard3Call, getCall} from '../utils/apiCalls';
 import "../themify-icons.css";
 import "../feather.css";
 import "../style1.css";
@@ -18,12 +18,22 @@ function Onboard3(props) {
     const [loader, setLoader] = useState(false);
     const [loader1, setLoader1] = useState(false);
     const [accountName, setAccountName] = useState("");
+    const [onboard, setOnboard] = useState(null);
     const token2 = props.user.user.token
-    console.log(token2)
+    
     const bankRef = useRef("");
     const accountRef = useRef("");
 
-    const onboard = Number(props.user.user.onboardingStep);
+    useEffect(() => {
+        getCall(setOnboard, token2)
+        return () => {
+           
+        }
+    }, [])
+
+    if (onboard > 3){
+        history.push(`step${onboard}`);
+    }
 
 
     const submit = async(evt) => {
@@ -145,20 +155,24 @@ function Onboard3(props) {
                                             className="form-control  style2-input style2-main-button">Verify Account</button>
                                     </div>
                                 </div>
+                                {
+                                    accountName.length > 1 ? (
+                                        <div className="row">
 
-
-                                <div className="row">
-
-                                    <div className="col-lg-12">
-                                        <label className="mb-2">Account Name</label>
-                                        <h2 className="mb-4">{accountName}</h2>
-                                        <div className={ loader1 === true ? "loader" : "none"}>
-                                            <div >Loading...</div>
-                                         </div>
-                                        <button type="submit" onClick={confirm}
-                                            className="form-control style2-input style2-main-button">Confirm Account Details</button>
+                                        <div className="col-lg-12">
+                                            <label className="mb-2">Account Name</label>
+                                            <h2 className="mb-4">{accountName}</h2>
+                                            <div className={ loader1 === true ? "loader" : "none"}>
+                                                <div >Loading...</div>
+                                             </div>
+                                            <button type="submit" onClick={confirm}
+                                                className="form-control style2-input style2-main-button">Confirm Account Details</button>
+                                        </div>
                                     </div>
-                                </div>
+                                    ) : null
+                                }
+
+                               
                             </form>
 
 
