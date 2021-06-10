@@ -1,21 +1,10 @@
 import React, {useState} from 'react';
 import { Link } from 'react-router-dom';
-import Login from '../components/Login';
 
 export default function Landing(props) {
-    const [loginToggle, setLoginToggle] = useState(false);
-
-    const onClickLogin = () => {
-        const Toggle = !loginToggle;
-        setLoginToggle(Toggle); 
-    }
-
 
     return (
         <>
-            {
-                loginToggle === true ? <Login toggle={onClickLogin} /> : null
-            }
             <main className="main">
                 <header className="landing-header">
                     <div>

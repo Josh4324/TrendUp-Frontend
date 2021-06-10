@@ -1,7 +1,5 @@
 const userReducerDefaultState = {
     user: null,
-    isFetching: false,
-    error: false,
 }
 
 const userReducer = (state = userReducerDefaultState, action) => {
@@ -9,8 +7,6 @@ const userReducer = (state = userReducerDefaultState, action) => {
         case 'GET_USER':
             return {
                 user: action.payload,
-                isFetching: false,
-                error: false
             }
         default:
             return state;

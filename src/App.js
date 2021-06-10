@@ -10,6 +10,8 @@ import "./custom.css";
 
 function App(props) {
   const user = props.user.user;
+  console.log(user)
+  
   return (
     <div className="App color-theme-blue">
       <HashRouter basename="/">

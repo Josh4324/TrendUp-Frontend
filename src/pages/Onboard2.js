@@ -29,6 +29,7 @@ function Onboard2(props) {
     const [onboard, setOnboard] = useState(null);
     const [image, setImage] = useState(null);
 
+    console.log(onboard)
 
     useEffect(() => {
         getCall(setOnboard, token)
@@ -37,8 +38,12 @@ function Onboard2(props) {
         }
     }, [])
 
-    if (onboard > 2){
-        history.push(`step${onboard}`);
+    if (Number(onboard) > 2){
+        if (Number(onboard) === 4){
+           history.push("/dashboard")
+        }else{
+            history.push(`step${onboard}`);
+        }   
     }
 
     const imageSubmit = async(evt) => {

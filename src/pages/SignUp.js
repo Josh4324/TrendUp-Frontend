@@ -1,7 +1,7 @@
 import React, {useState,useRef} from 'react';
 import { Link } from 'react-router-dom';
 import Login from '../components/Login';
-import {signupCall, verificationCall} from '../utils/apiCalls';
+import {signupCall, verificationCall, resendCall} from '../utils/apiCalls';
 import { useHistory } from "react-router-dom";
 
 export default function SignUp() {
@@ -43,6 +43,17 @@ export default function SignUp() {
         }
 
         const result = await verificationCall(cred,setLoader,setError,history);
+    }
+
+    const resend = async(evt) => {
+        evt.preventDefault();
+
+        const cred = {
+            email: emailRef.current.value,
+            password: passwordRef.current.value,
+        }
+
+        const result = await resendCall(cred);
     }
 
 
@@ -115,7 +126,7 @@ export default function SignUp() {
                                     <div className="form-group icon-input">
                                 
                                         <input type="text" className="form-control style2-input ps-3 mb-2 bg-white" ref={codeRef} placeholder="Paste verification code"/> 
-                                        <span className="form-input-btn" onClick={verify}>Resend</span> 
+                                        <span className="form-input-btn" onClick={resend}>Resend</span> 
                                         <div id="emailHelp" className="form-text">Please check your inbox for a verification code.</div>
                             
                                         <div className="invalid-feedback">

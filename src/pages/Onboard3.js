@@ -9,6 +9,7 @@ import "../style1.css";
 import "../custom1.css";
 import axios from "axios";
 import {connect} from 'react-redux';
+import NotificationManager from 'react-notifications/lib/NotificationManager';
 
 function Onboard3(props) {
     const token = "sk_test_fe5d07ae5f83bbc809ec64ada3efb3e9caa1338c"
@@ -31,13 +32,21 @@ function Onboard3(props) {
         }
     }, [])
 
-    if (onboard > 3){
-        history.push(`step${onboard}`);
+    if (Number(onboard) > 3){
+        if (Number(onboard) === 4){
+           history.push("/dashboard")
+        }else{
+            history.push(`step${onboard}`);
+        }   
     }
 
 
     const submit = async(evt) => {
         evt.preventDefault();
+
+        if (accountRef.current.value === ""){
+            return NotificationManager.error("Account number cannot be empty", "Error")
+        }
        
         const bankCode = bankRef.current.value;
         const accountCode = accountRef.current.value;
@@ -75,6 +84,7 @@ function Onboard3(props) {
             accName: accountName,
             bankName: bankRef.current.value,
             onboardingStep: 4,
+            showComplete: true
         }
 
         console.log(cred)

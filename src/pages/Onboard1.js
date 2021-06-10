@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import { NotificationManager} from 'react-notifications';
-import {onboard1Call, getCall} from '../utils/apiCalls';
+import {onboard1Call, getCall, userVerify} from '../utils/apiCalls';
 import { useHistory } from "react-router-dom";
 import {connect} from 'react-redux';
 import "../themify-icons.css";
@@ -14,6 +14,7 @@ function Onboard1(props) {
     const [creator, setCreator] = useState(false);
     const [onboard, setOnboard] = useState(null);
     const [fan, setFan] = useState(false);
+    const [found, setFound] = useState(null);
     const [error, setError] = useState("");
     const [loader, setLoader] = useState(false);
     let history = useHistory();
@@ -27,8 +28,12 @@ function Onboard1(props) {
         }
     }, [])
 
-    if (onboard > 1){
-        history.push(`step${onboard}`);
+    if (Number(onboard) > 1){
+        if (Number(onboard) === 4){
+           history.push("/dashboard")
+        }else{
+            history.push(`step${onboard}`);
+        }   
     }
     
     const selectCreator = () => {
@@ -39,6 +44,7 @@ function Onboard1(props) {
     const selectFan = () => {
         setFan(true);
         setCreator(false);
+        setError("");
     }
 
     const submit = async(evt) => {
@@ -53,7 +59,13 @@ function Onboard1(props) {
         }
 
         if (userType === ""){
-            return NotificationManager.error("You must select a user type", "Error")
+            return NotificationManager.error("You must select a user type", "Error");
+        }
+
+        if (creator){
+            if (userRef.current.value === ""){
+                return NotificationManager.error("You must enter a username", "Error");
+            }
         }
 
         let cred;
@@ -74,6 +86,24 @@ function Onboard1(props) {
 
         const result = await onboard1Call(cred, setLoader, setError, history, token);
 
+    }
+
+    const usernameCheck = async() => {
+        setFound(null);
+        let cred2 = {
+            username: userRef.current.value
+        }
+        
+        if (userRef.current.value.length < 4){
+            setError("Your username should be more than 3 characters")
+         }
+
+
+        if (userRef.current.value.length > 3){
+            const result1 = await userVerify(cred2, setLoader, setError, setFound, token);
+        }
+
+       
     }
     return (
         <div>
@@ -137,8 +167,10 @@ function Onboard1(props) {
                                     <span className="choose-link-input-icon input-icon"><img src="images/trendupp-icon.png"
                                             alt=""/></span>
                                     <span className="choose-link-input-text">trendupp.com/</span>
-                                    <input type="text" className="form-control style2-input" style={{paddingLeft: "140px"}} ref={userRef} placeholder="yournamehere" />
-                                    <i className="choose-link-input-check input-icon-e ti-check"></i>
+                                    <input type="text" onChange={usernameCheck} className="form-control style2-input" style={{paddingLeft: "140px"}} ref={userRef} placeholder="yournamehere" />
+
+                                    <i className="choose-link-input-check input-icon-e ti-check" style={{ backgroundColor: found === false ? "green" : null}}></i>
+                                 
                                 </div>
                                 ) : null
                             }

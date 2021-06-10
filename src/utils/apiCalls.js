@@ -84,6 +84,17 @@ export const verificationCall = async (userCredential, setLoader, setError, hist
     }
 };
 
+export const resendCall = async (userCredential) => {
+    try {
+        const res = await axios.post(`${http}/api/v1/user/resend-code`, userCredential);
+        if (res){
+           NotificationManager.success('Code Resent', 'Success');
+        }
+    }catch(err){
+        console.log(err.response.data);
+    }
+};
+
 export const onboard1Call = async (userCredential, setLoader, setError, history, token) => {
     try {
        setLoader(true)
@@ -92,6 +103,29 @@ export const onboard1Call = async (userCredential, setLoader, setError, history,
         if (res){
            setLoader(false);
            history.push("/step2")
+        }
+    }catch(err){
+        console.log(err.response)
+        setLoader(false)
+        setError(err.response.data.message);
+    }
+};
+
+export const userVerify = async (userCredential, setLoader, setError, setFound, token) => {
+    try {
+        console.log(userCredential)
+       setLoader(true)
+        axios.defaults.headers.common['Authorization'] = "JWT " + token;
+        const res = await axios.post(`${http}/api/v1/user/checkUser`, userCredential);
+        if (res){
+           setLoader(false);
+           if (res.data.data === true){
+               setError("Username already exists");
+           }else{
+               setError("");
+           }
+           setFound(res.data.data);
+           console.log(res.data);
         }
     }catch(err){
         console.log(err.response)
@@ -137,10 +171,14 @@ export const onboard2ImageCall = async (userCredential, setLoader, token, setIma
 
 export const getCall = async (setOnboard, token, ) => {
     try {
+        console.log(token)
       //setLoader(true);
       //setError(false);
-      axios.defaults.headers.common['Authorization'] = "JWT " + token;
-      const res = await axios.get(`${http}/api/v1/user`);
+      const res = await axios.get(`${http}/api/v1/user`,  {
+        headers: {
+          'Authorization': `JWT ${token}`
+        }
+      });
       if (res.data.code === 200){
           //setLoader(false);
           setOnboard(res.data.data.onboardingStep);
@@ -153,7 +191,6 @@ export const getCall = async (setOnboard, token, ) => {
           //setError(err.response.data.message);
     }
   };
-
 
 
 export const onboard3Call = async (userCredential, setLoader, history, token) => {
@@ -170,4 +207,41 @@ export const onboard3Call = async (userCredential, setLoader, history, token) =>
         setLoader(false)
     }
 };
+
+export const onDash = async (userCredential, token) => {
+    try {
+        axios.defaults.headers.common['Authorization'] = "JWT " + token;
+        const res = await axios.patch(`${http}/api/v1/user`, userCredential);
+    }catch(err){
+        console.log(err.response)
+    }
+};
+
+export const getCallModal = async (setModal, dispatch, token, ) => {
+    try {
+        console.log(token)
+      //setLoader(true);
+      //setError(false);
+      const res = await axios.get(`${http}/api/v1/user`,  {
+        headers: {
+          'Authorization': `JWT ${token}`
+        }
+      });
+      if (res.data.code === 200){
+          //setLoader(false);
+          setModal(res.data.data.showComplete);
+          console.log(res.data.data)
+          dispatch({ type: "GET_USER", payload: res.data.data });
+
+          //setImage(res.data.data.picture);
+      }
+      
+    } catch (err) {
+          console.log(err.response.data);
+          //setLoader(false);
+          //setError(err.response.data.message);
+    }
+  };
+
+
 
