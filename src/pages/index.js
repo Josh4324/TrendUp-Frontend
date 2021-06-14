@@ -9,8 +9,12 @@ import Onboard1 from './Onboard1';
 import Onboard2 from './Onboard2';
 import Onboard3 from './Onboard3';
 import OnboardComplete from './OnboardComplete';
+import FanDashboard from './FanDashboard';
+import CreatorPage from './CreatorPage';
 import NotFound from './NotFound';
+import Sidebar from './Sidebar';
 
 
 
-export { SignUp, PrivateRoute, LoginPage, Dashboard, Landing, ForgotPassword, NotFound, Onboard1, Onboard2, Onboard3, OnboardComplete, ResetPassword};
+
+export { SignUp, PrivateRoute, LoginPage, CreatorPage, FanDashboard, Sidebar, Dashboard, Landing, ForgotPassword, NotFound, Onboard1, Onboard2, Onboard3, OnboardComplete, ResetPassword};

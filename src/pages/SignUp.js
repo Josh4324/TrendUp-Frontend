@@ -126,7 +126,7 @@ export default function SignUp() {
                                     <div className="form-group icon-input">
                                 
                                         <input type="text" className="form-control style2-input ps-3 mb-2 bg-white" ref={codeRef} placeholder="Paste verification code"/> 
-                                        <span className="form-input-btn" onClick={resend}>Resend</span> 
+                                        <span className="form-input-btn resend" onClick={resend}>Resend</span> 
                                         <div id="emailHelp" className="form-text">Please check your inbox for a verification code.</div>
                             
                                         <div className="invalid-feedback">

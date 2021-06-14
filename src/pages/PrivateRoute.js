@@ -4,19 +4,13 @@ import {connect} from 'react-redux';
 import jwt_decode from "jwt-decode";
 
 function PrivateRoute({ component: Component, props, ...rest }) {
-    const token = rest.user.token;
-    const decoded = jwt_decode(token);
-    const expirationTime = (decoded.exp * 1000) - 60000;
-    if (Date.now() >= expirationTime) {
-        localStorage.removeItem('trend-user');
-        return <Redirect to="/login" />
-    }
+    const user = rest.user
     
     return(
       <Route 
           {...rest} 
           render={(props) => (
-              token ? <Component {...props} /> : <Redirect to="/login" />
+              user ? <Component {...props} /> : <Redirect to="/login" />
           )}
       />
     );

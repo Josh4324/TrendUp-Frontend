@@ -1,10 +1,9 @@
 import axios from "axios";
 import { NotificationManager} from 'react-notifications';
-//const http = "http://localhost:8080";
-const http = "http://159.65.48.80";
+import {front, http} from "./constants";
 
-//const front = "http://localhost:3000";
-const front = "http://159.65.48.80";
+console.log(front, http)
+
 
 
 export const loginCall = async (userCredential, dispatch, setLoader, setError, history) => {
@@ -12,21 +11,27 @@ export const loginCall = async (userCredential, dispatch, setLoader, setError, h
   try {
     setLoader(true);
     setError(false);
+    console.log(http)
     const res = await axios.post(`${http}/api/v1/user/login`, userCredential);
     console.log(res)
     if (res.data.code === 200){
         setLoader(false);
+        dispatch({ type: "LOGIN_SUCCESS", payload: res.data.data });
         localStorage.setItem('trend-user', JSON.stringify(res.data.data))
         let onboard = Number(res.data.data.onboardingStep);
+        console.log(res.data.data.userType)
+        if (res.data.data.userType === "fan"){
+           return window.location.href = `${front}/#/fan-dashboard`
+        }
         console.log(onboard)
-        if (onboard === 4){
+        if (Number(onboard) === 4){
+            console.log("hereeeee")
             window.location.href = `${front}/#/dashboard`
         }else{
             window.location.href = `${front}/#/step${onboard}`
         }
         
     }
-    dispatch({ type: "LOGIN_SUCCESS", payload: res.data.data });
   } catch (err) {
     dispatch({ type: "LOGIN_FAILURE", payload: err });
         console.log(err.response.data);
@@ -102,6 +107,9 @@ export const onboard1Call = async (userCredential, setLoader, setError, history,
         const res = await axios.patch(`${http}/api/v1/user`, userCredential);
         if (res){
            setLoader(false);
+           if (userCredential.userType === "fan"){
+               return history.push("/fan-dashboard")
+           }
            history.push("/step2")
         }
     }catch(err){
@@ -161,8 +169,11 @@ export const onboard2ImageCall = async (userCredential, setLoader, token, setIma
            setLoader(false);
            NotificationManager.success("image uploaded successfully", "Success");
            setImage(res.data.data);
+        }else{
+            NotificationManager.error("Error occured while trying to upload image", "Error");
         }
     }catch(err){
+        NotificationManager.error("Error occured while trying to upload image", "Error");
         console.log(err.response)
         setLoader(false)
     }

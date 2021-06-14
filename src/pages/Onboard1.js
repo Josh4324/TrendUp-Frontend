@@ -6,8 +6,11 @@ import { useHistory } from "react-router-dom";
 import {connect} from 'react-redux';
 import "../themify-icons.css";
 import "../feather.css";
+//import "../style.css";
 import "../style1.css";
+import "../lightbox.css";
 import "../custom1.css";
+
 
 function Onboard1(props) {
     
@@ -20,6 +23,8 @@ function Onboard1(props) {
     let history = useHistory();
     const userRef = useRef("");
     const token = props.user.user.token;
+    const firstNameRef = useRef(null);
+    const lastNameRef = useRef(null);
 
     useEffect(() => {
         getCall(setOnboard, token)
@@ -78,8 +83,10 @@ function Onboard1(props) {
             }
         }else {
             cred = {
-                onboardingStep: 2,
+                onboardingStep: 4,
                 userType,
+                firstName: firstNameRef.current.value,
+                lastName: lastNameRef.current.value
             } 
         }
         
@@ -155,6 +162,33 @@ function Onboard1(props) {
                                 <h2 className="useronboard-title">Choose your link</h2>
                                 <h4 className="useronboard-subtitle">Pick a simple shareable link for your page.<br/>You can always
                             change this later </h4>
+                            </div>
+                            ) : null
+                        }
+
+                        {
+                            fan ? (
+                                <div class="fan-profile-onboard-section">
+                                <h2 class="useronboard-title">Complete your profile</h2>
+                                
+                                <form class="choose-link-onboard-form" action="user_onboard2.html" method="GET">
+        
+                                    
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control style2-input" ref={firstNameRef} required placeholder="First Name" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control style2-input" ref={lastNameRef} required placeholder="Last Name"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                </form>
                             </div>
                             ) : null
                         }
