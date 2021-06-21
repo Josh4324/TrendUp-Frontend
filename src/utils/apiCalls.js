@@ -2,8 +2,6 @@ import axios from "axios";
 import { NotificationManager} from 'react-notifications';
 import {front, http} from "./constants";
 
-console.log(front, http)
-
 
 
 export const loginCall = async (userCredential, dispatch, setLoader, setError, history) => {
@@ -245,6 +243,49 @@ export const getCallModal = async (setModal, dispatch, token, ) => {
           dispatch({ type: "GET_USER", payload: res.data.data });
 
           //setImage(res.data.data.picture);
+      }
+      
+    } catch (err) {
+          console.log(err.response.data);
+          //setLoader(false);
+          //setError(err.response.data.message);
+    }
+  };
+
+  export const postCall = async (userCredential, setLoader, token, history) => {
+    try {
+       setLoader(true)
+        axios.defaults.headers.common['Authorization'] = "JWT " + token;
+        const res = await axios.post(`${http}/api/v1/post`, userCredential);
+        console.log(res)
+        if (res){
+            console.log(res.data)
+           setLoader(false);
+           NotificationManager.success("Post created successfully", "Success");
+           return window.location.href = `${front}/#/dashboard`
+
+        }
+    }catch(err){
+        NotificationManager.error("Error occured while creating post", "Error");
+        console.log(err)
+        console.log(err.response)
+        setLoader(false)
+    }
+};
+
+export const getPost = async (token) => {
+    try {
+      //setLoader(true);
+      //setError(false);
+      const res = await axios.get(`${http}/api/v1/post`,  {
+        headers: {
+          'Authorization': `JWT ${token}`
+        }
+      });
+      if (res.data.code === 200){
+          //setLoader(false);
+          console.log(res.data.data)
+        
       }
       
     } catch (err) {
