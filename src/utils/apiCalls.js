@@ -321,6 +321,37 @@ export const getCall2 = async ( username) => {
     }
   };
 
+  export const initializePaymentCall = async (userCredential) => {
+    try {
+        const res = await axios.post(`${http}/api/v1/payment`, userCredential);
+        if (res){
+           NotificationManager.success("Payment initalized successfully", "Success");
+
+        }
+        return res;
+    }catch(err){
+        NotificationManager.error("Error occured while creating post", "Error");
+        console.log(err)
+        console.log(err.response);
+    }
+};
+
+export const Pay = async (userCredential) => {
+    try {
+        const res = await axios.post(`${http}/api/v1/payment`, userCredential);
+      
+        if (res){
+           NotificationManager.success("Payment initalized successfully", "Success");
+
+        }
+        return res
+    }catch(err){
+        NotificationManager.error("Error occured while creating post", "Error");
+        console.log(err)
+        console.log(err.response);
+    }
+};
+
 
 
 

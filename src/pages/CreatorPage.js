@@ -1,18 +1,44 @@
 import React, {useState, useRef, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
-import {getCall2, getPost2} from '../utils/apiCalls';
+import {getCall2, getPost2, initializePaymentCall} from '../utils/apiCalls';
+import { useFlutterwave, FlutterWaveButton } from 'react-flutterwave';
 
 function CreatorPage(props) {
     const [modal, setmodal] = useState(false);
     const [amount, setAmount] = useState(0);
-    const [option, setOption] = useState("one");
+    const [option, setOption] = useState("One-Time");
+    const [reference, setReference] = useState("");
+    const [payment_plan, setPaymentPlan] = useState(12368);
     const [userData, setUserData] = useState({});
     const [userPost, setUserPost] = useState([]);
     const messageRef = useRef("");
     const emailRef = useRef("");
     const firstNameRef = useRef("");
     const lastNameRef = useRef("");
+
+    let name = firstNameRef.current.value + " " + lastNameRef.current.value;
+
+
+    const config = {
+        public_key: 'FLWPUBK_TEST-d0b3befc83b20f52316dc9176b5f412a-X',
+        tx_ref: reference,
+        amount,
+        currency: 'NGN',
+        payment_options: 'card',
+        payment_plan,
+        redirect_url: `http://localhost:3000/#/${props.match.params.username}`,
+        customer: {
+          email: emailRef.current.value,
+          phonenumber: '',
+          name,
+        },
+        customizations: {
+          title: 'TrendUpp',
+          description: 'Connecting Creators to Fans',
+          logo: 'https://assets.piedpiper.com/logo.png',
+        },
+      };
 
     useEffect( async() => {
         let username = props.match.params.username
@@ -24,7 +50,6 @@ function CreatorPage(props) {
         }
 
         if (post){
-            console.log(post);
             setUserPost(post.data.data);
         }
         
@@ -33,7 +58,7 @@ function CreatorPage(props) {
         }
     }, [])
 
-    const {firstName, lastName, picture, creating, about, userName} = userData || ""
+    const {firstName, id, lastName, picture, creating, about, userName} = userData || ""
 
     const onModal = () => {
         setmodal(!modal)
@@ -48,15 +73,48 @@ function CreatorPage(props) {
         setAmount(value);
     }
 
-    const onPay = (evt) => {
+    const onPay = async (evt) => {
         evt.preventDefault();
-        console.log(option);
-        console.log(amount);
-        console.log(messageRef.current.value);
-        console.log(emailRef.current.value);
-        console.log(firstNameRef.current.value);
-        console.log(lastNameRef.current.value);
+
+        console.log(payment_plan);
+
+        let cred = {
+            amount,
+            payment_plan: option,
+            creatorId: id,
+            email: emailRef.current.value,
+            firstName: firstNameRef.current.value,
+            lastName: lastNameRef.current.value,
+            message: messageRef.current.value
+        }
+
+        let payment = await initializePaymentCall(cred);
+        if (payment){
+            setReference(payment.data.data.reference);
+            handleFlutterPayment({
+                callback: (response) => {
+                  console.log(response);
+                },
+                onClose: () => {},
+              });
+
+        }
+
+       
+       
+        
     }
+
+    const handleFlutterPayment = useFlutterwave(config);
+
+    const fwConfig = {
+        ...config,
+        text: 'Pay with Flutterwave!',
+        callback: (response) => {
+          console.log(response);
+        },
+        onClose: () => {},
+      };
 
     return (
         <div className="creator-page">
@@ -184,7 +242,7 @@ function CreatorPage(props) {
                                                         d="m246.122 477.289c-144.417-126.367-246.122-193.304-246.122-299.774 0-80.513 57.4-146.515 136-146.515 54.544 0 95.017 33.497 120 81.015 24.981-47.515 65.454-81.015 120-81.015 78.609 0 136 66.015 136 146.515 0 106.457-101.572 173.291-246.122 299.773-5.657 4.949-14.1 4.949-19.756.001z" />
                                                 </g>
                                             </g>
-                                        </svg> Support Twyse
+                                        </svg> Support {firstName}
                                     </span>
                             </span>
                             </a>
@@ -196,7 +254,7 @@ function CreatorPage(props) {
                         <div class="card-body p-0 me-lg-5">
                             <a href="#">
                                 <h3 class="card-creator-title">{item.title}</h3>
-                                <p class="card-creator-text">Unlock this post by supporting Twyse</p>
+                                <p class="card-creator-text">Unlock this post by supporting {firstName}</p>
                             </a>
 
                         </div>
@@ -227,7 +285,7 @@ function CreatorPage(props) {
                         d="m246.122 477.289c-144.417-126.367-246.122-193.304-246.122-299.774 0-80.513 57.4-146.515 136-146.515 54.544 0 95.017 33.497 120 81.015 24.981-47.515 65.454-81.015 120-81.015 78.609 0 136 66.015 136 146.515 0 106.457-101.572 173.291-246.122 299.773-5.657 4.949-14.1 4.949-19.756.001z" />
                 </g>
             </g>
-        </svg> Support Twyse</a>
+        </svg> Support {firstName}</a>
 </div>
 
 </div>
@@ -241,17 +299,17 @@ function CreatorPage(props) {
                 <span class="popup-del" id="popupDel" onClick={onModal}><i class="feather-x"></i></span>
             <div class="card-body">
            
-            <h3 class="card-creator-bio--title mb-4 text-center">Support Twyse Ereme</h3>
+            <h3 class="card-creator-bio--title mb-4 text-center">Support {firstName} {lastName}</h3>
                 <form action="">
                     <div class="row">
                         <div class="col-12 mb-3 text-center">
                             <div class="radio-circle-wrapper">
-                            <input type="radio" name="support-type" onChange={() => onOption("one")} value="one-time" class="support-type-radio radio-circle-input" checked={option === "one"} id="support-type_onetime"/>
+                            <input type="radio" name="support-type" onChange={() => {onOption("One-TIme");  setPaymentPlan(12368);}} value="one-time" class="support-type-radio radio-circle-input" checked={option === "One-Time"} id="support-type_onetime"/>
                             <label for="support-type_onetime" class="support-type radio-circle-label"> One-time</label>
                             </div>
                             
                             <div class="radio-circle-wrapper">
-                            <input type="radio" name="support-type" onChange={() => onOption("monthly")} value="monthly" class="support-type-radio radio-circle-input" checked={option !== "one"} id="support-type_monthly"/>
+                            <input type="radio" name="support-type" onChange={() => {onOption("Monthly"); setPaymentPlan(12340)}} value="monthly" class="support-type-radio radio-circle-input" checked={option !== "One-Time"} id="support-type_monthly"/>
                             <label for="support-type_monthly" class="support-type radio-circle-label"> Monthly</label>
                             </div>
                             
@@ -296,7 +354,7 @@ function CreatorPage(props) {
                     <div class="row mt-3">
     
                         <div class="col-lg-12 mb-3">
-                            <label for=""> Send Twyse a message</label>
+                            <label for=""> Send {firstName} a message</label>
                             <textarea ref={messageRef} class="form-control mb-0 p-3 h100 bg-greylight lh-16" rows="5"
                                 placeholder="Say something nice... (optional)" spellcheck="false"></textarea>
                         </div>
@@ -304,19 +362,7 @@ function CreatorPage(props) {
                     </div>
                     <div class="row">
     
-                        <div class="col-lg-12">
-    
-                            <button type="submit" class="btn d-block mb-3 w-100"><svg enable-background="new 0 0 512 512"
-                                    height="512" viewBox="0 0 512 512" width="512"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <g>
-                                        <g>
-                                            <path
-                                                d="m246.122 477.289c-144.417-126.367-246.122-193.304-246.122-299.774 0-80.513 57.4-146.515 136-146.515 54.544 0 95.017 33.497 120 81.015 24.981-47.515 65.454-81.015 120-81.015 78.609 0 136 66.015 136 146.515 0 106.457-101.572 173.291-246.122 299.773-5.657 4.949-14.1 4.949-19.756.001z" />
-                                        </g>
-                                    </g>
-                                </svg> Support Twyse</button>
-                        </div>
+                        
                     </div>
     
                 </form>
@@ -347,7 +393,7 @@ function CreatorPage(props) {
                         <div class="col-12 mb-2">
     
                             <p class="mb-2">Amount</p>
-                            <h4 class="form-header">₦10,000 <span class="text-grey-500 font-xsss">monthly</span>
+                            <h4 class="form-header">₦{amount} <span class="text-grey-500 font-xsss">{option}</span>
                             </h4>
                         </div>
                     </div>
