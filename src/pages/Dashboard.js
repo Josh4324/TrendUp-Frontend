@@ -67,7 +67,6 @@ function Dashboard(props) {
     }
 
     useEffect(() => {
-        console.log("effect")
         getCallModal(setModal, props.dispatch,token);
         
         return () => {

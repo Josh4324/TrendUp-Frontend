@@ -295,5 +295,32 @@ export const getPost = async (token) => {
     }
   };
 
+export const getCall2 = async ( username) => {
+    try {
+
+      const res = await axios.get(`${http}/api/v1/user/userdata?username=${username}`);
+      return res
+      
+    } catch (err) {
+          console.log(err.response.data);
+          //setLoader(false);
+          //setError(err.response.data.message);
+    }
+  };
+
+  export const getPost2 = async ( username) => {
+    try {
+
+      const res = await axios.get(`${http}/api/v1/post?username=${username}`);
+      return res
+      
+    } catch (err) {
+          console.log(err.response.data);
+          //setLoader(false);
+          //setError(err.response.data.message);
+    }
+  };
+
+
 
 

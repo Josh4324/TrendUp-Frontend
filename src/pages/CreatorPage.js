@@ -1,12 +1,63 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {getCall2, getPost2} from '../utils/apiCalls';
 
-export default function CreatorPage(props) {
+function CreatorPage(props) {
     const [modal, setmodal] = useState(false);
+    const [amount, setAmount] = useState(0);
+    const [option, setOption] = useState("one");
+    const [userData, setUserData] = useState({});
+    const [userPost, setUserPost] = useState([]);
+    const messageRef = useRef("");
+    const emailRef = useRef("");
+    const firstNameRef = useRef("");
+    const lastNameRef = useRef("");
+
+    useEffect( async() => {
+        let username = props.match.params.username
+        let data = await getCall2(username);
+        let post = await getPost2(username);
+        console.log(data);
+        if (data){
+            setUserData(data.data.data);
+        }
+
+        if (post){
+            console.log(post);
+            setUserPost(post.data.data);
+        }
+        
+        return () => {
+            
+        }
+    }, [])
+
+    const {firstName, lastName, picture, creating, about, userName} = userData || ""
 
     const onModal = () => {
         setmodal(!modal)
     }
+
+    const onOption = (value) => {
+        setOption(value)
+    }
+
+    const onAmount = (value) => {
+        console.log(value)
+        setAmount(value);
+    }
+
+    const onPay = (evt) => {
+        evt.preventDefault();
+        console.log(option);
+        console.log(amount);
+        console.log(messageRef.current.value);
+        console.log(emailRef.current.value);
+        console.log(firstNameRef.current.value);
+        console.log(lastNameRef.current.value);
+    }
+
     return (
         <div className="creator-page">
              <div class="main-wrapper">
@@ -21,6 +72,8 @@ export default function CreatorPage(props) {
             </Link>
         </div>
     </div>
+    {
+        userData === null ? "User does not exists" :
     
     <div class="middle-sidebar-bottom">
         <div class="middle-sidebar-left">
@@ -30,9 +83,9 @@ export default function CreatorPage(props) {
                     <div class="card card-creator card-creator-bio pt-0">
                         <div class="card-body">
 
-                            <h3 class="card-creator-bio--title">Twyse Ereme</h3>
+                            <h3 class="card-creator-bio--title">{firstName} {lastName}</h3>
                                 <p class="card-creator-bio--body">
-                                    Travel & Lifestyle YouTuber living in Lagos, Nigeria. I create content around Lifestyle, Real Estate, Travel & more...
+                                    {creating}
 
                                     <a onClick={onModal} class="btn btn-md mt-3 supportBtn"><svg
                                             enable-background="new 0 0 512 512" height="512"
@@ -44,19 +97,12 @@ export default function CreatorPage(props) {
                                                         d="m246.122 477.289c-144.417-126.367-246.122-193.304-246.122-299.774 0-80.513 57.4-146.515 136-146.515 54.544 0 95.017 33.497 120 81.015 24.981-47.515 65.454-81.015 120-81.015 78.609 0 136 66.015 136 146.515 0 106.457-101.572 173.291-246.122 299.773-5.657 4.949-14.1 4.949-19.756.001z" />
                                                 </g>
                                             </g>
-                                        </svg> Support Twyse</a>
+                                        </svg> Support {firstName}</a>
                                 </p>
 
                                 <div class="card-body card-creator-about">
                                    
-                                    <p class="card-creator-about-text">Kia ora and hello from Aotearoa, the land
-                                        of the long white cloud. Join my Virtual Walking Tours around New
-                                        Zealand. Enjoy beautiful nature, local lifestyle, food and fun. Join
-                                        Lunch with Louise for cooking and food, coffee and cafes. Let's Go to
-                                        the real Middle Earth and walk on Rainbows and Fossil Forests. Join me
-                                        daily on Happs.tv, IG, YouTube & Twitter
-                                        I love my coffee. Your coffees keep me inspired and motivated so I can
-                                        share lots more with you. Thank you 😍</p>
+                                    <p class="card-creator-about-text">{about}</p>
 
                                 </div>
                                 <div class="card-body card-creator-about-social">
@@ -74,36 +120,52 @@ export default function CreatorPage(props) {
                         </div>
                     </div>
 
-                    <div class="card card-creator mb-3">
+                       {
+                        userPost.map((item) => {
+                            return (
+
+                                <div>
+                                
+                                {
+                                    item.postType === "public" ?
+                                    <div>
+                                    
+                                <div class="card card-creator mb-3">
+                                    <div class="card-body card-creator-meta">
+                                    <img class="avatar me-3" src={picture} alt="" />
+                                        <h4 class="card-creator-meta--author"> <a href="#">{firstName} {lastName}</a> <span
+                                                class="card-creator-meta--date">March 2,
+                                                2022</span></h4>
+
+                                    </div>
+                                    <div class="card-body card-creator-image">
+                                        <a href="#"><img src={item.image} class="post-image" alt="image"/></a>
+                                    </div>
+                                    <div class="card-body p-0 me-lg-5">
+                                        <a href="#">
+                                            <h3 class="card-creator-title">{item.title}</h3>
+                                            <p class="card-creator-text">{item.message}</p>
+                                        </a>
+
+                                    </div>
+                                </div>
+                                    </div>  : null
+                                }
+                                {
+                                    item.postType === "supporter" ?
+                                <div>
+                                <div class="card card-creator card-creator-locked mb-3">
                         <div class="card-body card-creator-meta">
                            
-                            <h4 class="card-creator-meta--author"> <a href="#">Twyse Ereme </a> <span
+                            <img class="avatar me-3" src={picture} alt="" />
+                            
+                            <h4 class="card-creator-meta--author"><a href="#">{firstName} {lastName}</a> <span
                                     class="card-creator-meta--date">March 2,
                                     2022</span></h4>
 
                         </div>
-                        <div class="card-body card-creator-image">
-                            <a href="#"><img src="images/egypt-lg.jpg" class="" alt="image"/></a>
-                        </div>
-                        <div class="card-body p-0 me-lg-5">
-                            <a href="#">
-                                <h3 class="card-creator-title">We went on tour in Cairo, Egypt</h3>
-                                <p class="card-creator-text">Lorem ipsum dolor sit amet, consectetur adipiscing
-                                    elit. Morbi nulla dolor, ornare at commodo non, feugiat non nisi. Phasellus
-                                    faucibus mollis pharetra. Proin blandit ac massa sed rhoncus...</p>
-                            </a>
 
-                        </div>
-                    </div>
-
-                    <div class="card card-creator card-creator-locked mb-3">
-                        <div class="card-body card-creator-meta">
-                           
-                            <h4 class="card-creator-meta--author"><a href="#">Twyse Ereme </a> <span
-                                    class="card-creator-meta--date">March 2,
-                                    2022</span></h4>
-
-                        </div>
+                       
                         <div class="card-body card-creator-image">
                             <a href="#" class="supportBtn">
                             <img src="images/jamaica-lg.jpg" class="" alt="image"/>
@@ -133,20 +195,26 @@ export default function CreatorPage(props) {
                         
                         <div class="card-body p-0 me-lg-5">
                             <a href="#">
-                                <h3 class="card-creator-title">I lived in a village in Ethiopia Africa</h3>
+                                <h3 class="card-creator-title">{item.title}</h3>
                                 <p class="card-creator-text">Unlock this post by supporting Twyse</p>
                             </a>
 
                         </div>
                     </div>
+                                </div> : null
+                                }   
+                        
 
-
+                                </div>
+                            )
+                        })
+                    }
                 </div>
             </div>
         </div>
 
     </div>
-
+}
 </div>
 
 
@@ -178,12 +246,12 @@ export default function CreatorPage(props) {
                     <div class="row">
                         <div class="col-12 mb-3 text-center">
                             <div class="radio-circle-wrapper">
-                            <input type="radio" name="support-type" value="one-time" class="support-type-radio radio-circle-input" checked id="support-type_onetime"/>
+                            <input type="radio" name="support-type" onChange={() => onOption("one")} value="one-time" class="support-type-radio radio-circle-input" checked={option === "one"} id="support-type_onetime"/>
                             <label for="support-type_onetime" class="support-type radio-circle-label"> One-time</label>
                             </div>
                             
                             <div class="radio-circle-wrapper">
-                            <input type="radio" name="support-type" value="monthly" class="support-type-radio radio-circle-input" id="support-type_monthly"/>
+                            <input type="radio" name="support-type" onChange={() => onOption("monthly")} value="monthly" class="support-type-radio radio-circle-input" checked={option !== "one"} id="support-type_monthly"/>
                             <label for="support-type_monthly" class="support-type radio-circle-label"> Monthly</label>
                             </div>
                             
@@ -192,23 +260,23 @@ export default function CreatorPage(props) {
                     <div class="row radio-row mb-2">
                         <div class="col-6">
                             <input type="radio" name="support-amount" class="radio-option" id="supportAmount1"
-                                value="1000"/>
+                                value="1000" onChange={() => onAmount(1000)}/>
                             <label for="supportAmount1" class="radio-option-label">₦1,000</label>
                         </div>
                         <div class="col-6">
-                            <input type="radio" name="support-amount" class="radio-option" id="supportAmount2"
+                            <input type="radio" onChange={() => onAmount(3000)}  name="support-amount" class="radio-option" id="supportAmount2"
                                 value="1000"/>
                             <label for="supportAmount2" class="radio-option-label">₦3,000</label>
                         </div>
                     </div>
                     <div class="row radio-row mb-2">
                         <div class="col-6">
-                            <input type="radio" name="support-amount" class="radio-option" id="supportAmount3"
+                            <input type="radio" onChange={() => onAmount(5000)} name="support-amount" class="radio-option" id="supportAmount3"
                                 value="1000"/>
                             <label for="supportAmount3" class="radio-option-label">₦5,000</label>
                         </div>
                         <div class="col-6">
-                            <input type="radio" name="support-amount" class="radio-option" id="supportAmount4"
+                            <input type="radio" onChange={() => onAmount(10000)} name="support-amount" class="radio-option" id="supportAmount4"
                                 value="1000"/>
                             <label for="supportAmount4" class="radio-option-label">₦10,000</label>
                         </div>
@@ -220,7 +288,7 @@ export default function CreatorPage(props) {
     
                                 <input type="radio" name="support-amount" class="d-none" id="supportAmountC"/>
                                 <span class="input-icon">₦</span>
-                                <input type="text" class="form-control mb-0" placeholder="other amount" />
+                                <input type="text" onChange={(evt) => onAmount(evt.target.value)} class="form-control mb-0" placeholder="other amount" />
     
                             </div>
                         </div>
@@ -229,7 +297,7 @@ export default function CreatorPage(props) {
     
                         <div class="col-lg-12 mb-3">
                             <label for=""> Send Twyse a message</label>
-                            <textarea class="form-control mb-0 p-3 h100 bg-greylight lh-16" rows="5"
+                            <textarea ref={messageRef} class="form-control mb-0 p-3 h100 bg-greylight lh-16" rows="5"
                                 placeholder="Say something nice... (optional)" spellcheck="false"></textarea>
                         </div>
     
@@ -257,21 +325,21 @@ export default function CreatorPage(props) {
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <input type="email" class="form-control style2-input mb-3" placeholder="Email" />
+                                <input type="email" ref={emailRef} class="form-control style2-input mb-3" placeholder="Email" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <input type="text" class="form-control style2-input mb-3" placeholder="First Name"/>
+                                <input type="text" ref={firstNameRef} class="form-control style2-input mb-3" placeholder="First Name"/>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <input type="text" class="form-control style2-input mb-3" placeholder="Last Name"/>
+                                <input type="text" ref={lastNameRef} class="form-control style2-input mb-3" placeholder="Last Name"/>
                             </div>
                         </div>
                     </div>
@@ -287,7 +355,7 @@ export default function CreatorPage(props) {
     
                         <div class="col-lg-12">
     
-                            <button type="submit" class="btn d-block w-100">Pay with Flutterwave</button>
+                            <button type="submit" onClick={onPay} class="btn d-block w-100">Pay with Flutterwave</button>
     
                             <img src="images/cff1437-Badge_1_1.png" class=" d-inline-block mt-4 w-100" alt=""/>
                         </div>
@@ -309,3 +377,13 @@ export default function CreatorPage(props) {
         </div>
     )
 }
+
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+        user: state.auth,
+        data: state.user
+    }
+  }
+  
+  export default connect(mapStateToProps)(CreatorPage);
