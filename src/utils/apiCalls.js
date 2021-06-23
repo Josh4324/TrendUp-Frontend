@@ -277,14 +277,16 @@ export const getPost = async (token) => {
     try {
       //setLoader(true);
       //setError(false);
-      const res = await axios.get(`${http}/api/v1/post`,  {
+      const res = await axios.get(`${http}/api/v1/post/all`,  {
         headers: {
           'Authorization': `JWT ${token}`
         }
       });
+
       if (res.data.code === 200){
           //setLoader(false);
           console.log(res.data.data)
+          return res.data.data;
         
       }
       
@@ -293,7 +295,7 @@ export const getPost = async (token) => {
           //setLoader(false);
           //setError(err.response.data.message);
     }
-  };
+};
 
 export const getCall2 = async ( username) => {
     try {
@@ -351,6 +353,9 @@ export const Pay = async (userCredential) => {
         console.log(err.response);
     }
 };
+
+
+
 
 
 
