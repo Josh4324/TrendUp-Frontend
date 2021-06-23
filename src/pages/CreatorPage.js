@@ -125,7 +125,7 @@ function CreatorPage(props) {
 
     <div class="nav-header border-0">
         <div class="nav-top">
-            <Link to="/" class="logo"> <img src="images/trendupp-logo-icon.png"
+            <Link to="/dashboard" class="logo"> <img src="images/trendupp-logo-icon.png"
                     alt="Trendupp Logo"/>
             </Link>
         </div>

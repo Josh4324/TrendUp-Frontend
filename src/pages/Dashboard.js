@@ -50,7 +50,7 @@ function Dashboard(props) {
 
     const logout = () => {
         localStorage.removeItem('trend-user');
-        window.location.href = `${front}/#/login`
+        history.push("/login");
     }
 
   

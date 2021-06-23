@@ -5,7 +5,7 @@ export default function PostView() {
         <div>
                  <div class="">
 
-<div class="middle-sidebar-bottom">
+<div class="middle-sidebar-bottom" style={{paddingLeft: "20px"}}>
     <div class="middle-sidebar-left">
         
         <div class="row">

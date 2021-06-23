@@ -11,17 +11,7 @@ import jwt_decode from "jwt-decode";
 
 function App(props) {
   const user = JSON.parse(localStorage.getItem('trend-user'));
-    
-    if (user){
-        const token = user.token
-        const decoded = jwt_decode(token);
-        const expirationTime = (decoded.exp * 1000) - 60000;
-        if (Date.now() >= expirationTime) {
-            console.log("expired")
-            localStorage.removeItem('trend-user');
-            return <Redirect to="/login" />
-        }
-    }
+  console.log(user);
   return (
     <div className="App color-theme-blue">
       <HashRouter basename="/">
@@ -45,7 +35,7 @@ function App(props) {
           <Route  component={NotFound} />
 
         </Switch>
-        <NotificationContainer/>
+        <NotificationContainer />
       </HashRouter>
     </div>
   );

@@ -10,7 +10,7 @@ function DashComponent(props) {
     const newlink = "trendupp.com" + link
     return (
         <div>
-             <div className="middle-sidebar-bottom">
+             <div className="middle-sidebar-bottom" style={{paddingLeft: "20px"}}>
         <div className="middle-sidebar-left">
             <div className="row">
                 <div className="col-md-4 pe-md-2">
