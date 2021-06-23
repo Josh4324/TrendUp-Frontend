@@ -25,13 +25,13 @@ function App(props) {
           <Route exact path="/signup">
               { user ? <Dashboard/> : <SignUp/>}
           </Route>
-          <PrivateRoute path="/step1" component={Onboard1} />
-          <PrivateRoute path="/step2" component={Onboard2} />
-          <PrivateRoute path="/step3" component={Onboard3} />
-          <PrivateRoute path="/step4" component={OnboardComplete} />
-          <PrivateRoute path="/dashboard" component={Dashboard} />
-          <PrivateRoute path="/fan-dashboard" component={FanDashboard} />
-          <Route  path="/:username" component={CreatorPage} />
+          <PrivateRoute exact path="/step1" component={Onboard1} />
+          <PrivateRoute exact path="/step2" component={Onboard2} />
+          <PrivateRoute exact path="/step3" component={Onboard3} />
+          <PrivateRoute exact path="/step4" component={OnboardComplete} />
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          <PrivateRoute exact path="/fan-dashboard" component={FanDashboard} />
+          <Route   path="/:username" component={CreatorPage} />
           <Route  component={NotFound} />
 
         </Switch>
