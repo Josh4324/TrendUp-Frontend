@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
-import {getCall2, getPost2, Pay2, initializePaymentCall} from '../utils/apiCalls';
+import {getCall2, getPost2, Pay2, initializePaymentCall, verifyPaymentCall} from '../utils/apiCalls';
 import { useHistory } from "react-router-dom";
 import { useFlutterwave, FlutterWaveButton } from 'react-flutterwave';
 
@@ -82,10 +82,20 @@ function CreatorPage(props) {
                     name,
                 },
                 callback: async function (data) {
-                  console.log(data);
-                  let result = await Pay2(data.transaction_id);
-                  if (result.status === "success"){
-                      console.log("Success done")
+                  
+                  let cred = {
+                    "txref":data.tx_ref,
+                    "SECKEY":"FLWSECK_TEST-ff7d39867a3cc21da33e8dfcb7bf94c6-X"
+                  }
+                  let result = await Pay2(cred);
+                  
+                  if (result.data.status === "success"){
+                    let cred = {
+                        status: "approved",
+                        reference: data.tx_ref
+                    }
+            
+                    let payment = await verifyPaymentCall(cred);
                   }
                 },
                 onclose: function() {

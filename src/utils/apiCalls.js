@@ -332,7 +332,22 @@ export const getCall2 = async ( username) => {
         }
         return res;
     }catch(err){
-        NotificationManager.error("Error occured while creating post", "Error");
+        NotificationManager.error("Error occured while intializing post", "Error");
+        console.log(err)
+        console.log(err.response);
+    }
+};
+
+export const verifyPaymentCall = async (userCredential) => {
+    try {
+        const res = await axios.patch(`${http}/api/v1/payment`, userCredential);
+        if (res){
+           NotificationManager.success("Payment verified successfully", "Success");
+
+        }
+        return res;
+    }catch(err){
+        NotificationManager.error("Error occured while verifying payment", "Error");
         console.log(err)
         console.log(err.response);
     }
@@ -354,11 +369,10 @@ export const Pay = async (userCredential) => {
     }
 };
 
-export const Pay2 = async (reference) => {
+export const Pay2 = async (cred) => {
     try {
-         axios.defaults.headers.common['Authorization'] = "JWT " + "FLWSECK_TEST-ff7d39867a3cc21da33e8dfcb7bf94c6-X";
          axios.defaults.headers.common['Content-Type'] = 'application/json';
-        const res = await axios.get(`https://api.flutterwave.com/v3/transactions/${reference}/verify`);
+        const res = await axios.post(`https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/v2/verify`, cred);
         
         if (res){
            NotificationManager.success("Payment verified successfully", "Success");
