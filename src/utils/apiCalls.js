@@ -348,7 +348,24 @@ export const Pay = async (userCredential) => {
         }
         return res
     }catch(err){
-        NotificationManager.error("Error occured while creating post", "Error");
+        NotificationManager.error("Error occured while initiating payment", "Error");
+        console.log(err)
+        console.log(err.response);
+    }
+};
+
+export const Pay2 = async (reference) => {
+    try {
+         axios.defaults.headers.common['Authorization'] = "JWT " + "FLWSECK_TEST-ff7d39867a3cc21da33e8dfcb7bf94c6-X";
+         axios.defaults.headers.common['Content-Type'] = 'application/json';
+        const res = await axios.get(`https://api.flutterwave.com/v3/transactions/${reference}/verify`);
+        
+        if (res){
+           NotificationManager.success("Payment verified successfully", "Success");
+        }
+        return res
+    }catch(err){
+        NotificationManager.error("Error occured while verifying payment", "Error");
         console.log(err)
         console.log(err.response);
     }

@@ -1,15 +1,17 @@
 import React, {useState, useRef, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
-import {getCall2, getPost2, initializePaymentCall} from '../utils/apiCalls';
+import {getCall2, getPost2, Pay2, initializePaymentCall} from '../utils/apiCalls';
+import { useHistory } from "react-router-dom";
 import { useFlutterwave, FlutterWaveButton } from 'react-flutterwave';
 
 function CreatorPage(props) {
+    let history = useHistory();
     const [modal, setmodal] = useState(false);
     const [amount, setAmount] = useState(0);
     const [option, setOption] = useState("One-Time");
     const [reference, setReference] = useState("");
-    const [payment_plan, setPaymentPlan] = useState(12368);
+    const [payment_plan, setPaymentPlan] = useState("");
     const [userData, setUserData] = useState({});
     const [userPost, setUserPost] = useState([]);
     const messageRef = useRef("");
@@ -18,28 +20,6 @@ function CreatorPage(props) {
     const lastNameRef = useRef("");
 
     let name = firstNameRef.current.value + " " + lastNameRef.current.value;
-
-
-    const config = {
-        public_key: 'FLWPUBK_TEST-d0b3befc83b20f52316dc9176b5f412a-X',
-        tx_ref: reference,
-        amount,
-        currency: 'NGN',
-        payment_options: 'card',
-        payment_plan,
-        redirect_url: `http://localhost:3000/#/${props.match.params.username}`,
-        customer: {
-          email: emailRef.current.value,
-          phonenumber: '',
-          name,
-        },
-        customizations: {
-          title: 'TrendUpp',
-          description: 'Connecting Creators to Fans',
-          logo: 'https://assets.piedpiper.com/logo.png',
-        },
-      };
-
     useEffect( async() => {
         let username = props.match.params.username
         let data = await getCall2(username);
@@ -76,8 +56,6 @@ function CreatorPage(props) {
     const onPay = async (evt) => {
         evt.preventDefault();
 
-        console.log(payment_plan);
-
         let cred = {
             amount,
             payment_plan: option,
@@ -90,12 +68,35 @@ function CreatorPage(props) {
 
         let payment = await initializePaymentCall(cred);
         if (payment){
-            setReference(payment.data.data.reference);
-            handleFlutterPayment({
-                callback: (response) => {
-                  console.log(response);
+            window.FlutterwaveCheckout({
+                public_key: 'FLWPUBK_TEST-d0b3befc83b20f52316dc9176b5f412a-X',
+                tx_ref: payment.data.data.reference,
+                amount,
+                currency: 'NGN',
+                payment_options: 'card',
+                redirect_url: // specified redirect URL
+                  "",
+                customer: {
+                    email: emailRef.current.value,
+                    phonenumber: '',
+                    name,
                 },
-                onClose: () => {},
+                callback: async function (data) {
+                  console.log(data);
+                  let result = await Pay2(data.transaction_id);
+                  if (result.status === "success"){
+                      console.log("Success done")
+                  }
+                },
+                onclose: function() {
+                  // close modal
+                  history.push("/dashboard")
+                },
+                customizations: {
+                    title: 'TrendUpp',
+                    description: 'Connecting Creators to Fans',
+                    logo: 'https://assets.piedpiper.com/logo.png',
+                  },
               });
 
         }
@@ -104,17 +105,6 @@ function CreatorPage(props) {
        
         
     }
-
-    const handleFlutterPayment = useFlutterwave(config);
-
-    const fwConfig = {
-        ...config,
-        text: 'Pay with Flutterwave!',
-        callback: (response) => {
-          console.log(response);
-        },
-        onClose: () => {},
-      };
 
     return (
         <div className="creator-page">
@@ -304,7 +294,7 @@ function CreatorPage(props) {
                     <div class="row">
                         <div class="col-12 mb-3 text-center">
                             <div class="radio-circle-wrapper">
-                            <input type="radio" name="support-type" onChange={() => {onOption("One-TIme");  setPaymentPlan(12368);}} value="one-time" class="support-type-radio radio-circle-input" checked={option === "One-Time"} id="support-type_onetime"/>
+                            <input type="radio" name="support-type" onChange={() => {onOption("One-TIme");  setPaymentPlan("");}} value="one-time" class="support-type-radio radio-circle-input" checked={option === "One-Time"} id="support-type_onetime"/>
                             <label for="support-type_onetime" class="support-type radio-circle-label"> One-time</label>
                             </div>
                             
