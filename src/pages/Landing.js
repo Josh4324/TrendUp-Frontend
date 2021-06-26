@@ -31,7 +31,7 @@ export default function Landing(props) {
 
                 <section className="landing-section1">
                     <p className="landing-section1-p1">
-                    Easiest way for your audience to say thanks.
+                    Easiest way for your audience to say thanks Josh.
                     </p>
                     <p className="landing-section1-p2">
                     It’s absolutely free, and takes less than a minute
