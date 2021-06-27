@@ -224,13 +224,18 @@ function Onboard1(props) {
                                 <div >Loading...</div>
                             </div>
 
-                            <div class="col-sm-12 p-0">
+                            {
+                                creator || fan ? (<div class="col-sm-12 p-0">
                                 <div class="form-group mb-1">
 
                                     <button type="submit" onClick={submit} class="form-control style2-input style2-main-button">Continue
                                         <i class="ti-arrow-right" style={{paddingLeft:"5px"}}></i></button>
                                 </div>
-                            </div>
+                            </div>) : null
+                            }
+                            
+
+
                         </form>
                     </div>
 

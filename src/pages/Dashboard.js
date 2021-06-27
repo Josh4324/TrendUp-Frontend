@@ -76,11 +76,11 @@ function Dashboard(props) {
         }
     }, [])
     return (
-        <div className="dashboard-page">
+        <div className="dashboard-page" style={{background: "#f9f9f9"}}>
             <div className="main-wrapper">
 
 
-        <div className="nav-header border-0">
+        <div className="nav-header border-0" style={{background: "#f9f9f9"}}>
             <div className="nav-top">
                 <Link to="/dashboard" className="logo"> <img src="images/trenupp-logo.png" alt="Trendupp Logo"/> </Link>
 
