@@ -1307,7 +1307,7 @@ input[type="radio"].post-type-radio.radio-circle-input:checked~.post-type.radio-
   top: 0;
   left: 0;
   bottom: 0;
-  height: 100%;
+  height: 200vh;
   width: 100%;
   background: rgb(0 0 0 / 64%);
   backdrop-filter: blur(10px);

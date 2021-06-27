@@ -151,6 +151,10 @@ function Dashboard(props) {
 </div>
 
 
+
+ 
+</div>               
+        
 {
     modal === true ? ( 
     <div className="popup-wrapper" id="popupWrapper">
@@ -195,8 +199,6 @@ function Dashboard(props) {
 : null
 }
 
- 
-</div>               
         </div>
                 
     )
