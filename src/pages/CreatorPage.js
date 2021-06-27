@@ -20,7 +20,7 @@ function CreatorPage(props) {
     const lastNameRef = useRef("");
     
 
-    let name = firstNameRef.current.value + " " + lastNameRef.current.value;
+   
     useEffect( async() => {
         let username = props.match.params.username
         let data = await getCall2(username);
@@ -41,6 +41,7 @@ function CreatorPage(props) {
 
     const {firstName, id, lastName, picture, creating, about, userName} = userData || ""
     let img1 = picture || "images/profile-image.jpg" ;
+    //let name = firstNameRef.current.value + " " + lastNameRef.current.value;
 
     const onModal = () => {
         setmodal(!modal)
@@ -81,7 +82,7 @@ function CreatorPage(props) {
                 customer: {
                     email: emailRef.current.value,
                     phonenumber: '',
-                    name,
+                    name : firstNameRef.current.value + " " + lastNameRef.current.value
                 },
                 callback: async function (data) {
                   

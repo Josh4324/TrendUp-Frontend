@@ -27,10 +27,16 @@ function Dashboard(props) {
     const [log, setLog] = useState(false);
     let history = useHistory();
     const token = props.user.user.token
+    const onboard1 = props.user.user.onboardingStep
     const {firstName, picture, userName} = props.data.user || ""
     let img1 = picture || "images/profile-image.jpg" ;
     const link = `/${userName}`
     const newlink = "trendupp.com" + link
+    console.log(onboard1, "on")
+
+    if (Number(onboard1) !== 4){
+        history.push(`step${onboard1}`);  
+    }
 
     const setPage = (page) => {
         setView(page);
