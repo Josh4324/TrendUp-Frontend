@@ -18,6 +18,7 @@ function CreatorPage(props) {
     const emailRef = useRef("");
     const firstNameRef = useRef("");
     const lastNameRef = useRef("");
+    
 
     let name = firstNameRef.current.value + " " + lastNameRef.current.value;
     useEffect( async() => {
@@ -39,6 +40,7 @@ function CreatorPage(props) {
     }, [])
 
     const {firstName, id, lastName, picture, creating, about, userName} = userData || ""
+    let img1 = picture || "images/profile-image.jpg" ;
 
     const onModal = () => {
         setmodal(!modal)
@@ -140,7 +142,13 @@ function CreatorPage(props) {
 
                     <div class="card card-creator card-creator-bio pt-0">
                         <div class="card-body">
-
+                        <figure class="avatar"
+                        style={{
+                            backgroundImage: 'url('+img1+')'
+                          }}
+                        >
+                                        <img src="images/profile-image.jpg" alt=""/>
+                                    </figure>
                             <h3 class="card-creator-bio--title">{firstName} {lastName}</h3>
                                 <p class="card-creator-bio--body">
                                     {creating}
