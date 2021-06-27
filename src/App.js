@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, HashRouter, Router, Redirect } from 'react-router-dom';
 import {LoginPage, Dashboard,Landing,SignUp, Onboard1, Onboard2, Onboard3,
-   PrivateRoute, NotFound, OnboardComplete, FanDashboard, CreatorPage} from './pages/index';
+   PrivateRoute, NotFound, OnboardComplete, FanDashboard, PostPage, CreatorPage} from './pages/index';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import {connect} from 'react-redux';
 import 'react-notifications/lib/notifications.css';
@@ -10,8 +10,7 @@ import jwt_decode from "jwt-decode";
 
 
 function App(props) {
-  const user = JSON.parse(localStorage.getItem('trend-user'));
-  console.log(user);
+  const user = props.user.user
   return (
     <div className="App color-theme-blue">
       <HashRouter basename="/">
@@ -30,6 +29,7 @@ function App(props) {
           <PrivateRoute exact path="/step3" component={Onboard3} />
           <PrivateRoute exact path="/step4" component={OnboardComplete} />
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          <PrivateRoute exact path="/post" component={PostPage} />
           <PrivateRoute exact path="/fan-dashboard" component={FanDashboard} />
           <Route   path="/:username" component={CreatorPage} />
           <Route  component={NotFound} />
@@ -42,6 +42,7 @@ function App(props) {
 }
 
 const mapStateToProps = (state) => {
+  console.log("state", state)
   return {
       user: state.auth,
   }

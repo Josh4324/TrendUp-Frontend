@@ -5,18 +5,20 @@ import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
 import { NotificationManager} from 'react-notifications';
 
-function PrivateRoute({ component: Component, props, ...rest }) {
-    const user = rest.user
+function PrivateRoute({ component: Component, props, dispatch, ...rest }) {
+    let user = rest.user
     let history = useHistory();
 
-    const userToken = JSON.parse(localStorage.getItem("trend-user"));
-
-        if (userToken !== null){
-            const decoded = jwt_decode(userToken.token);
+    
+        if (user !== null){
+            const decoded = jwt_decode(user.token);
       
             const expirationTime = new Date()/1000;
 
             if (expirationTime >= decoded.exp){
+                user = null;
+                dispatch({ type: "LOGIN_SUCCESS", payload: null });
+                console.log("expired")
                 localStorage.removeItem('trend-user');
                 NotificationManager.error("Session has expired, please log in again", "Error", 10000);
                 history.push("/login")

@@ -13,8 +13,9 @@ import FanDashboard from './FanDashboard';
 import CreatorPage from './CreatorPage';
 import NotFound from './NotFound';
 import Sidebar from './Sidebar';
+import PostPage from './PostPage';
 
 
 
 
-export { SignUp, PrivateRoute, LoginPage, CreatorPage, FanDashboard, Sidebar, Dashboard, Landing, ForgotPassword, NotFound, Onboard1, Onboard2, Onboard3, OnboardComplete, ResetPassword};
+export { SignUp, PrivateRoute, LoginPage, PostPage, CreatorPage, FanDashboard, Sidebar, Dashboard, Landing, ForgotPassword, NotFound, Onboard1, Onboard2, Onboard3, OnboardComplete, ResetPassword};

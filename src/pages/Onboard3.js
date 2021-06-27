@@ -16,6 +16,7 @@ function Onboard3(props) {
     const JWT = "Bearer " + token;
     let history = useHistory();
     const [error, setError] = useState("");
+    const [derror, setDerror] = useState("");
     const [loader, setLoader] = useState(false);
     const [loader1, setLoader1] = useState(false);
     const [accountName, setAccountName] = useState("");
@@ -51,6 +52,7 @@ function Onboard3(props) {
         const bankCode = bankRef.current.value;
         const accountCode = accountRef.current.value;
         setLoader(true);
+        setError("");
         fetch(`https://api.paystack.co/bank/resolve?account_number=${accountCode}&bank_code=${bankCode}`, {
             method: 'GET', // or 'PUT'
             headers: {
@@ -61,7 +63,13 @@ function Onboard3(props) {
         .then(data => {
             setLoader(false);
           console.log('Success:', data);
-          setAccountName(data.data.account_name)
+          console.log("checking")
+          if (data.status === false){
+            setError("Could not resolve account name, check your account number or bank")
+        }
+          setAccountName(data.data.account_name);
+          console.log(data.status);
+          
           //setData(data.data);
           //setLoading(false);
         })
@@ -160,9 +168,11 @@ function Onboard3(props) {
                                 <div className="row">
 
                                     <div className="col-lg-12">
-
-                                        <button type="submit" onClick={submit}
-                                            className="form-control  style2-input style2-main-button">Verify Account</button>
+                                        {
+                                             accountName === "" ? (<button type="submit" onClick={submit}
+                                             className="form-control  style2-input style2-main-button">Verify Account</button>) : null
+                                        }
+                                        
                                     </div>
                                 </div>
                                 {

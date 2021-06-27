@@ -18,7 +18,7 @@ import "../feather.css";
 import "../style1.css";
 import "../custom1.css";
 
-function Dashboard(props) {
+function PostPage(props) {
     const [modal, setModal]  = useState(false);
     const [view, setView] = useState("dashboard");
     const [public1, setPublic1] = useState(true);
@@ -139,12 +139,7 @@ function Dashboard(props) {
         <div className="main-content right-chat-active" style={{backgroundColor:"unset"}}>
 
         {
-            view === "dashboard" ? <DashComponent /> : 
-            view === "post" ?  <Post public1={public1} support={support} /> : 
-            view === "supporter" ? <Supporter /> : 
-            view === "postview" ? <PostView /> :
-            view === "wallet" ? <Wallet /> : 
-            view === "settings" ? <Settings /> : null
+            <PostView />
         }
 
    
@@ -210,4 +205,4 @@ const mapStateToProps = (state) => {
     }
   }
   
-  export default connect(mapStateToProps)(Dashboard);
+  export default connect(mapStateToProps)(PostPage);
