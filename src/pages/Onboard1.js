@@ -20,6 +20,7 @@ function Onboard1(props) {
     const [found, setFound] = useState(null);
     const [error, setError] = useState("");
     const [loader, setLoader] = useState(false);
+    const [select, setSelect] = useState(false);
     let history = useHistory();
     const userRef = useRef("");
     const token = props.user.user.token;
@@ -44,11 +45,13 @@ function Onboard1(props) {
     const selectCreator = () => {
         setCreator(true);
         setFan(false);
+        setSelect(true)
     }
 
     const selectFan = () => {
         setFan(true);
         setCreator(false);
+        setSelect(true)
         setError("");
     }
 
@@ -141,7 +144,8 @@ function Onboard1(props) {
                             <div className="step-header-text">Bank Account Details</div>
                         </div>
                     </div>
-                    <div className="creator-onboard-option-sec">
+                    {
+                        select === false ? ( <div className="creator-onboard-option-sec">
                         <h2 className="useronboard-title">Are you a creator?</h2>
                         <div className="creator-onboard-options">
                             <span onClick={selectCreator}  className={ !creator ? "creator-onboard-option" : "creator-onboard-option creator-hover" } >
@@ -154,7 +158,9 @@ function Onboard1(props) {
                             </span>
                         </div>
                     </div>
-                    
+                    ) : null
+                    }
+                   
                     <div className="choose-link-onboard-section">
                         {
                             creator ? (

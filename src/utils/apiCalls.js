@@ -44,6 +44,7 @@ export const signupCall = async (userCredential, setLoader, setError, setSuccess
         setError(false);
         const res = await axios.post(`${http}/api/v1/user/signup`, userCredential);
         if (res){
+
             setLoader(false);
             setSuccess(true);
             setSignUp(true);
@@ -70,14 +71,18 @@ export const signupCall = async (userCredential, setLoader, setError, setSuccess
     }
 };
 
-export const verificationCall = async (userCredential, setLoader, setError, history) => {
+export const verificationCall = async (userCredential, setLoader, setError, history, dispatch) => {
     try {
        setLoader(true)
         const res = await axios.post(`${http}/api/v1/user/verify`, userCredential);
         if (res){
            setLoader(false);
            NotificationManager.success('User verified successfully', 'Success');
-           history.push("/login")
+           dispatch({ type: "LOGIN_SUCCESS", payload: res.data.data });
+           localStorage.setItem('trend-user', JSON.stringify(res.data.data))
+           return  history.push("/step1")
+           
+           
         }
     }catch(err){
         setLoader(false)

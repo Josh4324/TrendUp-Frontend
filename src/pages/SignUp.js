@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import Login from '../components/Login';
 import {signupCall, verificationCall, resendCall} from '../utils/apiCalls';
 import { useHistory } from "react-router-dom";
+import {connect} from 'react-redux';
 
-export default function SignUp() {
+function SignUp(props) {
     const [loginToggle, setLoginToggle] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
@@ -42,7 +43,7 @@ export default function SignUp() {
             code: codeRef.current.value,
         }
 
-        const result = await verificationCall(cred,setLoader,setError,history);
+        const result = await verificationCall(cred,setLoader,setError,history, props.dispatch);
     }
 
     const resend = async(evt) => {
@@ -167,3 +168,5 @@ export default function SignUp() {
         </>
     )
 }
+
+export default connect()(SignUp);
