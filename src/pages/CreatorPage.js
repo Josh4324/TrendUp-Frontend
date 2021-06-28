@@ -10,11 +10,15 @@ function CreatorPage(props) {
     const [modal, setmodal] = useState(false);
     const [amount, setAmount] = useState(0);
     const [option, setOption] = useState("One-Time");
+    const [firstname, setFirstName] = useState("");
+    const [lastname, setLastName] = useState("");
+    const [email, setEmail] = useState("");
     const [reference, setReference] = useState("");
     const [payment_plan, setPaymentPlan] = useState("");
     const [userData, setUserData] = useState({});
     const [userPost, setUserPost] = useState([]);
     const [payment, setPayment] = useState(false);
+    const [message, setMessage] = useState("");
     const messageRef = useRef("");
     const emailRef = useRef("");
     const firstNameRef = useRef("");
@@ -72,11 +76,13 @@ function CreatorPage(props) {
             amount,
             payment_plan: option,
             creatorId: id,
-            email: emailRef.current.value,
-            firstName: firstNameRef.current.value,
-            lastName: lastNameRef.current.value,
-            message: messageRef.current.value
+            email,
+            firstName: firstName,
+            lastName: lastName,
+            message
         }
+
+        console.log(cred)
 
         let payment = await initializePaymentCall(cred);
         if (payment){
@@ -89,9 +95,9 @@ function CreatorPage(props) {
                 redirect_url: // specified redirect URL
                   "",
                 customer: {
-                    email: emailRef.current.value,
+                    email: email,
                     phonenumber: '',
-                    name : firstNameRef.current.value + " " + lastNameRef.current.value
+                    name : firstname + " " + lastname
                 },
                 callback: async function (data) {
                   
@@ -323,7 +329,7 @@ function CreatorPage(props) {
                     <div class="row">
                         <div class="col-12 mb-3 text-center">
                             <div class="radio-circle-wrapper">
-                            <input type="radio" name="support-type" onChange={(evt) => {onOption("One-TIme");  setPaymentPlan("");}}  class="support-type-radio radio-circle-input" value="One-Time" checked id="support-type_onetime"/>
+                            <input type="radio" name="support-type" onChange={(evt) => {onOption("One-TIme");  setPaymentPlan("");}}  class="support-type-radio radio-circle-input" value="One-Time" id="support-type_onetime"/>
                             <label for="support-type_onetime" class="support-type radio-circle-label"> One-time</label>
                             </div>
                             
@@ -374,7 +380,7 @@ function CreatorPage(props) {
     
                         <div class="col-lg-12 mb-3">
                             <label for=""> Send {firstName} a message</label>
-                            <textarea ref={messageRef} class="form-control mb-0 p-3 h100 bg-greylight lh-16" rows="5"
+                            <textarea ref={messageRef} onChange={(evt) => setMessage(evt.target.value)} class="form-control mb-0 p-3 h100 bg-greylight lh-16" rows="5"
                                 placeholder="Say something nice... (optional)" spellcheck="false"></textarea>
                         </div>
     
@@ -405,21 +411,21 @@ function CreatorPage(props) {
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <input type="email" ref={emailRef} class="form-control style2-input mb-3" placeholder="Email" />
+                                <input type="email" ref={emailRef} onChange={(evt) => setEmail(evt.target.value)} class="form-control style2-input mb-3" placeholder="Email" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <input type="text" ref={firstNameRef} class="form-control style2-input mb-3" placeholder="First Name"/>
+                                <input type="text" ref={firstNameRef} onChange={(evt) => setFirstName(evt.target.value)} class="form-control style2-input mb-3" placeholder="First Name"/>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <input type="text" ref={lastNameRef} class="form-control style2-input mb-3" placeholder="Last Name"/>
+                                <input type="text" ref={lastNameRef} onChange={(evt) => setLastName(evt.target.value)} class="form-control style2-input mb-3" placeholder="Last Name"/>
                             </div>
                         </div>
                     </div>
