@@ -14,6 +14,7 @@ function CreatorPage(props) {
     const [payment_plan, setPaymentPlan] = useState("");
     const [userData, setUserData] = useState({});
     const [userPost, setUserPost] = useState([]);
+    const [payment, setPayment] = useState(false);
     const messageRef = useRef("");
     const emailRef = useRef("");
     const firstNameRef = useRef("");
@@ -45,6 +46,9 @@ function CreatorPage(props) {
 
     const onModal = () => {
         setmodal(!modal)
+        if (payment === true){
+            setPayment(false)
+        }
     }
 
     const onOption = (value) => {
@@ -54,6 +58,11 @@ function CreatorPage(props) {
     const onAmount = (value) => {
         console.log(value)
         setAmount(value);
+    }
+
+    const onPayStep = (evt) => {
+        evt.preventDefault();
+        setPayment(true);
     }
 
     const onPay = async (evt) => {
@@ -309,16 +318,17 @@ function CreatorPage(props) {
             <div class="card-body">
            
             <h3 class="card-creator-bio--title mb-4 text-center">Support {firstName} {lastName}</h3>
+                { payment === false ?
                 <form action="">
                     <div class="row">
                         <div class="col-12 mb-3 text-center">
                             <div class="radio-circle-wrapper">
-                            <input type="radio" name="support-type" onChange={() => {onOption("One-TIme");  setPaymentPlan("");}} value="one-time" class="support-type-radio radio-circle-input" checked={option === "One-Time"} id="support-type_onetime"/>
+                            <input type="radio" name="support-type" onChange={(evt) => {onOption("One-TIme");  setPaymentPlan("");}}  class="support-type-radio radio-circle-input" value="One-Time" checked id="support-type_onetime"/>
                             <label for="support-type_onetime" class="support-type radio-circle-label"> One-time</label>
                             </div>
                             
                             <div class="radio-circle-wrapper">
-                            <input type="radio" name="support-type" onChange={() => {onOption("Monthly"); setPaymentPlan(12340)}} value="monthly" class="support-type-radio radio-circle-input" checked={option !== "One-Time"} id="support-type_monthly"/>
+                            <input type="radio" name="support-type" onChange={(evt) => {onOption("Monthly"); setPaymentPlan(12340)}} class="support-type-radio radio-circle-input" value="Monthly" id="support-type_monthly"/>
                             <label for="support-type_monthly" class="support-type radio-circle-label"> Monthly</label>
                             </div>
                             
@@ -370,12 +380,27 @@ function CreatorPage(props) {
     
                     </div>
                     <div class="row">
-    
-                        
-                    </div>
+
+                            <div class="col-lg-12">
+
+                                <button onClick={onPayStep}  class="btn d-block w-100 mb-3"><svg enable-background="new 0 0 512 512"
+                                        height="512" viewBox="0 0 512 512" width="512"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="m246.122 477.289c-144.417-126.367-246.122-193.304-246.122-299.774 0-80.513 57.4-146.515 136-146.515 54.544 0 95.017 33.497 120 81.015 24.981-47.515 65.454-81.015 120-81.015 78.609 0 136 66.015 136 146.515 0 106.457-101.572 173.291-246.122 299.773-5.657 4.949-14.1 4.949-19.756.001z" />
+                                            </g>
+                                        </g>
+                                    </svg> Support {firstName}</button>
+                            </div>
+                        </div>
     
                 </form>
-    
+                : null    
+            }
+            {
+                payment === true ?
                 <form action="">
                     <div class="row">
                         <div class="col-12">
@@ -417,7 +442,8 @@ function CreatorPage(props) {
                     </div>
     
                 </form>
-    
+                : null 
+                }
     
         </div>
     
