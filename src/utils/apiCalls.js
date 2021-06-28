@@ -214,6 +214,7 @@ export const onboard3Call = async (userCredential, setLoader, history, token) =>
         const res = await axios.patch(`${http}/api/v1/user`, userCredential);
         if (res){
            setLoader(false);
+           console.log(res)
            history.push("/dashboard")
         }
     }catch(err){

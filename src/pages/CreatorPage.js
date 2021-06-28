@@ -19,6 +19,7 @@ function CreatorPage(props) {
     const [userPost, setUserPost] = useState([]);
     const [payment, setPayment] = useState(false);
     const [message, setMessage] = useState("");
+    const [button, setButton] = useState(false);
     const messageRef = useRef("");
     const emailRef = useRef("");
     const firstNameRef = useRef("");
@@ -71,7 +72,7 @@ function CreatorPage(props) {
 
     const onPay = async (evt) => {
         evt.preventDefault();
-
+        setButton(true)
         let cred = {
             amount,
             payment_plan: option,
@@ -441,7 +442,7 @@ function CreatorPage(props) {
     
                         <div class="col-lg-12">
     
-                            <button type="submit" onClick={onPay} class="btn d-block w-100">Pay with Flutterwave</button>
+                            <button type="submit" disabled={button} onClick={onPay} class="btn d-block w-100">Pay with Flutterwave</button>
     
                             <img src="images/cff1437-Badge_1_1.png" class=" d-inline-block mt-4 w-100" alt=""/>
                         </div>
