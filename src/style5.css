@@ -119,12 +119,12 @@ body {
   border-radius: 10px;
 }
 
-h1 {
+.h1 {
   font-size: 48px;
   line-height: 1.0833333333;
 }
 
-h2 {
+.h2 {
   font-size: 36px;
   line-height: 1.4444444444;
 }
@@ -139,12 +139,12 @@ h2 {
   line-height: 1.2380952381;
 }
 
-h1,
-h2,
+.h1,
+.h2,
 .h3,
 .h4,
-h5,
-h6 {
+.h5,
+.h6 {
   color: var(--heading-color);
   font-family: var(--heading-font);
 }

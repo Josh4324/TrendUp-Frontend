@@ -50,7 +50,7 @@ export default function Landing(props) {
                 <div class="col-lg-7">
                     <div class="header-inner desktop-center">
                        
-                        <h1 class="title1" style={{color:"#1E266D"}}>Easiest way for your audience to say thanks.</h1>
+                        <h1 className="h1" class="title1" style={{color:"#1E266D"}}>Easiest way for your audience to say thanks.</h1>
                         <p className="p"> It’s absolutely free, and takes less than a minute</p>
                         <div class="btn-wrapper  desktop-center padding-top-20 padding-bottom-10">
                             <a className="a" href={signup} class="boxed-btn btn-brand ">Create my account</a>
@@ -74,7 +74,7 @@ export default function Landing(props) {
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="section-title desktop-center padding-bottom-40 mx-auto">
-                    <h3 className="h3" class="title social-title">Here’s how trendupp works for creators</h3>
+                    <h3 className="h3" className="h3" class="title social-title">Here’s how trendupp works for creators</h3>
                 </div>
             </div>
         </div>
@@ -110,7 +110,7 @@ export default function Landing(props) {
             <div class="row justify-content-center">
                 <div class="col-md-5">
                     <div class="section-title desktop-center margin-bottom-55">
-                        <h3 className="h3" class="title1 social-title" style={{color:"#1E266D"}}>Creators are excited about trendupp </h3>
+                        <h3 className="h3" className="h3" class="title1 social-title" style={{color:"#1E266D"}}>Creators are excited about trendupp </h3>
                     </div>
                 </div>
             </div>
@@ -154,7 +154,7 @@ export default function Landing(props) {
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-5 offset-md-1">
-                    <h2>Ready to take creative
+                    <h2 className="h2">Ready to take creative
                         work to the next level?</h2>
                 </div>
                 <div class="col-md-3 offset-md-3">
