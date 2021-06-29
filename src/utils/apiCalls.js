@@ -349,7 +349,6 @@ export const verifyPaymentCall = async (userCredential) => {
         const res = await axios.patch(`${http}/api/v1/payment`, userCredential);
         if (res){
            NotificationManager.success("Payment verified successfully", "Success");
-
         }
         return res;
     }catch(err){

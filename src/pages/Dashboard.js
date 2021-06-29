@@ -33,11 +33,6 @@ function Dashboard(props) {
     const link = `/${userName}`
     const newlink = "trendupp.com" + link
 
-
-    if (Number(onboardingStep) !== 4){
-        history.push(`step${onboardingStep}`);  
-    }
-
     const setPage = (page) => {
         setView(page);
     }
