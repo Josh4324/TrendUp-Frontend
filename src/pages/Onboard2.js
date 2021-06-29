@@ -141,20 +141,20 @@ function Onboard2(props) {
             <div class="row">
                 <div class="col-lg-12 mb-2">
                     <div class="form-group">
-                        <input type="text" required class="form-control style2-input" ref={brandRef} placeholder="Brand Name" />
+                        <input type="text" required class="form-control style2-input" pattern="[A-Za-z0-9]+" title="Eight or more characters" ref={brandRef} placeholder="Brand Name" />
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-2">
                     <div class="form-group">
-                        <input type="text" required class="form-control style2-input" ref={firstNameRef} placeholder="First Name" />
+                        <input type="text" required class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={firstNameRef} placeholder="First Name" />
                     </div>
                 </div>
 
                 <div class="col-md-6 mb-2">
                     <div class="form-group">
-                        <input type="text" required class="form-control style2-input" ref={lastNameRef} placeholder="Last Name"/>
+                        <input type="text" required class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={lastNameRef} placeholder="Last Name"/>
                     </div>
                 </div>
             </div>
@@ -162,7 +162,7 @@ function Onboard2(props) {
             <div class="row">
                 <div class="col-lg-12 mb-2">
                     <div class="form-group">
-                        <input type="text" class="form-control style2-input" ref={websiteUrlRef} placeholder="Website URL"/>
+                        <input type="text" class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={websiteUrlRef} placeholder="Website URL"/>
                     </div>
                 </div>
             </div>
@@ -172,7 +172,7 @@ function Onboard2(props) {
                 <div class="col-lg-12 mb-2">
                     <div class="form-group">
                         <label class="mb-2">What are you creating?</label>
-                        <input type="text" required class="form-control style2-input" ref={createRef} placeholder="creating piano music, building Coronarelief.org, posting a new art everyday"/>
+                        <input type="text" required class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={createRef} placeholder="creating piano music, building Coronarelief.org, posting a new art everyday"/>
                     </div>
                 </div>
             </div>
@@ -181,7 +181,7 @@ function Onboard2(props) {
 
                 <div class="col-lg-12 mb-3">
                     <label class="mb-2">About me</label>
-                    <textarea class="form-control mb-0 p-3 h100 bg-greylight lh-16" required rows="5" ref={aboutRef}
+                    <textarea pattern="[A-Za-z0-9]+" class="form-control mb-0 p-3 h100 bg-greylight lh-16" required rows="5" ref={aboutRef}
                         placeholder="Hey 👋 I just created a page here. You can now buy me a coffee!" spellcheck="false"></textarea>
                 </div>
 
@@ -195,28 +195,28 @@ function Onboard2(props) {
                 <div class="col-12 mb-2">
                     <div class="form-group form-group-icon social-platform-input">
                         <span class="input-icon"><img src="images/icon-twitter.svg" alt=""/></span>
-                        <input type="text" class="form-control style2-input"  ref={twitterRef} placeholder="username"/>
+                        <input type="text" class="form-control style2-input" pattern="[A-Za-z0-9]+"  ref={twitterRef} placeholder="username"/>
                         <span class="social-platform-input-text">@</span>
                     </div>
                 </div>
                 <div class="col-12 mb-2">
                     <div class="form-group form-group-icon social-platform-input">
                         <span class="input-icon"><img src="images/Instagram_AppIcon_Aug2017.png" alt=""/></span>
-                        <input type="text" class="form-control style2-input" ref={instagramRef} placeholder="username"/>
+                        <input type="text" class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={instagramRef} placeholder="username"/>
                         <span class="social-platform-input-text ">@</span>
                     </div>
                 </div>
                 <div class="col-12 mb-2">
                     <div class="form-group form-group-icon social-platform-input">
                         <span class="input-icon"><img src="images/icon-youtube.svg" alt=""/></span>
-                        <input type="text" class="form-control style2-input" ref={youtubeRef} placeholder="username"/>
+                        <input type="text" class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={youtubeRef} placeholder="username"/>
                         <span class="social-platform-input-text ">@</span>
                     </div>
                 </div>
                 <div class="col-12 mb-2">
                     <div class="form-group form-group-icon social-platform-input">
                         <span class="input-icon"><img src="images/icon-facebook.svg" alt=""/></span>
-                        <input type="text" class="form-control style2-input" ref={facebookRef} placeholder="username"/>
+                        <input type="text" class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={facebookRef} placeholder="username"/>
                         <span class="social-platform-input-text ">@</span>
                     </div>
                 </div>

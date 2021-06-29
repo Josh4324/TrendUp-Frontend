@@ -104,15 +104,22 @@ function Onboard1(props) {
         let cred2 = {
             username: userRef.current.value
         }
+
+        let regex = /^[a-zA-Z0-9]*$/
+        console.log(regex.test(userRef.current.value))
+
         
         if (userRef.current.value.length < 4){
-            setError("Your username should be more than 3 characters")
-         }
-
-
-        if (userRef.current.value.length > 3){
+            if (regex.test(userRef.current.value) === false){
+                setError("Your username character can only be alphanumeric");
+            }else{
+                setError("Your username should be more than 3 characters")
+            }
+         }else if (regex.test(userRef.current.value) === false){
+            setError("Your username character can only be alphanumeric")
+         }else if (userRef.current.value.length > 3){
             const result1 = await userVerify(cred2, setLoader, setError, setFound, token);
-        }
+         }
 
        
     }
@@ -184,14 +191,14 @@ function Onboard1(props) {
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control style2-input" ref={firstNameRef} required placeholder="First Name" />
+                                            <input type="text" class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={firstNameRef} required placeholder="First Name" />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <input type="text" class="form-control style2-input" ref={lastNameRef} required placeholder="Last Name"/>
+                                            <input type="text" class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={lastNameRef} required placeholder="Last Name"/>
                                         </div>
                                     </div>
                                 </div>
@@ -208,7 +215,7 @@ function Onboard1(props) {
                                     <span className="choose-link-input-icon input-icon"><img src="images/trendupp-icon.png"
                                             alt=""/></span>
                                     <span className="choose-link-input-text">trendupp.com/</span>
-                                    <input type="text" onChange={usernameCheck} className="form-control style2-input" style={{paddingLeft: "140px"}} ref={userRef} placeholder="yournamehere" />
+                                    <input type="text" onChange={usernameCheck} required className="form-control style2-input" style={{paddingLeft: "140px"}} ref={userRef} placeholder="yournamehere" />
 
                                     <i className="choose-link-input-check input-icon-e ti-check" style={{ backgroundColor: found === false ? "green" : null}}></i>
                                  
