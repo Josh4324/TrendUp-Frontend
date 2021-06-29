@@ -10,19 +10,23 @@ import jwt_decode from "jwt-decode";
 
 
 function App(props) {
-  const user = props.user.user
+  const user = props.user.user;
+  let onboarding;
+  if (user !== null){
+    onboarding = Number(user.onboardingStep);
+  }
   return (
     <div className="App color-theme-blue">
       <HashRouter basename="/">
         <Switch>
           <Route exact path="/">
-              { user ? <Dashboard/> : <Landing/>}
+              { onboarding === 1 ? <Onboard1 /> : onboarding === 2 ? <Onboard2/> : onboarding === 3 ? <Onboard3/> : user !== null ?  <Dashboard/> : <Landing/>}
           </Route>
           <Route exact path="/login">
-              { user ? <Dashboard/> : <LoginPage/>}
+              {onboarding === 1 ? <Onboard1 /> : onboarding === 2 ? <Onboard2/> : onboarding === 3 ? <Onboard3/> : user !== null ?  <Dashboard/> : <LoginPage/>}
           </Route>
           <Route exact path="/signup">
-              { user ? <Dashboard/> : <SignUp/>}
+              { onboarding === 1 ? <Onboard1 /> : onboarding === 2 ? <Onboard2/> : onboarding === 3 ? <Onboard3/> : user !== null ?  <Dashboard/> : <SignUp/>}
           </Route>
           <PrivateRoute exact path="/step1" component={Onboard1} />
           <PrivateRoute exact path="/step2" component={Onboard2} />
