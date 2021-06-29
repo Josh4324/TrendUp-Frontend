@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import "../themify-icons.css";
 import "../feather.css";
 //import "../style.css";
+import "../style5.css";
 import "../style1.css";
 import "../lightbox.css";
 import "../custom1.css";

@@ -20,23 +20,23 @@ export default function Landing(props) {
             <div class="container nav-container social-nav">
                 <div class="responsive-mobile-menu">
                     <div class="logo-wrapper float-left">
-                        <a href="/" class="logo">
+                        <a className="a" href="/" class="logo">
                             <img src="assets/img/trenupp-logo-2.png" alt=""/>
                         </a>
                     </div>
 
-                    <a class="d-block float-right d-md-none mt-1 nav-right-link" href="#">Login</a>
+                    <a className="a" class="d-block float-right d-md-none mt-1 nav-right-link" href="#">Login</a>
                 </div>
                 
                 <div class="nav-right-content">
                     <ul>
                         <li>
-                            <a class="nav-right-link" href={login}>Login</a>
+                            <a className="a" class="nav-right-link" href={login}>Login</a>
                         </li>
                     </ul>
                     
                     <div class="btn-wrapper">
-                        <a href={signup} class="boxed-btn btn-brand">Sign up</a>
+                        <a className="a" href={signup} class="boxed-btn btn-brand">Sign up</a>
                     </div>
                 </div>
             </div>
@@ -51,9 +51,9 @@ export default function Landing(props) {
                     <div class="header-inner desktop-center">
                        
                         <h1 class="title1" style={{color:"#1E266D"}}>Easiest way for your audience to say thanks.</h1>
-                        <p> It’s absolutely free, and takes less than a minute</p>
+                        <p className="p"> It’s absolutely free, and takes less than a minute</p>
                         <div class="btn-wrapper  desktop-center padding-top-20 padding-bottom-10">
-                            <a href={signup} class="boxed-btn btn-brand ">Create my account</a>
+                            <a className="a" href={signup} class="boxed-btn btn-brand ">Create my account</a>
                         </div>
                     </div>
                    
@@ -74,7 +74,7 @@ export default function Landing(props) {
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="section-title desktop-center padding-bottom-40 mx-auto">
-                    <h3 class="title social-title">Here’s how trendupp works for creators</h3>
+                    <h3 className="h3" class="title social-title">Here’s how trendupp works for creators</h3>
                 </div>
             </div>
         </div>
@@ -88,9 +88,9 @@ export default function Landing(props) {
                 </div>
                 <div class="col-lg-6 offset-lg-1">
                     <ul class="content">
-                        <li><h4>Create an account</h4> Choose a unique username, setup payment and start receiving payments from your supporters </li>
-                        <li><h4>Invite supporters to your page</h4> After creating your account, a unique invite link is created for you. Copy and paste to invite your supporters</li>
-                        <li><h4>Start receiving payments</h4> Get payments from your supporters into your account</li>
+                        <li><h4 classname="h4">Create an account</h4> Choose a unique username, setup payment and start receiving payments from your supporters </li>
+                        <li><h4 classname="h4">Invite supporters to your page</h4> After creating your account, a unique invite link is created for you. Copy and paste to invite your supporters</li>
+                        <li><h4 classname="h4">Start receiving payments</h4> Get payments from your supporters into your account</li>
                     </ul>
                 </div>
             </div>
@@ -110,7 +110,7 @@ export default function Landing(props) {
             <div class="row justify-content-center">
                 <div class="col-md-5">
                     <div class="section-title desktop-center margin-bottom-55">
-                        <h3 class="title1 social-title" style={{color:"#1E266D"}}>Creators are excited about trendupp </h3>
+                        <h3 className="h3" class="title1 social-title" style={{color:"#1E266D"}}>Creators are excited about trendupp </h3>
                     </div>
                 </div>
             </div>
@@ -118,30 +118,30 @@ export default function Landing(props) {
                 <div class="col-lg-4 col-md-6">
                     <div class="single-price-plan-01">
                         <div class="price-header">
-                            <p class="mb-4">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                            <p className="p" class="mb-4">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
                             <div class="img-icon text-center mb-2"><img src="assets/img/testim-1.png" alt=""/></div>
-                            <h4 class="text-center">Happy User</h4>
-                            <p class="text-center">@happyuser</p>
+                            <h4 classname="h4" class="text-center">Happy User</h4>
+                            <p className="p" class="text-center">@happyuser</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="single-price-plan-01">
                         <div class="price-header">
-                            <p class="mb-4">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                            <p className="p" class="mb-4">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
                             <div class="img-icon text-center mb-2"><img src="assets/img/testim-2.png" alt=""/></div>
-                            <h4 class="text-center">Happy User</h4>
-                            <p class="text-center">@happyuser</p>
+                            <h4 classname="h4" class="text-center">Happy User</h4>
+                            <p className="p" class="text-center">@happyuser</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="single-price-plan-01">
                         <div class="price-header">
-                            <p class="mb-4">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                            <p className="p" class="mb-4">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
                             <div class="img-icon text-center mb-2"><img src="assets/img/testim-3.png" alt=""/></div>
-                            <h4 class="text-center">Happy User</h4>
-                            <p class="text-center">@happyuser</p>
+                            <h4 classname="h4" class="text-center">Happy User</h4>
+                            <p className="p" class="text-center">@happyuser</p>
                         </div>
                     </div>
                 </div>
@@ -159,7 +159,7 @@ export default function Landing(props) {
                 </div>
                 <div class="col-md-3 offset-md-3">
                     <div class="btn-wrapper">
-                    <a href={signup} class="boxed-btn btn-brand white"> Create an account</a>
+                    <a className="a" href={signup} class="boxed-btn btn-brand white"> Create an account</a>
                     </div>
                 </div>
             </div>
@@ -174,16 +174,16 @@ export default function Landing(props) {
                     <div class="col-lg-12">
                         <div class="copyright-item">
                             <div class="copyright-area-inner text-left">
-                                    <a href="/" class="logo d-block mb-2">
+                                    <a className="a" href="/" class="logo d-block mb-2">
                                         <img src="assets/img/trenupp-logo-2.png" alt="" style={{height: "25px"}}/>
                                     </a>
                                 © Copyrights 2021 Trendupp All rights reserved.
                             </div>
                             <div class="widget widget_nav_menu">
                                 <ul class="social_share style-01">
-                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a className="a" href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a className="a" href="#"><i class="fab fa-instagram"></i></a></li>
+                                    <li><a className="a" href="#"><i class="fab fa-twitter"></i></a></li>
                                 </ul>
                             </div>
                         </div>

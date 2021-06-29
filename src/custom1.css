@@ -365,7 +365,7 @@ label {
 
 .btn {
   background: #c84076;
-  color: #fff;
+  color: #fff !important;
   font-weight: 500;
   border-radius: 7px;
   line-height: 1;
