@@ -36,16 +36,16 @@ function DashComponent(props) {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-4 ps-md-2">
-                    <div className="card w-100 bg-grey border-0 shadow-none p-4 rounded-xxl mb-3">
-                        <div className="card-body d-flex p-0">
-                            <i
-                                className="btn-round-lg d-inline-block me-3 bg-greydark feather-zap font-md text-white"></i>
-                            <h4 className="text-grey-600 font-xl fw-700">0 <span
-                                    className="fw-500 mt-0 d-block text-grey-500 font-xssss">Page Views</span></h4>
+                <div class="col-md-4 ps-md-2">
+                            <div class="card dash-card shadow-none bg-grey p-4 mb-3">
+                                <div class="card-body d-flex p-0">
+                                    <i
+                                        class="icon-round-lg me-3 bg-greydark feather-file"></i>
+                                    <h4 class="text-grey-600 font-xl fw-700">0 <span
+                                            class="fw-500 mt-0 d-block text-grey-500 font-xssss">Posts</span></h4>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
             </div>
             <div className="row">
                 <div className="col-lg-12">
