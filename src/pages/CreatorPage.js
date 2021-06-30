@@ -412,21 +412,21 @@ function CreatorPage(props) {
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <input type="email" ref={emailRef} onChange={(evt) => setEmail(evt.target.value)} class="form-control style2-input mb-3" placeholder="Email" />
+                                <input type="email" required ref={emailRef} onChange={(evt) => setEmail(evt.target.value)} class="form-control style2-input mb-3" placeholder="Email" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <input type="text" ref={firstNameRef} onChange={(evt) => setFirstName(evt.target.value)} class="form-control style2-input mb-3" placeholder="First Name"/>
+                                <input type="text" required ref={firstNameRef} onChange={(evt) => setFirstName(evt.target.value)} class="form-control style2-input mb-3" placeholder="First Name"/>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <input type="text" ref={lastNameRef} onChange={(evt) => setLastName(evt.target.value)} class="form-control style2-input mb-3" placeholder="Last Name"/>
+                                <input type="text" required ref={lastNameRef} onChange={(evt) => setLastName(evt.target.value)} class="form-control style2-input mb-3" placeholder="Last Name"/>
                             </div>
                         </div>
                     </div>
