@@ -164,14 +164,6 @@ function Onboard2(props) {
             <div class="row">
                 <div class="col-lg-12 mb-2">
                     <div class="form-group">
-                        <input type="text" class="form-control style2-input"  ref={websiteUrlRef} placeholder="Website URL"/>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-12 mb-2">
-                    <div class="form-group">
                         <input type="text" required  class="form-control style2-input" pattern="[0-9]+" title="Only numbers are allowed"  ref={numberRef} placeholder="Phone Number"/>
                     </div>
                 </div>
@@ -230,6 +222,13 @@ function Onboard2(props) {
                         <span class="social-platform-input-text ">@</span>
                     </div>
                 </div>
+                <div class="col-12 mb-2">
+                    <div class="form-group form-group-icon social-platform-input">
+                        <span class="input-icon"><img src="images/globe.svg" alt=""/></span>
+                        <input type="text" ref={websiteUrlRef} class="form-control style2-input" placeholder="website url"/>
+                                    
+                    </div>
+                </div>
             </div>
             <div className={ error.length > 0 ? "alert alert-danger" : "none" }>
                                 <div >{error}</div>
@@ -242,7 +241,7 @@ function Onboard2(props) {
 
                 <div class="col-lg-12">
 
-                    <button type="submit" 
+                    <button type="submit" style={{marginBottom: "80px"}}
                         class="submit-but">Complete</button>
                 </div>
             </div>
