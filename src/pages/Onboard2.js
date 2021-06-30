@@ -14,6 +14,7 @@ function Onboard2(props) {
     const firstNameRef = useRef("");
     const lastNameRef = useRef("");
     const websiteUrlRef = useRef("");
+    const numberRef = useRef("");
     const createRef = useRef("");
     const aboutRef = useRef("");
     const twitterRef = useRef("");
@@ -67,6 +68,7 @@ function Onboard2(props) {
             firstName: firstNameRef.current.value,
             lastName: lastNameRef.current.value,
             websiteUrl: websiteUrlRef.current.value,
+            phoneNumber: numberRef.current.value,
             about: aboutRef.current.value,
             facebookLink: facebookRef.current.value,
             twitterLink: twitterRef.current.value,
@@ -141,20 +143,20 @@ function Onboard2(props) {
             <div class="row">
                 <div class="col-lg-12 mb-2">
                     <div class="form-group">
-                        <input type="text" required class="form-control style2-input" pattern="[A-Za-z0-9]+" title="Eight or more characters" ref={brandRef} placeholder="Brand Name" />
+                        <input type="text" required class="form-control style2-input" pattern="[A-Za-z0-9 ]+" title="Only Alphanumeric Characters and space are allowed" ref={brandRef} placeholder="Brand Name" />
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-2">
                     <div class="form-group">
-                        <input type="text" required class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={firstNameRef} placeholder="First Name" />
+                        <input type="text" required class="form-control style2-input" pattern="[A-Za-z0-9 ]+" title="Only Alphanumeric Characters and space are allowed" ref={firstNameRef} placeholder="First Name" />
                     </div>
                 </div>
 
                 <div class="col-md-6 mb-2">
                     <div class="form-group">
-                        <input type="text" required class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={lastNameRef} placeholder="Last Name"/>
+                        <input type="text" required class="form-control style2-input" pattern="[A-Za-z0-9. ]+" title="Only Alphanumeric Characters and space are allowed" ref={lastNameRef} placeholder="Last Name"/>
                     </div>
                 </div>
             </div>
@@ -162,7 +164,15 @@ function Onboard2(props) {
             <div class="row">
                 <div class="col-lg-12 mb-2">
                     <div class="form-group">
-                        <input type="text" class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={websiteUrlRef} placeholder="Website URL"/>
+                        <input type="text" class="form-control style2-input"  ref={websiteUrlRef} placeholder="Website URL"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 mb-2">
+                    <div class="form-group">
+                        <input type="text" required  class="form-control style2-input" pattern="[0-9]+" title="Only numbers are allowed"  ref={numberRef} placeholder="Phone Number"/>
                     </div>
                 </div>
             </div>
@@ -172,7 +182,7 @@ function Onboard2(props) {
                 <div class="col-lg-12 mb-2">
                     <div class="form-group">
                         <label class="mb-2">What are you creating?</label>
-                        <input type="text" required class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={createRef} placeholder="creating piano music, building Coronarelief.org, posting a new art everyday"/>
+                        <input type="text" required class="form-control style2-input" ref={createRef} placeholder="creating piano music, building Coronarelief.org, posting a new art everyday"/>
                     </div>
                 </div>
             </div>
@@ -181,7 +191,7 @@ function Onboard2(props) {
 
                 <div class="col-lg-12 mb-3">
                     <label class="mb-2">About me</label>
-                    <textarea pattern="[A-Za-z0-9]+" class="form-control mb-0 p-3 h100 bg-greylight lh-16" required rows="5" ref={aboutRef}
+                    <textarea  class="form-control mb-0 p-3 h100 bg-greylight lh-16" required rows="5" ref={aboutRef}
                         placeholder="Hey 👋 I just created a page here. You can now buy me a coffee!" spellcheck="false"></textarea>
                 </div>
 

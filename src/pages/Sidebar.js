@@ -9,7 +9,7 @@ export default function Sidebar(props) {
                     <li><Link to="/dashboard" onClick={() => props.setView("dashboard")}
                             className="nav-content-bttn nav-content-bttn-current h-auto pt-2 pb-2"><i
                                 className="feather-bar-chart-2"></i><span>Dashboard</span></Link></li>
-                    <li><Link to={props.link} className="nav-content-bttn h-auto pt-2 pb-2"><i
+                    <li><Link to={props.link} target="_blank" className="nav-content-bttn h-auto pt-2 pb-2"><i
                                 className="feather-image"></i><span>My page</span></Link></li>
                     <li><Link to="/post" className="nav-content-bttn h-auto pt-2 pb-2"><i
                                 className="feather-file"></i><span>My Posts</span></Link></li>

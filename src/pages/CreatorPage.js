@@ -119,12 +119,12 @@ function CreatorPage(props) {
                 },
                 onclose: function() {
                   // close modal
-                  history.push("/dashboard")
+                  history.push(`/${userName}`)
                 },
                 customizations: {
                     title: 'TrendUpp',
                     description: 'Connecting Creators to Fans',
-                    logo: 'https://assets.piedpiper.com/logo.png',
+                    logo: 'https://res.cloudinary.com/josh4324/image/upload/v1625061582/trendupp-logo-icon_wzh6da.png',
                   },
               });
 

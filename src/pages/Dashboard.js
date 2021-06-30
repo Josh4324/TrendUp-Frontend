@@ -182,7 +182,7 @@ function Dashboard(props) {
             <CopyToClipboard text={newlink}
             onCopy={() => NotificationManager.success('Copied to clipboard', 'Success')}
             >
-                    <span className="input-icon-e copy-button" style={{paddingTop: "0px"}}> Tap to Copy</span>
+                    <span className="input-icon-e copy-button" > Tap to Copy</span>
             </CopyToClipboard>
         </div>
 
@@ -200,6 +200,13 @@ function Dashboard(props) {
             <Link className="share-button" to="#">
                 <img src="images/icon-whatsapp.svg" alt="" />
             </Link>
+
+            <div class="form-group text-center mt-4 pt-2">
+
+            <Link to={link}  target="_blank"
+                class="text-center bg-primary-light p-1 ps-4 pe-4 text-primary font-xsss fw-600 d-inline-block rounded-xxl">View
+                your page <i class="feather-corner-up-right fw-700"></i> </Link>
+            </div>
         </div>
 
     </div>

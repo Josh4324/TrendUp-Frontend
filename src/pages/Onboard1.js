@@ -11,6 +11,8 @@ import "../style5.css";
 import "../style1.css";
 import "../lightbox.css";
 import "../custom1.css";
+import "../newcustom.css";
+
 
 
 function Onboard1(props) {

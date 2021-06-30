@@ -68,7 +68,7 @@ function DashComponent(props) {
                             <CopyToClipboard text={newlink}
                             onCopy={() => NotificationManager.success('Copied to clipboard', 'Success')}
                             >
-                                    <span className="input-icon-e copy-button" style={{paddingTop: "0px"}}> Tap to Copy</span>
+                                    <span className="input-icon-e copy-button"> Tap to Copy</span>
                             </CopyToClipboard>
                            
                             </div>
