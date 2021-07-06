@@ -93,8 +93,14 @@ function PostPage(props) {
         <div className="nav-content">
             <div className="nav-wrap">
                 <div className="top-content">
-                    <Link to="user-page.html" className="nav-content-profile">
-                    { !picture === true ? ( <i className="feather-user"></i>) : (<img src={picture} className="pics" alt="Trendupp Logo"/>)}
+                    <Link to={link} className="nav-content-profile">
+                    <figure class="nav-content-image" 
+                     style={{
+                        backgroundImage: 'url('+picture+')'
+                      }}
+                   >
+                    <img src="images/profile-image.jpg" class="d-none" alt=""/>
+                    </figure>
                         <span>{firstName}</span>
                     </Link>
                     <div class="nav-content-button">

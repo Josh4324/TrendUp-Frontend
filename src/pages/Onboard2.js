@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import {onboard2Call, onboard2ImageCall, getCall} from '../utils/apiCalls';
 import {connect} from 'react-redux';
 import { useHistory } from "react-router-dom";
+import jwt_decode from "jwt-decode";
+import { NotificationManager} from 'react-notifications';
 import "../custom1.css";
 import "../feather.css";
 import "../style1.css";
@@ -30,9 +32,22 @@ function Onboard2(props) {
     const [onboard, setOnboard] = useState(null);
     const [image, setImage] = useState(null);
 
-    console.log(onboard)
 
     useEffect(() => {
+        let user = JSON.parse(localStorage.getItem("trend-user"));
+        if (user !== null){
+            const decoded = jwt_decode(user.token);
+            const expirationTime = new Date()/1000;
+
+            if (expirationTime >= decoded.exp){
+                user = null;
+                props.dispatch({ type: "LOGIN_SUCCESS", payload: null });
+                localStorage.removeItem('trend-user');
+                NotificationManager.error("Session has expired, please log in again", "Error", 10000);
+                history.push("/login")
+            }
+        }
+
         getCall(setOnboard, token)
         return () => {
            
@@ -197,28 +212,28 @@ function Onboard2(props) {
                 <div class="col-12 mb-2">
                     <div class="form-group form-group-icon social-platform-input">
                         <span class="input-icon"><img src="images/icon-twitter.svg" alt=""/></span>
-                        <input type="text" class="form-control style2-input" pattern="[A-Za-z0-9]+"  ref={twitterRef} placeholder="username"/>
+                        <input type="text" class="form-control style2-input"   ref={twitterRef} placeholder="username"/>
                         <span class="social-platform-input-text">@</span>
                     </div>
                 </div>
                 <div class="col-12 mb-2">
                     <div class="form-group form-group-icon social-platform-input">
                         <span class="input-icon"><img src="images/Instagram_AppIcon_Aug2017.png" alt=""/></span>
-                        <input type="text" class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={instagramRef} placeholder="username"/>
+                        <input type="text" class="form-control style2-input"  ref={instagramRef} placeholder="username"/>
                         <span class="social-platform-input-text ">@</span>
                     </div>
                 </div>
                 <div class="col-12 mb-2">
                     <div class="form-group form-group-icon social-platform-input">
                         <span class="input-icon"><img src="images/icon-youtube.svg" alt=""/></span>
-                        <input type="text" class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={youtubeRef} placeholder="username"/>
+                        <input type="text" class="form-control style2-input"  ref={youtubeRef} placeholder="username"/>
                         <span class="social-platform-input-text ">@</span>
                     </div>
                 </div>
                 <div class="col-12 mb-2">
                     <div class="form-group form-group-icon social-platform-input">
                         <span class="input-icon"><img src="images/icon-facebook.svg" alt=""/></span>
-                        <input type="text" class="form-control style2-input" pattern="[A-Za-z0-9]+" ref={facebookRef} placeholder="username"/>
+                        <input type="text" class="form-control style2-input"  ref={facebookRef} placeholder="username"/>
                         <span class="social-platform-input-text ">@</span>
                     </div>
                 </div>

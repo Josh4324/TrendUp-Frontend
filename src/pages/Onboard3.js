@@ -10,6 +10,7 @@ import "../custom1.css";
 import axios from "axios";
 import {connect} from 'react-redux';
 import NotificationManager from 'react-notifications/lib/NotificationManager';
+import jwt_decode from "jwt-decode";
 
 function Onboard3(props) {
     const token = "sk_test_fe5d07ae5f83bbc809ec64ada3efb3e9caa1338c"
@@ -27,6 +28,19 @@ function Onboard3(props) {
     const accountRef = useRef("");
 
     useEffect(() => {
+        let user = JSON.parse(localStorage.getItem("trend-user"));
+        if (user !== null){
+            const decoded = jwt_decode(user.token);
+            const expirationTime = new Date()/1000;
+
+            if (expirationTime >= decoded.exp){
+                user = null;
+                props.dispatch({ type: "LOGIN_SUCCESS", payload: null });
+                localStorage.removeItem('trend-user');
+                NotificationManager.error("Session has expired, please log in again", "Error", 10000);
+                history.push("/login")
+            }
+        }
         getCall(setOnboard, token2)
         return () => {
            

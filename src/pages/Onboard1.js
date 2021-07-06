@@ -5,6 +5,7 @@ import {onboard1Call, getCall, userVerify} from '../utils/apiCalls';
 import { useHistory } from "react-router-dom";
 import {connect} from 'react-redux';
 import "../themify-icons.css";
+import jwt_decode from "jwt-decode";
 import "../feather.css";
 //import "../style.css";
 import "../style5.css";
@@ -31,6 +32,22 @@ function Onboard1(props) {
     const lastNameRef = useRef(null);
 
     useEffect(() => {
+        
+        let user = JSON.parse(localStorage.getItem("trend-user"));
+        if (user !== null){
+            const decoded = jwt_decode(user.token);
+            const expirationTime = new Date()/1000;
+
+            if (expirationTime >= decoded.exp){
+                user = null;
+                props.dispatch({ type: "LOGIN_SUCCESS", payload: null });
+                localStorage.removeItem('trend-user');
+                NotificationManager.error("Session has expired, please log in again", "Error", 10000);
+                history.push("/login")
+            }
+        }
+
+
         getCall(setOnboard, token)
         return () => {
            

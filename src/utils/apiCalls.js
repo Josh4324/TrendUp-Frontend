@@ -38,6 +38,15 @@ export const loginCall = async (userCredential, dispatch, setLoader, setError, h
   }
 };
 
+export const anonSignupCall = async (userCredential) => {
+    try {
+        const res = await axios.post(`${http}/api/v1/user/anon-signup`, userCredential);
+        return res;
+    }catch(err){
+       return err;
+    }
+};
+
 export const signupCall = async (userCredential, setLoader, setError, setSuccess, setSignUp) => {
     try {
         setLoader(true)
@@ -70,6 +79,7 @@ export const signupCall = async (userCredential, setLoader, setError, setSuccess
         setError(err.response.data.message);
     }
 };
+
 
 export const verificationCall = async (userCredential, setLoader, setError, history, dispatch) => {
     try {

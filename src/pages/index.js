@@ -17,8 +17,9 @@ import PostPage from './PostPage';
 import SupporterPage from './SupporterPage';
 import WalletPage from './WalletPage';
 import SettingPage from './SettingPage';
+import Success from './Success';
 
 
 
 
-export { SignUp, PrivateRoute, LoginPage, PostPage, CreatorPage, SettingPage, FanDashboard, Sidebar, Dashboard, Landing, ForgotPassword, NotFound, Onboard1, WalletPage, SupporterPage, Onboard2, Onboard3, OnboardComplete, ResetPassword};
+export { SignUp, PrivateRoute, LoginPage, PostPage, Success, CreatorPage, SettingPage, FanDashboard, Sidebar, Dashboard, Landing, ForgotPassword, NotFound, Onboard1, WalletPage, SupporterPage, Onboard2, Onboard3, OnboardComplete, ResetPassword};

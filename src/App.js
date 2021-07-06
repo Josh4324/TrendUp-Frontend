@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, HashRouter, Router, Redirect } from 'react-router-dom';
 import {LoginPage, Dashboard,Landing,SignUp, Onboard1, Onboard2, Onboard3,
-   PrivateRoute, NotFound, WalletPage,OnboardComplete, SettingPage, FanDashboard, PostPage, CreatorPage, SupporterPage} from './pages/index';
+   PrivateRoute, NotFound, WalletPage,OnboardComplete, SettingPage, FanDashboard, PostPage, CreatorPage, SupporterPage, Success} from './pages/index';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import {connect} from 'react-redux';
 import 'react-notifications/lib/notifications.css';
@@ -38,7 +38,11 @@ function App(props) {
           <PrivateRoute exact path="/wallet" component={WalletPage} />
           <PrivateRoute exact path="/settings" component={SettingPage} />
           <PrivateRoute exact path="/fan-dashboard" component={FanDashboard} />
+          <Route exact  path="/success" component={Success} />
+          <Route path="/404" component={NotFound} />
           <Route   path="/:username" component={CreatorPage} />
+          
+          
           <Route  component={NotFound} />
 
         </Switch>

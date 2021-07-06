@@ -1,9 +1,12 @@
 import React, {useState, useRef, useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {connect} from 'react-redux';
-import {getCall2, getPost2, Pay2, initializePaymentCall, verifyPaymentCall} from '../utils/apiCalls';
+import {getCall2, getPost2, Pay2,anonSignupCall, initializePaymentCall, verifyPaymentCall} from '../utils/apiCalls';
 import { useHistory } from "react-router-dom";
-import { useFlutterwave, FlutterWaveButton } from 'react-flutterwave';
+import {front} from "../utils/constants";
+import NotificationManager from 'react-notifications/lib/NotificationManager';
+
+
 
 function CreatorPage(props) {
     let history = useHistory();
@@ -24,6 +27,14 @@ function CreatorPage(props) {
     const emailRef = useRef("");
     const firstNameRef = useRef("");
     const lastNameRef = useRef("");
+    const radioRef1 = useRef("");
+    const radioRef2 = useRef("");
+    const radioRef3 = useRef("");
+    const radioRef4 = useRef("");
+    const InputRef5 = useRef("");
+    const AmountRadio1 = useRef("");
+    const AmountRadio2 = useRef("");
+
     
 
    
@@ -45,7 +56,11 @@ function CreatorPage(props) {
         }
     }, [])
 
-    const {firstName, id, lastName, picture, creating, about, userName} = userData || ""
+    const {firstName, id, lastName, picture, creating, about, userName, facebookLink,twitterLink,instagramLink,youtubeLink,websiteUrl} = userData || ""
+    let facebook = `https://www.facebook.com/${facebookLink}`;
+    let instagram = `https://www.instagram.com/${instagramLink}`;
+    let twitter = `https://twitter.com/${twitterLink}`;
+    let youtube = `https://www.youtube.com/${youtubeLink}`
     let img1 = picture || "images/profile-image.jpg" ;
     //let name = firstNameRef.current.value + " " + lastNameRef.current.value;
 
@@ -61,16 +76,26 @@ function CreatorPage(props) {
     }
 
     const onAmount = (value) => {
-        console.log(value)
         setAmount(value);
     }
 
     const onPayStep = (evt) => {
+        
+        if (amount === 0){
+            return NotificationManager.error("Amount cannot be empty", "Error")
+        }
+
+
         evt.preventDefault();
         setPayment(true);
     }
 
     const onPay = async (evt) => {
+        localStorage.removeItem("new_trend_user");
+        localStorage.removeItem("trend-creator");
+        if (email === "" || firstname === "" || lastname === ""){
+            return NotificationManager.error("Email or FirstName or LastName cannot be empty", "Error")
+        }
         evt.preventDefault();
         setButton(true)
         let cred = {
@@ -78,12 +103,10 @@ function CreatorPage(props) {
             payment_plan: option,
             creatorId: id,
             email,
-            firstName: firstName,
-            lastName: lastName,
+            firstName: firstname,
+            lastName: lastname,
             message
         }
-
-        console.log(cred)
 
         let payment = await initializePaymentCall(cred);
         if (payment){
@@ -91,6 +114,7 @@ function CreatorPage(props) {
                 public_key: 'FLWPUBK_TEST-d0b3befc83b20f52316dc9176b5f412a-X',
                 tx_ref: payment.data.data.reference,
                 amount,
+                redirect_url: `${front}/#/success`,
                 currency: 'NGN',
                 payment_options: 'card',
                 redirect_url: // specified redirect URL
@@ -113,8 +137,23 @@ function CreatorPage(props) {
                         status: "approved",
                         reference: data.tx_ref
                     }
-            
+                    let userCred = {
+                        email,
+                        firstName: firstname,
+                        lastName: lastname,
+                        onboardingStep: 1,
+                    }
+                    let createdUser = await anonSignupCall(userCred);
+                    if (createdUser?.data?.data){
+                        localStorage.setItem("new_trend_user", "new")
+                    }
                     let payment = await verifyPaymentCall(cred);
+                    if (payment){
+                        localStorage.setItem('trend-creator', userName)
+                        history.push('/success');
+                        window.location.href = `${front}/#/success`
+                        window.location.reload(true);
+                    }
                   }
                 },
                 onclose: function() {
@@ -135,6 +174,7 @@ function CreatorPage(props) {
         
     }
 
+
     return (
         <div className="creator-page">
              <div class="main-wrapper">
@@ -150,7 +190,7 @@ function CreatorPage(props) {
         </div>
     </div>
     {
-        userData === null ? "User does not exists" :
+        userData === null ? <Redirect  to="/404" /> :
     
     <div class="middle-sidebar-bottom">
         <div class="middle-sidebar-left">
@@ -189,15 +229,15 @@ function CreatorPage(props) {
 
                                 </div>
                                 <div class="card-body card-creator-about-social">
-                                    <a href="#" class="card-creator-about-social--item"><i
+                                    <a href={twitter} class="card-creator-about-social--item"><i
                                             class="feather-twitter"></i> </a>
-                                    <a href="#" class="card-creator-about-social--item"><i
+                                    <a href={instagram} class="card-creator-about-social--item"><i
                                             class="feather-instagram"></i></a>
-                                    <a href="#" class="card-creator-about-social--item"><i
+                                    <a href={youtube} class="card-creator-about-social--item"><i
                                             class="feather-youtube"></i></a>
-                                    <a href="#" class="card-creator-about-social--item"><i
+                                    <a href={facebook} class="card-creator-about-social--item"><i
                                             class="feather-facebook"></i></a>
-                                    <a href="#" class="card-creator-about-social--item"><i
+                                    <a href={websiteUrl} class="card-creator-about-social--item"><i
                                             class="feather-link"></i></a>
                                 </div>
                         </div>
@@ -215,14 +255,28 @@ function CreatorPage(props) {
                                     
                                 <div class="card card-creator mb-3">
                                     <div class="card-body card-creator-meta">
-                                    <img class="avatar me-3" src={picture} alt="" />
+                                    <figure class="avatar me-3"
+                        style={{
+                            backgroundImage: 'url('+picture+')'
+                          }}
+                        >
+                         <img class="avatar me-3" src={picture} alt="" />
+                        </figure>
+                                   
                                         <h4 class="card-creator-meta--author"> <a href="#">{firstName} {lastName}</a> <span
                                                 class="card-creator-meta--date">March 2,
                                                 2022</span></h4>
 
                                     </div>
                                     <div class="card-body card-creator-image">
-                                        <a href="#"><img src={item.image} class="post-image" alt="image"/></a>
+
+                                        <a href="#">
+                                       
+                            <img src={item.image} class="post-image" alt="image"/>
+                           
+                                            
+                                            
+                                            </a>
                                     </div>
                                     <div class="card-body p-0 me-lg-5">
                                         <a href="#">
@@ -330,12 +384,21 @@ function CreatorPage(props) {
                     <div class="row">
                         <div class="col-12 mb-3 text-center">
                             <div class="radio-circle-wrapper">
-                            <input type="radio" name="support-type" onChange={(evt) => {onOption("One-TIme");  setPaymentPlan("");}}  class="support-type-radio radio-circle-input" value="One-Time" id="support-type_onetime"/>
+                            <input type="radio" ref={AmountRadio1} name="support-type" onChange={(evt) => {
+                                onOption("One-TIme");  
+                                setPaymentPlan("");
+                                AmountRadio1.current.checked = true
+                                
+                                }}  class="support-type-radio radio-circle-input" value="One-Time" id="support-type_onetime"/>
                             <label for="support-type_onetime" class="support-type radio-circle-label"> One-time</label>
                             </div>
                             
                             <div class="radio-circle-wrapper">
-                            <input type="radio" name="support-type" onChange={(evt) => {onOption("Monthly"); setPaymentPlan(12340)}} class="support-type-radio radio-circle-input" value="Monthly" id="support-type_monthly"/>
+                            <input type="radio" ref={AmountRadio2}  name="support-type" onChange={(evt) => {
+                                onOption("Monthly"); 
+                                setPaymentPlan(12340);
+                                AmountRadio2.current.checked = true
+                                }} class="support-type-radio radio-circle-input" value="Monthly" id="support-type_monthly"/>
                             <label for="support-type_monthly" class="support-type radio-circle-label"> Monthly</label>
                             </div>
                             
@@ -343,24 +406,36 @@ function CreatorPage(props) {
                     </div>
                     <div class="row radio-row mb-2">
                         <div class="col-6">
-                            <input type="radio" name="support-amount" class="radio-option" id="supportAmount1"
-                                value="1000" onChange={() => onAmount(1000)}/>
+                            <input type="radio" ref={radioRef1} name="support-amount" class="radio-option" id="supportAmount1"
+                                value="1000" onChange={() => {
+                                    onAmount(1000);
+                                    InputRef5.current.value = "";
+                                    }}/>
                             <label for="supportAmount1" class="radio-option-label">₦1,000</label>
                         </div>
                         <div class="col-6">
-                            <input type="radio" onChange={() => onAmount(3000)}  name="support-amount" class="radio-option" id="supportAmount2"
+                            <input type="radio" ref={radioRef2} onChange={() => {
+                                onAmount(3000);
+                                InputRef5.current.value = "";
+                            }}  name="support-amount" class="radio-option" id="supportAmount2"
                                 value="1000"/>
                             <label for="supportAmount2" class="radio-option-label">₦3,000</label>
                         </div>
                     </div>
                     <div class="row radio-row mb-2">
                         <div class="col-6">
-                            <input type="radio" onChange={() => onAmount(5000)} name="support-amount" class="radio-option" id="supportAmount3"
+                            <input type="radio" ref={radioRef3} onChange={() => {
+                                onAmount(5000);
+                                InputRef5.current.value = "";
+                            }} name="support-amount" class="radio-option" id="supportAmount3"
                                 value="1000"/>
                             <label for="supportAmount3" class="radio-option-label">₦5,000</label>
                         </div>
                         <div class="col-6">
-                            <input type="radio" onChange={() => onAmount(10000)} name="support-amount" class="radio-option" id="supportAmount4"
+                            <input type="radio" ref={radioRef4} onChange={() => {
+                                onAmount(10000);
+                                InputRef5.current.value = "";
+                            }} name="support-amount" class="radio-option" id="supportAmount4"
                                 value="1000"/>
                             <label for="supportAmount4" class="radio-option-label">₦10,000</label>
                         </div>
@@ -372,7 +447,13 @@ function CreatorPage(props) {
     
                                 <input type="radio" name="support-amount" class="d-none" id="supportAmountC"/>
                                 <span class="input-icon">₦</span>
-                                <input type="text" onChange={(evt) => onAmount(evt.target.value)} class="form-control mb-0" placeholder="other amount" />
+                                <input type="text" ref={InputRef5} onChange={(evt) => {
+                                    onAmount(evt.target.value);
+                                    radioRef3.current.checked = false;
+                                    radioRef1.current.checked = false;
+                                    radioRef2.current.checked = false;
+                                
+                                }} class="form-control mb-0" placeholder="other amount" />
     
                             </div>
                         </div>
