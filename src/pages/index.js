@@ -16,10 +16,14 @@ import Sidebar from './Sidebar';
 import PostPage from './PostPage';
 import SupporterPage from './SupporterPage';
 import WalletPage from './WalletPage';
+import SupportHistoryPage from './SupportHistoryPage';
 import SettingPage from './SettingPage';
 import Success from './Success';
+import SettingsLink from './SettingsLink';
+import Details from './Details';
+import Bank from './Bank';
 
 
 
 
-export { SignUp, PrivateRoute, LoginPage, PostPage, Success, CreatorPage, SettingPage, FanDashboard, Sidebar, Dashboard, Landing, ForgotPassword, NotFound, Onboard1, WalletPage, SupporterPage, Onboard2, Onboard3, OnboardComplete, ResetPassword};
+export { SignUp, PrivateRoute, LoginPage, Bank, Details, SettingsLink, PostPage, SupportHistoryPage, Success, CreatorPage, SettingPage, FanDashboard, Sidebar, Dashboard, Landing, ForgotPassword, NotFound, Onboard1, WalletPage, SupporterPage, Onboard2, Onboard3, OnboardComplete, ResetPassword};

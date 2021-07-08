@@ -18,7 +18,7 @@ import "../feather.css";
 import "../style1.css";
 import "../custom1.css";
 
-function ResetPassword(props) {
+function Details(props) {
     const [modal, setModal]  = useState(false);
     const [view, setView] = useState("dashboard");
     const [public1, setPublic1] = useState(true);
@@ -149,6 +149,7 @@ function ResetPassword(props) {
 
         <div className="main-content right-chat-active" style={{backgroundColor:"unset"}}>
 
+
         <div class="middle-sidebar-bottom" style={{paddingLeft: "20px"}}>
                 <div class="middle-sidebar-left">
                     
@@ -162,49 +163,112 @@ function ResetPassword(props) {
                                 
                                 
                     <div class="settings-userdetails-section">
-                        <h2 class="useronboard-title mt-4 mb-4">Change Password</h2>
+                        <h2 class="useronboard-title mt-4 mb-4">Update User Details</h2>
                         
-                        <form class="mw-400 mx-auto" action="user_onboard3.html" method="GET">
+                        <form class="userdetails-onboard-form" action="user_onboard3.html" method="GET">
 
+                            <div class="form-group upload-input mb-4">
+                                <input type="file" name="file" id="file" class="input-file"/>
+                                <label for="file"
+                                    class="rounded-3 text-center bg-white btn-tertiary js-labelFile p-4 w-100 border-dashed">
+                                    <i class="ti-camera large-icon me-3 d-block"></i>
+                                    <span class="js-fileName">Upload profile picture</span>
+                                </label>
+                            </div>
     
                             <div class="row">
                                 <div class="col-lg-6 mb-2">
-                                    <label class="">Current Password</label>
+                                    <label class="">Basic Information</label>
                                 </div>
                             </div>
     
                             <div class="row">
                                 <div class="col-lg-12 mb-2">
                                     <div class="form-group">
-                                        <input type="text" class="form-control style2-input" placeholder=""/>
+                                        <input type="text" class="form-control style2-input" placeholder="Brand Name"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control style2-input" placeholder="First Name"/>
+                                    </div>
+                                </div>
+    
+                                <div class="col-md-6 mb-2">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control style2-input" placeholder="Last Name"/>
                                     </div>
                                 </div>
                             </div>
     
                             <div class="row">
-                                <div class="col-lg-6 mb-2">
-                                    <label class="">New Password</label>
+                                <div class="col-lg-12 mb-2">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control style2-input" placeholder="Website URL"/>
+                                    </div>
                                 </div>
                             </div>
+    
     
                             <div class="row">
                                 <div class="col-lg-12 mb-2">
                                     <div class="form-group">
-                                        <input type="text" class="form-control style2-input" placeholder=""/>
+                                        <label class="mb-2">What are you creating?</label>
+                                        <input type="text" class="form-control style2-input" placeholder="creating piano music, building Coronarelief.org, posting a new art everyday"/>
                                     </div>
                                 </div>
                             </div>
     
                             <div class="row">
-                                <div class="col-lg-6 mb-2">
-                                    <label class="">Confirm Password</label>
+    
+                                <div class="col-lg-12 mb-3">
+                                    <label class="mb-2">About me</label>
+                                    <textarea class="form-control mb-0 p-3 h100 bg-greylight lh-16" rows="5"
+                                        placeholder="Hey 👋 I just created a page here. You can now buy me a coffee!" spellcheck="false"></textarea>
                                 </div>
+    
                             </div>
     
                             <div class="row">
-                                <div class="col-lg-12 mb-2">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control style2-input" placeholder=""/>
+                                <div class="col-12">
+                                    <label class="mb-">Social Platforms</label>
+                                    <p class="text-grey-600 font-xssss mb-2">Enter the username of the social media platforms you are on</p>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <div class="form-group form-group-icon social-platform-input">
+                                        <span class="input-icon"><img src="images/icon-twitter.svg" alt=""/></span>
+                                        <input type="text" class="form-control style2-input" placeholder="username"/>
+                                        <span class="social-platform-input-text">@</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <div class="form-group form-group-icon social-platform-input">
+                                        <span class="input-icon"><img src="images/Instagram_AppIcon_Aug2017.png" alt=""/></span>
+                                        <input type="text" class="form-control style2-input" placeholder="username"/>
+                                        <span class="social-platform-input-text">@</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <div class="form-group form-group-icon social-platform-input">
+                                        <span class="input-icon"><img src="images/icon-youtube.svg" alt=""/></span>
+                                        <input type="text" class="form-control style2-input" placeholder="username"/>
+                                        <span class="social-platform-input-text">@</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <div class="form-group form-group-icon social-platform-input">
+                                        <span class="input-icon"><img src="images/icon-facebook.svg" alt=""/></span>
+                                        <input type="text" class="form-control style2-input" placeholder="username"/>
+                                        <span class="social-platform-input-text">@</span>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <div class="form-group form-group-icon social-platform-input">
+                                        <span class="input-icon"><img src="images/globe.svg" alt=""/></span>
+                                        <input type="text" class="form-control style2-input" placeholder="website url"/>
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -214,7 +278,7 @@ function ResetPassword(props) {
                                 <div class="col-lg-12">
     
                                     <button type="submit"
-                                        class="form-control style2-input style2-main-button">Update Password</button>
+                                        class="form-control style2-input style2-main-button">Update User Details</button>
                                 </div>
                             </div>
                         </form>
@@ -232,7 +296,6 @@ function ResetPassword(props) {
                 </div>
 
             </div>
-   
 </div>
 
 
@@ -254,4 +317,4 @@ const mapStateToProps = (state) => {
     }
   }
   
-  export default connect(mapStateToProps)(ResetPassword);
+  export default connect(mapStateToProps)(Details);

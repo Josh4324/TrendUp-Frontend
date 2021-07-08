@@ -4,12 +4,7 @@ import {onDash,getCallModal, getCall} from '../utils/apiCalls';
 import {connect} from 'react-redux';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { NotificationManager} from 'react-notifications';
-import DashComponent from "../components/DashComponent";
-import Post from "../components/Post";
-import Supporter from "../components/Supporter";
-import PostView from "../components/PostView";
-import Wallet from "../components/Wallet";
-import Settings from "../components/Settings";
+import SupportHistory from "../components/SupportHistory";
 import {Sidebar} from "./index";
 import { useHistory } from "react-router-dom";
 import {front} from "../utils/constants";
@@ -18,7 +13,7 @@ import "../feather.css";
 import "../style1.css";
 import "../custom1.css";
 
-function SupporterPage(props) {
+function SupportHistoryPage(props) {
     const [modal, setModal]  = useState(false);
     const [view, setView] = useState("dashboard");
     const [public1, setPublic1] = useState(true);
@@ -32,7 +27,7 @@ function SupporterPage(props) {
     let img1 = picture || "images/profile-image.jpg" ;
     const link = `/${userName}`
     const newlink = "trendupp.com" + link
-    console.log(onboard1, "on")
+    console.log(props)
 
 
     const setPage = (page) => {
@@ -71,13 +66,7 @@ function SupporterPage(props) {
         setModal(false);
     }
 
-    useEffect(() => {
-        getCallModal(setModal, props.dispatch,token);
-        
-        return () => {
-           
-        }
-    }, [])
+   
     return (
         <div className="dashboard-page" style={{background: "#f9f9f9"}}>
             <div className="main-wrapper">
@@ -150,7 +139,7 @@ function SupporterPage(props) {
         <div className="main-content right-chat-active" style={{backgroundColor:"unset"}}>
 
         {
-            <Supporter token={token}/>
+            <SupportHistory token={token}/>
         }
 
    
@@ -218,4 +207,4 @@ const mapStateToProps = (state) => {
     }
   }
   
-  export default connect(mapStateToProps)(SupporterPage);
+  export default connect(mapStateToProps)(SupportHistoryPage);

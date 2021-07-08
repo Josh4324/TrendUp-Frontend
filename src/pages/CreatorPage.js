@@ -151,14 +151,14 @@ function CreatorPage(props) {
                     if (payment){
                         localStorage.setItem('trend-creator', userName)
                         history.push('/success');
-                        window.location.href = `${front}/#/success`
                         window.location.reload(true);
                     }
                   }
                 },
                 onclose: function() {
                   // close modal
-                  history.push(`/${userName}`)
+                  history.push(`/${userName}`);
+                  window.location.reload(true);
                 },
                 customizations: {
                     title: 'TrendUpp',

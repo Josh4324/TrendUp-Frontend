@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import {onDash,getCallModal, getCall} from '../utils/apiCalls';
+import {onDash,getCallModal, getStat, getCall} from '../utils/apiCalls';
 import {connect} from 'react-redux';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { NotificationManager} from 'react-notifications';
@@ -13,6 +13,7 @@ import Settings from "../components/Settings";
 import {Sidebar} from "./index";
 import { useHistory } from "react-router-dom";
 import {front} from "../utils/constants";
+import jwt_decode from "jwt-decode";
 import "../themify-icons.css";
 import "../feather.css";
 import "../style1.css";
@@ -25,6 +26,10 @@ function Dashboard(props) {
     const [support, setSupport] = useState(false);
     const [onboard, setOnboard] = useState(null);
     const [log, setLog] = useState(false);
+    const [post, setPost] = useState(0);
+    const [amount, setAmount] = useState(0);
+    const [supporters, setSupporters] = useState([]);
+    const [supportersNum, setSupportersNum] = useState(0)
     let history = useHistory();
     const token = props.user.user.token
     const onboard1 = props.user.user.onboardingStep
@@ -69,8 +74,26 @@ function Dashboard(props) {
         setModal(false);
     }
 
-    useEffect(() => {
+    useEffect( async() => {
+        let user = JSON.parse(localStorage.getItem("trend-user"));
+        if (user !== null){
+            const decoded = jwt_decode(user.token);
+            const expirationTime = new Date()/1000;
+
+            if (expirationTime >= decoded.exp){
+                user = null;
+                props.dispatch({ type: "LOGIN_SUCCESS", payload: null });
+                localStorage.removeItem('trend-user');
+                NotificationManager.error("Session has expired, please log in again", "Error", 10000);
+                history.push("/login")
+            }
+        }
         getCallModal(setModal, props.dispatch,token);
+        const stat = await getStat(token);
+        setPost(stat.posts);
+        setAmount(stat.amount);
+        setSupportersNum(stat.supporters_number);
+        setSupporters(stat.supporters.slice(0,5));
         
         return () => {
            
@@ -148,9 +171,9 @@ function Dashboard(props) {
         <div className="main-content right-chat-active" style={{backgroundColor:"unset"}}>
 
         {
-            view === "dashboard" ? <DashComponent /> : 
+            view === "dashboard" ? <DashComponent post={post} supportersNum={supportersNum} supporters={supporters} amount={amount} /> : 
             view === "post" ?  <Post public1={public1} support={support} /> : 
-            view === "supporter" ? <Supporter /> : 
+            view === "supporter" ? <Supporter supportersNum={supportersNum} /> : 
             view === "postview" ? <PostView /> :
             view === "wallet" ? <Wallet /> : 
             view === "settings" ? <Settings /> : null

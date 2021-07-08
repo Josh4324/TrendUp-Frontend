@@ -400,6 +400,55 @@ export const Pay2 = async (cred) => {
     }
 };
 
+export const getStat = async (token) => {
+    try {
+      //setLoader(true);
+      //setError(false);
+      const res = await axios.get(`${http}/api/v1/statistic`,  {
+        headers: {
+          'Authorization': `JWT ${token}`
+        }
+      });
+
+      if (res.data.code === 200){
+          //setLoader(false);
+          console.log(res.data.data)
+          return res.data.data;
+        
+      }
+      
+    } catch (err) {
+          console.log(err.response.data);
+          //setLoader(false);
+          //setError(err.response.data.message);
+    }
+};
+
+export const getHistory = async (token, email) => {
+    try {
+      //setLoader(true);
+      //setError(false);
+      const res = await axios.get(`${http}/api/v1/statistic/history?email=${email}`,  {
+        headers: {
+          'Authorization': `JWT ${token}`
+        }
+      });
+
+      if (res.data.code === 200){
+          //setLoader(false);
+          console.log(res.data.data)
+          return res.data.data;
+        
+      }
+      
+    } catch (err) {
+          console.log(err.response.data);
+          //setLoader(false);
+          //setError(err.response.data.message);
+    }
+};
+
+
 
 
 

@@ -18,7 +18,7 @@ import "../feather.css";
 import "../style1.css";
 import "../custom1.css";
 
-function SupporterPage(props) {
+function Bank(props) {
     const [modal, setModal]  = useState(false);
     const [view, setView] = useState("dashboard");
     const [public1, setPublic1] = useState(true);
@@ -149,9 +149,79 @@ function SupporterPage(props) {
 
         <div className="main-content right-chat-active" style={{backgroundColor:"unset"}}>
 
-        {
-            <Supporter token={token}/>
-        }
+
+        <div class="middle-sidebar-bottom" style={{paddingLeft: "20px"}}>
+                <div class="middle-sidebar-left">
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            
+                            <div class="card dash-card dash-card__records dash-card__posts p-5">
+                                <a href="settings.html" class="back-btn">
+                                <h3 class="card-title mb-3">settings</h3>
+                                </a>
+                                
+                                
+                    <div class="settings-userdetails-section">
+                        <h2 class="useronboard-title mt-4 mb-4">Update Bank Account Details</h2>
+                        
+                        <form class="verifybank-onboard-form mw-400 mx-auto" action="dashboard.html" method="GET">
+
+                        
+
+                            <div class="row">
+                                <div class="col-12 mb-2">
+                                    <div class="form-group">
+                                        
+                                        <select name="" id="" class="form-control form-select style2-input">
+                                            <option value="Access Bank">Access Bank</option>
+                                            <option value="First Bank">First Bank</option>
+                                            <option value="GT Bank">GT Bank</option>
+                                            <option value="Sterling Bank">Sterling Bank</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control style2-input" placeholder="Account Number"/>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="row">
+    
+                                <div class="col-lg-12">
+    
+                                    <button type="submit"
+                                        class="form-control style2-input style2-main-button">Verify Account</button>
+                                </div>
+                            </div>
+    
+    
+                            <div class="row">
+    
+                                <div class="col-lg-12">
+                                    <label class="mb-2">Account Name</label>
+                                    <h2 class="mb-4">Chiamaka Olubankole</h2>
+                                    <button type="submit"
+                                        class="form-control style2-input style2-main-button">Confirm Account Details</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                            
+
+                                
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+            </div>
 
    
 </div>
@@ -161,49 +231,6 @@ function SupporterPage(props) {
  
 </div>               
         
-{
-    modal === true ? ( 
-    <div className="popup-wrapper" id="popupWrapper">
-    <div className="popup-blocker" id="popupBlocker"></div>
-    <div className="popup-body mw-600 mx-auto bg-white p-5 rounded-xxl">
-        <span className="popup-del" id="popupDel"><i className="feather-x" onClick={submit}></i></span>
-        <i className="ti-check btn-round-lg bg-success mx-auto d-block text-white font-md fw-600 mx-auto"></i>
-        <h2 className="font-lg fw-700 text-center mt-4">Congratulations</h2>
-        <h4 className="useronboard-subtitle mb-4">You’ve successfully created a profile. <br/>Share your page with your
-            audience to get supporters</h4>
-
-        <div className="form-group form-group-icon choose-link-input mw-400 mx-auto">
-            <span className="choose-link-input-icon input-icon"><img src="images/trendupp-icon.png" alt=""/></span>
-            <span className="choose-link-input-text">trendupp.com/</span>
-            <input type="text" className="form-control style2-input" style={{paddingLeft:"140px"}} placeholder={userName} disabled />
-            <CopyToClipboard text={newlink}
-            onCopy={() => NotificationManager.success('Copied to clipboard', 'Success')}
-            >
-                    <span className="input-icon-e copy-button" style={{paddingTop: "0px"}}> Tap to Copy</span>
-            </CopyToClipboard>
-        </div>
-
-        <div className="onboard-complete-share-section mt-4 pt-2">
-
-            <h4 className="fw-600 mb-3">Share on</h4>
-            <Link className="share-button" to="#">
-                <img src="images/icon-twitter.svg" alt="" />
-            </Link>
-
-            <Link className="share-button" to="#">
-                <img src="images/icon-facebook.svg" alt="" />
-            </Link>
-
-            <Link className="share-button" to="#">
-                <img src="images/icon-whatsapp.svg" alt="" />
-            </Link>
-        </div>
-
-    </div>
-</div>
-) 
-: null
-}
 
         </div>
                 
@@ -218,4 +245,4 @@ const mapStateToProps = (state) => {
     }
   }
   
-  export default connect(mapStateToProps)(SupporterPage);
+  export default connect(mapStateToProps)(Bank);
