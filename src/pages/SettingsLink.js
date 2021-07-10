@@ -1,15 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import {onDash,getCallModal, getCall} from '../utils/apiCalls';
+import {editCall,userVerify} from '../utils/apiCalls';
 import {connect} from 'react-redux';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { NotificationManager} from 'react-notifications';
-import DashComponent from "../components/DashComponent";
-import Post from "../components/Post";
-import Supporter from "../components/Supporter";
-import PostView from "../components/PostView";
-import Wallet from "../components/Wallet";
-import Settings from "../components/Settings";
 import {Sidebar} from "./index";
 import { useHistory } from "react-router-dom";
 import {front} from "../utils/constants";
@@ -24,6 +18,11 @@ function SettingsLink(props) {
     const [public1, setPublic1] = useState(true);
     const [support, setSupport] = useState(false);
     const [onboard, setOnboard] = useState(null);
+    const [error, setError] = useState("");
+    const [found, setFound] = useState(null);
+    const [loader, setLoader] = useState(false);
+    const name = props.data?.user?.userName || ""
+    const [username, setUsername] = useState(name);
     const [log, setLog] = useState(false);
     let history = useHistory();
     const token = props.user.user.token
@@ -32,7 +31,36 @@ function SettingsLink(props) {
     let img1 = picture || "images/profile-image.jpg" ;
     const link = `/${userName}`
     const newlink = "trendupp.com" + link
-    console.log(onboard1, "on")
+    const changeUsername = (evt) => {
+        setUsername(evt.target.value);
+        usernameCheck(evt.target.value);
+    }
+
+    const usernameCheck = async(value) => {
+        setFound(null);
+        let cred2 = {
+            username: value
+        }
+        let regex = /^[a-zA-Z0-9]*$/
+
+        
+        if (value.length < 4){
+            if (regex.test(value) === false){
+                setError("Your username character can only be alphanumeric");
+            }else{
+                setError("Your username should be more than 3 characters")
+            }
+         }else if (regex.test(value) === false){
+            setError("Your username character can only be alphanumeric")
+         }else if (value.length > 3){
+            
+            const result1 = await userVerify(cred2, setLoader, setError, setFound, token);
+         }
+
+       
+    }
+
+    
 
 
     const setPage = (page) => {
@@ -59,25 +87,15 @@ function SettingsLink(props) {
     }
 
   
-    
-
     const submit = async(evt) => {
-        evt.preventDefault();
-        const cred = {
-            showComplete: false
+        evt.preventDefault()
+        console.log(username)
+        let cred = {
+            userName: username
         }
-
-        const result = await onDash(cred,token);
-        setModal(false);
+        const result = await editCall(cred, setLoader, setError, props.dispatch, token);
     }
 
-    useEffect(() => {
-        getCallModal(setModal, props.dispatch,token);
-        
-        return () => {
-           
-        }
-    }, [])
     return (
         <div className="dashboard-page" style={{background: "#f9f9f9"}}>
             <div className="main-wrapper">
@@ -165,20 +183,27 @@ function SettingsLink(props) {
                     <div class="settings-link-section">
                         <h2 class="useronboard-title mt-4">Change your link</h2>
                         <h4 class="useronboard-subtitle">Pick a simple shareable link for your page.</h4>
-                        <form class="mw-400 mx-auto mt-4" action="user_onboard2.html" method="GET">
+                        <form class="mw-400 mx-auto mt-4">
 
                             <div class="form-group form-group-icon choose-link-input">
                                 <span class="choose-link-input-icon input-icon"><img src="images/trendupp-icon.png"
                                         alt=""/></span>
                                 <span class="choose-link-input-text">trendupp.com/</span>
-                                <input type="text" class="form-control style2-input" placeholder="yournamehere"/>
-                                <i class="choose-link-input-check input-icon-e ti-check"></i>
+                                <input type="text" onChange={changeUsername} value={username} class="form-control style2-input" placeholder="yournamehere"/>
+                                <i class="choose-link-input-check input-icon-e ti-check" style={{ backgroundColor: found === false ? "green" : null}}></i>
+                            </div>
+
+                            <div className={ error.length > 0 ? "alert alert-danger" : "none" }>
+                                <div >{error}</div>
+                            </div>
+                            <div className={ loader === true ? "loader" : "none"}>
+                                <div >Loading...</div>
                             </div>
 
                             <div class="col-sm-12 p-0">
                                 <div class="form-group mb-1">
 
-                                    <button type="submit" class="form-control style2-input style2-main-button">Update Link</button>
+                                    <button type="submit" onClick={submit}  class="form-control style2-input style2-main-button">Update Link</button>
                                 </div>
                             </div>
                         </form>

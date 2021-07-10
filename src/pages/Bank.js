@@ -1,15 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import {onDash,getCallModal, getCall} from '../utils/apiCalls';
+import {editCall} from '../utils/apiCalls';
+import NotificationManager from 'react-notifications/lib/NotificationManager';
 import {connect} from 'react-redux';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { NotificationManager} from 'react-notifications';
-import DashComponent from "../components/DashComponent";
-import Post from "../components/Post";
-import Supporter from "../components/Supporter";
-import PostView from "../components/PostView";
-import Wallet from "../components/Wallet";
-import Settings from "../components/Settings";
+import banks from "../utils/bank";
 import {Sidebar} from "./index";
 import { useHistory } from "react-router-dom";
 import {front} from "../utils/constants";
@@ -19,20 +13,39 @@ import "../style1.css";
 import "../custom1.css";
 
 function Bank(props) {
+    const token1 = "sk_test_fe5d07ae5f83bbc809ec64ada3efb3e9caa1338c";
+    const JWT = "Bearer " + token1;
     const [modal, setModal]  = useState(false);
     const [view, setView] = useState("dashboard");
     const [public1, setPublic1] = useState(true);
     const [support, setSupport] = useState(false);
     const [onboard, setOnboard] = useState(null);
+    const [error, setError] = useState("");
+    const [derror, setDerror] = useState("");
+    const [loader, setLoader] = useState(false);
+    const [loader1, setLoader1] = useState(false);
+    const [button, setButton] = useState(false);
     const [log, setLog] = useState(false);
     let history = useHistory();
     const token = props.user.user.token
     const onboard1 = props.user.user.onboardingStep
-    const {firstName, picture, userName, onboardingStep} = props.data.user || ""
+    const {firstName, picture, userName, bankName, accName, accNumber, onboardingStep} = props.data.user || "";
+    const [name, setName] = useState(accName);
+    const [number, setNumber] = useState(accNumber);
+    const bankList = Object.entries(banks);
+    let bank,bankcode
+    if (bankList){
+        bankList.map((item) => {
+            if (item[1] === bankName){
+                bank = item[0];
+            }
+        })
+    }
+    
+    let [bankCode, setBankCode] = useState(bankName);
     let img1 = picture || "images/profile-image.jpg" ;
     const link = `/${userName}`
     const newlink = "trendupp.com" + link
-    console.log(onboard1, "on")
 
 
     const setPage = (page) => {
@@ -59,25 +72,57 @@ function Bank(props) {
     }
 
   
-    
-
-    const submit = async(evt) => {
+    const verify = async(evt) => {
         evt.preventDefault();
-        const cred = {
-            showComplete: false
-        }
 
-        const result = await onDash(cred,token);
-        setModal(false);
+        if (number === ""){
+            return NotificationManager.error("Account number cannot be empty", "Error")
+        }
+       
+        const Code = bankCode;
+        const accountCode = number;
+        setLoader(true);
+        setError("");
+        fetch(`https://api.paystack.co/bank/resolve?account_number=${accountCode}&bank_code=${Code}`, {
+            method: 'GET', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: JWT
+            },
+        }).then(response => response.json())
+        .then(data => {
+            setLoader(false);
+          if (data.status === false){
+            setError("Could not resolve account name, check your account number or bank")
+        }
+         setButton(true);
+          setName(data.data.account_name);
+        })
+        .catch((error) => {
+            setLoader(false);
+          console.error('Error:', error);
+        });
+        
+        //const link = `https://api.paystack.co/bank/resolve?account_number=${accountCode}&bank_code=${bankCode}`;
+        //const res = await axios.get(link);
+        //console.log(res);
+
+       
     }
 
-    useEffect(() => {
-        getCallModal(setModal, props.dispatch,token);
-        
-        return () => {
-           
+    const submit = async(evt) => {
+        evt.preventDefault()
+        let cred = {
+            accNumber: number,
+            accName: name,
+            bankName: bankCode,
         }
-    }, [])
+        const result = await editCall(cred, setLoader, setError, props.dispatch, token);
+    }
+
+
+
+   
     return (
         <div className="dashboard-page" style={{background: "#f9f9f9"}}>
             <div className="main-wrapper">
@@ -157,9 +202,9 @@ function Bank(props) {
                         <div class="col-12">
                             
                             <div class="card dash-card dash-card__records dash-card__posts p-5">
-                                <a href="settings.html" class="back-btn">
+                                <Link to="/settings" class="back-btn">
                                 <h3 class="card-title mb-3">settings</h3>
-                                </a>
+                                </Link>
                                 
                                 
                     <div class="settings-userdetails-section">
@@ -169,44 +214,59 @@ function Bank(props) {
 
                         
 
-                            <div class="row">
-                                <div class="col-12 mb-2">
-                                    <div class="form-group">
-                                        
-                                        <select name="" id="" class="form-control form-select style2-input">
-                                            <option value="Access Bank">Access Bank</option>
-                                            <option value="First Bank">First Bank</option>
-                                            <option value="GT Bank">GT Bank</option>
-                                            <option value="Sterling Bank">Sterling Bank</option>
-                                        </select>
+                        <div className="row">
+                                    <div className="col-12 mb-2">
+                                        <div className="form-group">
+                                            
+                                            <select name="" id=""  className="form-control form-select style2-input">
+                                            <option value="">{bank}</option>
+                                                {
+                                                    Object.entries(banks).map((item) => {
+                                                        return <option onChange={() => setBankCode(item[1])}  value={item[1]}>{item[0]}</option>
+                                                    })
+                                                }
+                                               
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="col-12 mb-2">
+                                        <div className="form-group">
+                                            <input type="text" value={number} onChange={(evt) => setNumber(evt.target.value)}  className="form-control style2-input" placeholder="Account Number"/>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-12 mb-2">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control style2-input" placeholder="Account Number"/>
+                                <div className={ error.length > 0 ? "alert alert-danger" : "none" }>
+                                <div >{error}</div>
+                                </div>
+                                <div className={ loader === true ? "loader" : "none"}>
+                                    <div >Loading...</div>
+                                </div>
+                                {
+                                    button === false ? ( <div class="row">
+    
+                                    <div class="col-lg-12">
+        
+                                        <button type="submit" onClick={verify}
+                                            class="form-control style2-input style2-main-button">Verify Account</button>
                                     </div>
-                                </div>
-                            </div>
+                                </div>) : null
+                                }
+                           
     
-                            <div class="row">
-    
-                                <div class="col-lg-12">
-    
-                                    <button type="submit"
-                                        class="form-control style2-input style2-main-button">Verify Account</button>
-                                </div>
-                            </div>
-    
-    
-                            <div class="row">
+                            {
+                                button ? (<div class="row">
     
                                 <div class="col-lg-12">
                                     <label class="mb-2">Account Name</label>
-                                    <h2 class="mb-4">Chiamaka Olubankole</h2>
-                                    <button type="submit"
+                                    <h2 class="mb-4">{name}</h2>
+                                    <button type="submit" onClick={submit}
                                         class="form-control style2-input style2-main-button">Confirm Account Details</button>
                                 </div>
-                            </div>
+                            </div>) : null
+                            }
+                            
+
+
                         </form>
                     </div>
                             

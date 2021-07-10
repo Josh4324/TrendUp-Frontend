@@ -109,7 +109,6 @@ function Onboard3(props) {
             showComplete: true
         }
 
-        console.log(cred)
         const result = await onboard3Call(cred, setLoader1, history, token2);
     }
     

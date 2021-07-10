@@ -46,10 +46,7 @@ function App(props) {
           <Route exact  path="/success" component={Success} />
           <Route path="/404" component={NotFound} />
           <Route   path="/:username" component={CreatorPage} />
-          
-          
           <Route  component={NotFound} />
-
         </Switch>
         <NotificationContainer />
       </HashRouter>
@@ -58,7 +55,6 @@ function App(props) {
 }
 
 const mapStateToProps = (state) => {
-  console.log("state", state)
   return {
       user: state.auth,
   }

@@ -3,7 +3,6 @@ const emailReducerDefaultState = {
 }
 
 const emailReducer = (state = emailReducerDefaultState, action) => {
-    console.log(action);
     switch (action.type){
         case 'SEND_EMAIL':
             return {

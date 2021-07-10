@@ -9,21 +9,16 @@ export const loginCall = async (userCredential, dispatch, setLoader, setError, h
   try {
     setLoader(true);
     setError(false);
-    console.log(http)
     const res = await axios.post(`${http}/api/v1/user/login`, userCredential);
-    console.log(res)
     if (res.data.code === 200){
         setLoader(false);
         dispatch({ type: "LOGIN_SUCCESS", payload: res.data.data });
         localStorage.setItem('trend-user', JSON.stringify(res.data.data))
         let onboard = Number(res.data.data.onboardingStep);
-        console.log(res.data.data.userType)
         if (res.data.data.userType === "fan"){
            return window.location.href = `${front}/#/fan-dashboard`
         }
-        console.log(onboard)
         if (Number(onboard) === 4){
-            console.log("hereeeee")
             window.location.href = `${front}/#/dashboard`
         }else{
             window.location.href = `${front}/#/step${onboard}`
@@ -32,7 +27,6 @@ export const loginCall = async (userCredential, dispatch, setLoader, setError, h
     }
   } catch (err) {
     dispatch({ type: "LOGIN_FAILURE", payload: err });
-        console.log(err.response.data);
         setLoader(false);
         setError(err.response.data.message);
   }
@@ -58,9 +52,7 @@ export const signupCall = async (userCredential, setLoader, setError, setSuccess
             setSuccess(true);
             setSignUp(true);
         }
-        console.log(res)
     }catch(err){
-        console.log(err.response.data);
         setLoader(false);
         let errorMessage = ""
         if (err.response.data.message === "Validation Error"){
@@ -96,7 +88,6 @@ export const verificationCall = async (userCredential, setLoader, setError, hist
         }
     }catch(err){
         setLoader(false)
-        console.log(err.response.data);
         setError(err.response.data.message);
         
     }
@@ -109,7 +100,7 @@ export const resendCall = async (userCredential) => {
            NotificationManager.success('Code Resent', 'Success');
         }
     }catch(err){
-        console.log(err.response.data);
+        
     }
 };
 
@@ -126,7 +117,6 @@ export const onboard1Call = async (userCredential, setLoader, setError, history,
            history.push("/step2")
         }
     }catch(err){
-        console.log(err.response)
         setLoader(false)
         setError(err.response.data.message);
     }
@@ -134,7 +124,6 @@ export const onboard1Call = async (userCredential, setLoader, setError, history,
 
 export const userVerify = async (userCredential, setLoader, setError, setFound, token) => {
     try {
-        console.log(userCredential)
        setLoader(true)
         axios.defaults.headers.common['Authorization'] = "JWT " + token;
         const res = await axios.post(`${http}/api/v1/user/checkUser`, userCredential);
@@ -176,9 +165,7 @@ export const onboard2ImageCall = async (userCredential, setLoader, token, setIma
        setLoader(true)
         axios.defaults.headers.common['Authorization'] = "JWT " + token;
         const res = await axios.patch(`${http}/api/v1/user/image`, userCredential);
-        console.log(res)
         if (res){
-            console.log(res.data)
            setLoader(false);
            NotificationManager.success("image uploaded successfully", "Success");
            setImage(res.data.data);
@@ -224,7 +211,6 @@ export const onboard3Call = async (userCredential, setLoader, history, token) =>
         const res = await axios.patch(`${http}/api/v1/user`, userCredential);
         if (res){
            setLoader(false);
-           console.log(res)
            history.push("/dashboard")
         }
     }catch(err){
@@ -244,9 +230,6 @@ export const onDash = async (userCredential, token) => {
 
 export const getCallModal = async (setModal, dispatch, token, ) => {
     try {
-        console.log(token)
-      //setLoader(true);
-      //setError(false);
       const res = await axios.get(`${http}/api/v1/user`,  {
         headers: {
           'Authorization': `JWT ${token}`
@@ -255,7 +238,6 @@ export const getCallModal = async (setModal, dispatch, token, ) => {
       if (res.data.code === 200){
           //setLoader(false);
           setModal(res.data.data.showComplete);
-          console.log(res.data.data)
           dispatch({ type: "GET_USER", payload: res.data.data });
 
           //setImage(res.data.data.picture);
@@ -411,8 +393,6 @@ export const getStat = async (token) => {
       });
 
       if (res.data.code === 200){
-          //setLoader(false);
-          console.log(res.data.data)
           return res.data.data;
         
       }
@@ -445,6 +425,21 @@ export const getHistory = async (token, email) => {
           console.log(err.response.data);
           //setLoader(false);
           //setError(err.response.data.message);
+    }
+};
+
+export const editCall = async (userCredential, setLoader, setError, dispatch, token) => {
+    try {
+       setLoader(true)
+        axios.defaults.headers.common['Authorization'] = "JWT " + token;
+        const res = await axios.patch(`${http}/api/v1/user`, userCredential);
+        if (res){
+           setLoader(false);
+           NotificationManager.success("Data updated successfully", "Success")
+        }
+    }catch(err){
+        setLoader(false)
+        setError(err.response.data.message);
     }
 };
 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Wallet() {
+export default function Wallet(props) {
     return (
         <div>
              <div class="">
@@ -14,12 +14,11 @@ export default function Wallet() {
         </div>
         <div class="row">
             <div class="col-md-4">
-
-
-                <div class="card dash-card p-4 mb-3 shadow-none" style={{backgroundColor: "#fde9f1"}}>
+                {
+                    props.amount < 10000 ? (<div class="card dash-card p-4 mb-3 shadow-none" style={{backgroundColor: "#fde9f1"}}>
                     <div class="card-body d-flex p-0">
                         <i class="icon-round-lg me-3 bg-primary feather-shopping-bag"></i>
-                        <h4 class="text-primary font-xl fw-700">₦0 <span
+                        <h4 class="text-primary font-xl fw-700">₦{props.amount} <span
                                 class="fw-500 mt-0 d-block text-grey-500 font-xssss">Current Earning</span>
                         </h4>
                     </div>
@@ -29,11 +28,14 @@ export default function Wallet() {
                         <p class="mb-0">Your current earning must hit the minimum payout for you to activate payout.</p>
                     </div>
 
-                </div>
-                <div class="card dash-card p-4 mb-3 shadow-none" style={{backgroundColor: "#fde9f1"}}>
+                </div>) : null
+                }
+
+                {
+                    props.amount >= 10000 ? ( <div class="card dash-card p-4 mb-3 shadow-none" style={{backgroundColor: "#fde9f1"}}>
                     <div class="card-body d-flex p-0">
                         <i class="icon-round-lg me-3 bg-primary feather-shopping-bag"></i>
-                        <h4 class="text-primary font-xl fw-700">₦12,000 <span
+                        <h4 class="text-primary font-xl fw-700">₦{props.amount} <span
                                 class="fw-500 mt-0 d-block text-grey-500 font-xssss">Current Earning</span>
                         </h4>
                     </div>
@@ -42,12 +44,15 @@ export default function Wallet() {
                         <p class="mb-0">Yay, you have hit the minimum payout. You are eligible to request pay out.</p>
                     </div>
 
-                </div>
+                </div>) : null
+                }
+
+               
 
                 <div class="card dash-card bg-grey p-4 mb-3 shadow-none">
                     <div class="card-body d-flex p-0">
                         <i class="icon-round-lg me-3 bg-greydark feather-dollar-sign"></i>
-                        <h4 class="text-grey-600 font-xl fw-700">₦0 <span
+                        <h4 class="text-grey-600 font-xl fw-700">₦{props.amount} <span
                                 class="fw-500 mt-0 d-block text-grey-500 font-xssss">Total Earning</span>
                         </h4>
                     </div>

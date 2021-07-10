@@ -131,7 +131,7 @@ function DashComponent(props) {
                                             <div class="col-sm-5">
                                                 <h4 class="post-single_title">{item.firstName} {item.lastName}  <span
                                                         class="post-single_date">
-                                                        Jun 10, 2021 at 02:12 PM</span></h4>
+                                                         { new Date(item.createdAt).toDateString()} at {new Date(item.createdAt).toLocaleTimeString()}</span></h4>
                                             </div>
                                             <div class="col-sm-5"><p>{item.email}</p></div>
                                             <div class="col-sm-2"> ₦{item.amount}</div>

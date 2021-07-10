@@ -264,8 +264,8 @@ function CreatorPage(props) {
                         </figure>
                                    
                                         <h4 class="card-creator-meta--author"> <a href="#">{firstName} {lastName}</a> <span
-                                                class="card-creator-meta--date">March 2,
-                                                2022</span></h4>
+                                                class="card-creator-meta--date">{ new Date(item.createdAt).toDateString()}
+                                                </span></h4>
 
                                     </div>
                                     <div class="card-body card-creator-image">

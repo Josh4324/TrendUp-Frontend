@@ -24,15 +24,12 @@ function Dashboard(props) {
     const [view, setView] = useState("dashboard");
     const [public1, setPublic1] = useState(true);
     const [support, setSupport] = useState(false);
-    const [onboard, setOnboard] = useState(null);
-    const [log, setLog] = useState(false);
     const [post, setPost] = useState(0);
     const [amount, setAmount] = useState(0);
     const [supporters, setSupporters] = useState([]);
     const [supportersNum, setSupportersNum] = useState(0)
     let history = useHistory();
-    const token = props.user.user.token
-    const onboard1 = props.user.user.onboardingStep
+    const token = props.user.user.token;
     const {firstName, picture, userName, onboardingStep} = props.data.user || ""
     let img1 = picture || "images/profile-image.jpg" ;
     const link = `/${userName}`
@@ -44,8 +41,6 @@ function Dashboard(props) {
 
     const setPostType = (value, bool) => {
         if (value === "public"){
-            console.log(value);
-            console.log(bool)
             setPublic1(bool)
             setSupport(false)
         }else{
@@ -58,12 +53,7 @@ function Dashboard(props) {
         localStorage.removeItem('trend-user');
         props.dispatch({  type: "LOGIN_FAILURE" })
         history.push("/login");
-        setLog(true);
     }
-
-  
-    
-
     const submit = async(evt) => {
         evt.preventDefault();
         const cred = {
@@ -244,7 +234,6 @@ function Dashboard(props) {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         user: state.auth,
         data: state.user

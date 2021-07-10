@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import {onDash,getCallModal, getCall} from '../utils/apiCalls';
+import {onDash, getStat,} from '../utils/apiCalls';
 import {connect} from 'react-redux';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { NotificationManager} from 'react-notifications';
@@ -21,6 +21,7 @@ import "../custom1.css";
 function WalletPage(props) {
     const [modal, setModal]  = useState(false);
     const [view, setView] = useState("dashboard");
+    const [amount, setAmount] = useState(0);
     const [public1, setPublic1] = useState(true);
     const [support, setSupport] = useState(false);
     const [onboard, setOnboard] = useState(null);
@@ -32,7 +33,6 @@ function WalletPage(props) {
     let img1 = picture || "images/profile-image.jpg" ;
     const link = `/${userName}`
     const newlink = "trendupp.com" + link
-    console.log(onboard1, "on")
 
 
     const setPage = (page) => {
@@ -71,8 +71,9 @@ function WalletPage(props) {
         setModal(false);
     }
 
-    useEffect(() => {
-        getCallModal(setModal, props.dispatch,token);
+    useEffect(async() => {
+        const stat = await getStat(token);
+        setAmount(stat.amount);
         
         return () => {
            
@@ -150,7 +151,7 @@ function WalletPage(props) {
         <div className="main-content right-chat-active" style={{backgroundColor:"unset"}}>
 
         {
-            <Wallet />
+            <Wallet  amount={amount}/>
         }
 
    

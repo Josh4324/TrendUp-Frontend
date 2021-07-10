@@ -1,15 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import {onDash,getCallModal, getCall} from '../utils/apiCalls';
+import {getCallModal, onboard2ImageCall, editCall} from '../utils/apiCalls';
 import {connect} from 'react-redux';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { NotificationManager} from 'react-notifications';
-import DashComponent from "../components/DashComponent";
-import Post from "../components/Post";
-import Supporter from "../components/Supporter";
-import PostView from "../components/PostView";
-import Wallet from "../components/Wallet";
-import Settings from "../components/Settings";
 import {Sidebar} from "./index";
 import { useHistory } from "react-router-dom";
 import {front} from "../utils/constants";
@@ -19,20 +13,51 @@ import "../style1.css";
 import "../custom1.css";
 
 function Details(props) {
+    const {firstName, lastName,websiteUrl,facebookLink,phoneNumber, twitterLink,instagramLink,youtubeLink, brandName, picture,creating,about, userName, onboardingStep} = props.data.user || ""
     const [modal, setModal]  = useState(false);
+    const [loader, setLoader] = useState(false);
     const [view, setView] = useState("dashboard");
     const [public1, setPublic1] = useState(true);
     const [support, setSupport] = useState(false);
     const [onboard, setOnboard] = useState(null);
+    const [loader1, setLoader1] = useState(false);
+    const [error, setError] = useState("");
     const [log, setLog] = useState(false);
+    const [brand, setBrand] = useState(brandName);
+    const [firstname, setFirstname] = useState(firstName);
+    const [lastname, setLastname] = useState(lastName);
+    const [website, setWebsite] = useState(websiteUrl);
+    const [created, setCreated] = useState(creating);
+    const [About, setAbout] = useState(about);
+    const [facebook, setFacebook] = useState(facebookLink);
+    const [twitter, setTwitter] = useState(twitterLink);
+    const [instagram, setInstagram] = useState(instagramLink);
+    const [youtube, setYoutube] = useState(youtubeLink);
+    const [number, setNumber] = useState(phoneNumber);
+    const [image, setImage] = useState(picture);
+
+
     let history = useHistory();
     const token = props.user.user.token
     const onboard1 = props.user.user.onboardingStep
-    const {firstName, picture, userName, onboardingStep} = props.data.user || ""
+    
     let img1 = picture || "images/profile-image.jpg" ;
     const link = `/${userName}`
-    const newlink = "trendupp.com" + link
-    console.log(onboard1, "on")
+    const newlink = "trendupp.com" + link;
+    let imageRef = useRef("");
+    
+
+    const imageSubmit = async(evt) => {
+        evt.preventDefault();
+
+        const file = imageRef.current.files[0];
+
+        let formData = new FormData();
+        formData.append("picture", file);
+
+
+        const result = await onboard2ImageCall(formData, setLoader1, token,setImage);
+    }
 
 
     const setPage = (page) => {
@@ -62,22 +87,25 @@ function Details(props) {
     
 
     const submit = async(evt) => {
-        evt.preventDefault();
-        const cred = {
-            showComplete: false
+        evt.preventDefault()
+        
+        let cred = {
+            brandName: brand,
+            firstName: firstname,
+            lastName: lastname,
+            websiteUrl: website,
+            phoneNumber: number,
+            about: About,
+            facebookLink: facebook,
+            twitterLink: twitter,
+            instagramLink: instagram,
+            youtubeLink: youtube,
+            creating: created
         }
-
-        const result = await onDash(cred,token);
-        setModal(false);
+        const result = await editCall(cred, setLoader, setError, props.dispatch, token);
     }
 
-    useEffect(() => {
-        getCallModal(setModal, props.dispatch,token);
-        
-        return () => {
-           
-        }
-    }, [])
+   
     return (
         <div className="dashboard-page" style={{background: "#f9f9f9"}}>
             <div className="main-wrapper">
@@ -168,12 +196,35 @@ function Details(props) {
                         <form class="userdetails-onboard-form" action="user_onboard3.html" method="GET">
 
                             <div class="form-group upload-input mb-4">
-                                <input type="file" name="file" id="file" class="input-file"/>
+                                <input type="file" ref={imageRef} onChange={imageSubmit} name="file" id="file" class="input-file"/>
                                 <label for="file"
                                     class="rounded-3 text-center bg-white btn-tertiary js-labelFile p-4 w-100 border-dashed">
+                                            {
+                                    image ?  
+                                    
+                                    <figure class="nav-content-image pic" 
+                                    style={{
+                                       backgroundImage: 'url('+image+')',
+                                       marginLeft:"auto",
+                                       marginRight:"auto",
+                                       width: "100px",
+                                       height: "100px"
+                                     }}
+                                  >
+                                   
+                                   </figure>
+                                    
+                                    : <div>
                                     <i class="ti-camera large-icon me-3 d-block"></i>
                                     <span class="js-fileName">Upload profile picture</span>
+                                    </div>
+                                    }
+                                    
                                 </label>
+                            </div>
+
+                            <div className={ loader1 === true ? "loader" : "none"}>
+                                <div >Loading...</div>
                             </div>
     
                             <div class="row">
@@ -185,28 +236,28 @@ function Details(props) {
                             <div class="row">
                                 <div class="col-lg-12 mb-2">
                                     <div class="form-group">
-                                        <input type="text" class="form-control style2-input" placeholder="Brand Name"/>
+                                        <input type="text" required onChange={(evt) => setBrand(evt.target.value) } value={brand} class="form-control style2-input" placeholder="Brand Name"/>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-2">
                                     <div class="form-group">
-                                        <input type="text" class="form-control style2-input" placeholder="First Name"/>
+                                        <input type="text" required onChange={(evt) => setFirstname(evt.target.value) } value={firstname} class="form-control style2-input" placeholder="First Name"/>
                                     </div>
                                 </div>
     
                                 <div class="col-md-6 mb-2">
                                     <div class="form-group">
-                                        <input type="text" class="form-control style2-input" placeholder="Last Name"/>
+                                        <input type="text" required onChange={(evt) => setLastname(evt.target.value) } value={lastname} class="form-control style2-input" placeholder="Last Name"/>
                                     </div>
                                 </div>
                             </div>
-    
+
                             <div class="row">
                                 <div class="col-lg-12 mb-2">
                                     <div class="form-group">
-                                        <input type="text" class="form-control style2-input" placeholder="Website URL"/>
+                                        <input type="text" required value={number}  onChange={(evt) => setNumber(evt.target.value) } class="form-control style2-input" pattern="[0-9]+" title="Only numbers are allowed"  placeholder="Phone Number"/>
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +267,7 @@ function Details(props) {
                                 <div class="col-lg-12 mb-2">
                                     <div class="form-group">
                                         <label class="mb-2">What are you creating?</label>
-                                        <input type="text" class="form-control style2-input" placeholder="creating piano music, building Coronarelief.org, posting a new art everyday"/>
+                                        <input type="text" onChange={(evt) => setCreated(evt.target.value) } value={created} class="form-control style2-input" placeholder="creating piano music, building Coronarelief.org, posting a new art everyday"/>
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +277,7 @@ function Details(props) {
                                 <div class="col-lg-12 mb-3">
                                     <label class="mb-2">About me</label>
                                     <textarea class="form-control mb-0 p-3 h100 bg-greylight lh-16" rows="5"
-                                        placeholder="Hey 👋 I just created a page here. You can now buy me a coffee!" spellcheck="false"></textarea>
+                                      value={About} onChange={(evt) => setAbout(evt.target.value) }  placeholder="Hey 👋 I just created a page here. You can now buy me a coffee!" spellcheck="false"></textarea>
                                 </div>
     
                             </div>
@@ -239,45 +290,52 @@ function Details(props) {
                                 <div class="col-12 mb-2">
                                     <div class="form-group form-group-icon social-platform-input">
                                         <span class="input-icon"><img src="images/icon-twitter.svg" alt=""/></span>
-                                        <input type="text" class="form-control style2-input" placeholder="username"/>
+                                        <input type="text" class="form-control style2-input" onChange={(evt) => setTwitter(evt.target.value) } value={twitter} placeholder="username"/>
                                         <span class="social-platform-input-text">@</span>
                                     </div>
                                 </div>
                                 <div class="col-12 mb-2">
                                     <div class="form-group form-group-icon social-platform-input">
                                         <span class="input-icon"><img src="images/Instagram_AppIcon_Aug2017.png" alt=""/></span>
-                                        <input type="text" class="form-control style2-input" placeholder="username"/>
+                                        <input type="text" class="form-control style2-input" onChange={(evt) => setInstagram(evt.target.value) } value={instagram} placeholder="username"/>
                                         <span class="social-platform-input-text">@</span>
                                     </div>
                                 </div>
                                 <div class="col-12 mb-2">
                                     <div class="form-group form-group-icon social-platform-input">
                                         <span class="input-icon"><img src="images/icon-youtube.svg" alt=""/></span>
-                                        <input type="text" class="form-control style2-input" placeholder="username"/>
+                                        <input type="text" class="form-control style2-input" onChange={(evt) => setYoutube(evt.target.value) } value={youtube} placeholder="username"/>
                                         <span class="social-platform-input-text">@</span>
                                     </div>
                                 </div>
                                 <div class="col-12 mb-2">
                                     <div class="form-group form-group-icon social-platform-input">
                                         <span class="input-icon"><img src="images/icon-facebook.svg" alt=""/></span>
-                                        <input type="text" class="form-control style2-input" placeholder="username"/>
+                                        <input type="text" class="form-control style2-input" onChange={(evt) => setFacebook(evt.target.value) } value={facebook} placeholder="username"/>
                                         <span class="social-platform-input-text">@</span>
                                     </div>
                                 </div>
                                 <div class="col-12 mb-2">
                                     <div class="form-group form-group-icon social-platform-input">
                                         <span class="input-icon"><img src="images/globe.svg" alt=""/></span>
-                                        <input type="text" class="form-control style2-input" placeholder="website url"/>
+                                        <input type="text" class="form-control style2-input" onChange={(evt) => setWebsite(evt.target.value) } value={website} placeholder="website url"/>
                                         
                                     </div>
                                 </div>
+                            </div>
+
+                            <div className={ error.length > 0 ? "alert alert-danger" : "none" }>
+                                                <div >{error}</div>
+                            </div>
+                            <div className={ loader === true ? "loader" : "none"}>
+                                <div >Loading...</div>
                             </div>
     
                             <div class="row">
     
                                 <div class="col-lg-12">
     
-                                    <button type="submit"
+                                    <button type="submit" onClick={submit}
                                         class="form-control style2-input style2-main-button">Update User Details</button>
                                 </div>
                             </div>
