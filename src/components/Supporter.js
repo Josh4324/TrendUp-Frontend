@@ -1,9 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {onDash,getCallModal, getStat, getCall} from '../utils/apiCalls';
+import { Link } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import {connect} from 'react-redux';
 
-export default function Supporter(props) {
+function Supporter(props) {
     const [supporters, setSupporters] = useState([]);
-    const [supportersNum, setSupportersNum] = useState(0)
+    const [supportersNum, setSupportersNum] = useState(0);
+    let history = useHistory();
+    const generateLink = (email) => {
+        props.dispatch({ type: "SEND_EMAIL", payload: email});
+        history.push('/support-history')
+    }
     useEffect(async() => {
         const stat = await getStat(props.token);
         setSupportersNum(stat.supporters_number);
@@ -54,7 +62,10 @@ export default function Supporter(props) {
                                         <a href="#" class="dropdown-menu-link ms-auto" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false"><i class="ti-more-alt text-grey-900 btn-round-md bg-greylight font-xss"></i></a>
                                         <div class="dropdown-menu dropdown-menu-end p-4 rounded-xxl border-0 shadow-md" aria-labelledby="dropdownMenu2">
                                             <div class="card-body p-0">
-                                                <a href="support_history.html" class="d-block font-xsss text-grey-600 mt-0">View Support History</a>
+                                                <Link onClick={(evt) => {
+                                                    evt.preventDefault();
+                                                    generateLink(item.email)
+                                                    }} class="d-block font-xsss text-grey-600 mt-0">View Support History</Link>
                                             </div>
                                         </div>
 
@@ -76,3 +87,12 @@ export default function Supporter(props) {
         </div>
     )
 }
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.auth,
+        data: state.user
+    }
+  }
+  
+  export default connect(mapStateToProps)(Supporter);
