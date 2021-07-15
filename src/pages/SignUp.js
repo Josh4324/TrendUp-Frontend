@@ -85,10 +85,10 @@ function SignUp(props) {
 
                         <div className="col-sm-12 social-login">
                             
-                            <a href="#" className="social-login-icon">
+                            <Link to="/auth/google" className="social-login-icon">
                                 <img src="images/icon-google.svg" alt="google icon" className="" />
                                
-                            </a>
+                            </Link>
                             <a href="#" className="social-login-icon">
                                 <img src="images/icon-facebook.svg" alt="google icon" className=""/>
                                 

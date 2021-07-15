@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import {onDash,getCallModal, getCall} from '../utils/apiCalls';
+import {onDash,getCallModal, getCall,resetPasswordCall} from '../utils/apiCalls';
 import {connect} from 'react-redux';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { NotificationManager} from 'react-notifications';
@@ -21,6 +21,8 @@ import "../custom1.css";
 function ResetPassword(props) {
     const [modal, setModal]  = useState(false);
     const [view, setView] = useState("dashboard");
+    const [loader, setLoader] = useState(false);
+    const [error, setError] = useState(false);
     const [public1, setPublic1] = useState(true);
     const [support, setSupport] = useState(false);
     const [onboard, setOnboard] = useState(null);
@@ -31,8 +33,10 @@ function ResetPassword(props) {
     const {firstName, picture, userName, onboardingStep} = props.data.user || ""
     let img1 = picture || "images/profile-image.jpg" ;
     const link = `/${userName}`
-    const newlink = "trendupp.com" + link
-    console.log(onboard1, "on")
+    let oldPasswordRef = useRef("");
+    let newPasswordRef = useRef("");
+    let confirmPasswordRef = useRef("");
+
 
 
     const setPage = (page) => {
@@ -59,16 +63,20 @@ function ResetPassword(props) {
     }
 
   
-    
-
     const submit = async(evt) => {
-        evt.preventDefault();
-        const cred = {
-            showComplete: false
-        }
+        evt.preventDefault()
 
-        const result = await onDash(cred,token);
-        setModal(false);
+        if (newPasswordRef.current.value !== confirmPasswordRef.current.value){
+            NotificationManager.error("Password do not match", "Error")
+        }else{
+            let cred = {
+                oldPassword: oldPasswordRef.current.value,
+                newPassword: newPasswordRef.current.value
+             }
+             const result = await resetPasswordCall(cred, token);
+        }
+        
+       
     }
 
     useEffect(() => {
@@ -164,7 +172,7 @@ function ResetPassword(props) {
                     <div class="settings-userdetails-section">
                         <h2 class="useronboard-title mt-4 mb-4">Change Password</h2>
                         
-                        <form class="mw-400 mx-auto" action="user_onboard3.html" method="GET">
+                        <form class="mw-400 mx-auto">
 
     
                             <div class="row">
@@ -176,7 +184,7 @@ function ResetPassword(props) {
                             <div class="row">
                                 <div class="col-lg-12 mb-2">
                                     <div class="form-group">
-                                        <input type="text" class="form-control style2-input" placeholder=""/>
+                                        <input type="password" ref={oldPasswordRef} class="form-control style2-input" placeholder=""/>
                                     </div>
                                 </div>
                             </div>
@@ -190,7 +198,7 @@ function ResetPassword(props) {
                             <div class="row">
                                 <div class="col-lg-12 mb-2">
                                     <div class="form-group">
-                                        <input type="text" class="form-control style2-input" placeholder=""/>
+                                        <input type="password" ref={newPasswordRef} class="form-control style2-input" placeholder=""/>
                                     </div>
                                 </div>
                             </div>
@@ -204,7 +212,7 @@ function ResetPassword(props) {
                             <div class="row">
                                 <div class="col-lg-12 mb-2">
                                     <div class="form-group">
-                                        <input type="text" class="form-control style2-input" placeholder=""/>
+                                        <input type="password" ref={confirmPasswordRef} class="form-control style2-input" placeholder=""/>
                                     </div>
                                 </div>
                             </div>
@@ -213,7 +221,7 @@ function ResetPassword(props) {
     
                                 <div class="col-lg-12">
     
-                                    <button type="submit"
+                                    <button type="submit" onClick={submit}
                                         class="form-control style2-input style2-main-button">Update Password</button>
                                 </div>
                             </div>

@@ -449,9 +449,11 @@ export const deletePostCall = async (postId, token) => {
         const res = await axios.delete(`${http}/api/v1/post/${postId}`);
         if (res){
            NotificationManager.success("Post deleted successfully", "Success")
+           window.location.reload()
         }
     }catch(err){
         NotificationManager.error("Unable to delete Post", "Error");
+        window.location.reload()
     }
 };
 
@@ -461,9 +463,23 @@ export const editPostCall = async (userCredential,postId, token) => {
         const res = await axios.patch(`${http}/api/v1/post/${postId}`, userCredential);
         if (res){
            NotificationManager.success("Post edited successfully", "Success")
+           window.location.reload()
         }
     }catch(err){
-        NotificationManager.error("Unable to edit Post", "Error")
+        NotificationManager.error("Unable to edit Post", "Error");
+        window.location.reload()
+    }
+};
+
+export const resetPasswordCall = async (userCredential, token) => {
+    try {
+        axios.defaults.headers.common['Authorization'] = "JWT " + token;
+        const res = await axios.patch(`${http}/api/v1/user/reset`, userCredential);
+        if (res){
+           NotificationManager.success("Password reset successfully", "Success")
+        }
+    }catch(err){
+        NotificationManager.error("Old password incorrect or an error occurred", "Error");
     }
 };
 
