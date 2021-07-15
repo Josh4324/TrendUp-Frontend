@@ -1,13 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import {onDash,getCallModal, getCall} from '../utils/apiCalls';
+import {onDash,getCallModal, getCall,deletePostCall} from '../utils/apiCalls';
 import {connect} from 'react-redux';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { NotificationManager} from 'react-notifications';
-import DashComponent from "../components/DashComponent";
-import Post from "../components/Post";
-import Supporter from "../components/Supporter";
 import PostView from "../components/PostView";
+import Post from "../components/Post";
+import EditPost from "../components/EditPost";
 import Wallet from "../components/Wallet";
 import Settings from "../components/Settings";
 import {Sidebar} from "./index";
@@ -21,6 +18,8 @@ import "../custom1.css";
 function PostPage(props) {
     const [modal, setModal]  = useState(false);
     const [view, setView] = useState("dashboard");
+    const [postData, setPostData] = useState({});
+    const [postId, setPostId] = useState(null);
     const [public1, setPublic1] = useState(true);
     const [support, setSupport] = useState(false);
     const [onboard, setOnboard] = useState(null);
@@ -30,6 +29,10 @@ function PostPage(props) {
     const {firstName, picture, userName} = props.data.user || ""
     const link = `/${userName}`
     const newlink = "trendupp.com" + link
+
+    const deletePost = (postId) => {
+        deletePostCall(postId, token )
+    }
 
     const setPage = (page) => {
         setView(page);
@@ -145,59 +148,41 @@ function PostPage(props) {
         <div className="main-content right-chat-active" style={{backgroundColor:"unset"}}>
 
         {
-            <PostView />
+             view === "post" ?  <Post public1={public1} support={support} postData={postData} /> : 
+             view === "edit" ?  <EditPost public1={public1} support={support} postData={postData} /> : 
+            <PostView setModal={setModal} setView={setView} setPostData={setPostData} setPostId={setPostId}/>
+            
         }
 
    
 </div>
 
 
-{
-    modal === true ? ( 
-    <div className="popup-wrapper" id="popupWrapper">
-    <div className="popup-blocker" id="popupBlocker"></div>
-    <div className="popup-body mw-600 mx-auto bg-white p-5 rounded-xxl">
-        <span className="popup-del" id="popupDel"><i className="feather-x" onClick={submit}></i></span>
-        <i className="ti-check btn-round-lg bg-success mx-auto d-block text-white font-md fw-600 mx-auto"></i>
-        <h2 className="font-lg fw-700 text-center mt-4">Congratulations</h2>
-        <h4 className="useronboard-subtitle mb-4">You’ve successfully created a profile. <br/>Share your page with your
-            audience to get supporters</h4>
-
-        <div className="form-group form-group-icon choose-link-input mw-400 mx-auto">
-            <span className="choose-link-input-icon input-icon"><img src="images/trendupp-icon.png" alt=""/></span>
-            <span className="choose-link-input-text">trendupp.com/</span>
-            <input type="text" className="form-control style2-input" style={{paddingLeft:"140px"}} placeholder={userName} disabled />
-            <CopyToClipboard text={newlink}
-            onCopy={() => NotificationManager.success('Copied to clipboard', 'Success')}
-            >
-                    <span className="input-icon-e copy-button" style={{paddingTop: "0px"}}> Tap to Copy</span>
-            </CopyToClipboard>
-        </div>
-
-        <div className="onboard-complete-share-section mt-4 pt-2">
-
-            <h4 className="fw-600 mb-3">Share on</h4>
-            <Link className="share-button" to="#">
-                <img src="images/icon-twitter.svg" alt="" />
-            </Link>
-
-            <Link className="share-button" to="#">
-                <img src="images/icon-facebook.svg" alt="" />
-            </Link>
-
-            <Link className="share-button" to="#">
-                <img src="images/icon-whatsapp.svg" alt="" />
-            </Link>
-        </div>
-
-    </div>
-</div>
-) 
-: null
-}
-
  
-</div>               
+</div>   
+{
+                    modal ? ( <div class="popup-wrapper pt-0" id="popupWrapper">
+                    <div class="popup-blocker" id="popupBlocker"></div>
+                    <div class="popup-body card mw-400 mx-auto bg-white p-5 rounded-xxl">
+            
+                        <span class="popup-del" onClick={() => setModal(false)} id="popupDel"><i class="feather-x"></i></span>
+                        <div class="card-body">
+                            
+                            <h2 class="mb-4 text-center">Are you sure you want to delete this post?</h2>
+                            
+                            <div class="row">
+                                <div class="col-12 mb-3" onClick={() => deletePost(postId)}><span  class="btn d-block w-100">Confirm</span></div>
+                                <div class="col-12"><span onClick={() => setModal(false)}  class="btn btn-grey d-block w-100">Cancel</span></div>
+                            </div>
+                                
+                        </div>
+            
+            
+            
+                    </div>
+                </div>
+            ) : null
+                }            
         </div>
                 
     )

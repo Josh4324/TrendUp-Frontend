@@ -443,6 +443,29 @@ export const editCall = async (userCredential, setLoader, setError, dispatch, to
     }
 };
 
+export const deletePostCall = async (postId, token) => {
+    try {
+        axios.defaults.headers.common['Authorization'] = "JWT " + token;
+        const res = await axios.delete(`${http}/api/v1/post/${postId}`);
+        if (res){
+           NotificationManager.success("Post deleted successfully", "Success")
+        }
+    }catch(err){
+        NotificationManager.error("Unable to delete Post", "Error");
+    }
+};
+
+export const editPostCall = async (userCredential,postId, token) => {
+    try {
+        axios.defaults.headers.common['Authorization'] = "JWT " + token;
+        const res = await axios.patch(`${http}/api/v1/post/${postId}`, userCredential);
+        if (res){
+           NotificationManager.success("Post edited successfully", "Success")
+        }
+    }catch(err){
+        NotificationManager.error("Unable to edit Post", "Error")
+    }
+};
 
 
 

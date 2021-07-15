@@ -151,6 +151,7 @@ function WalletPage(props) {
         <div className="main-content right-chat-active" style={{backgroundColor:"unset"}}>
 
         {
+             view === "post" ?  <Post public1={public1} support={support} /> : 
             <Wallet  amount={amount}/>
         }
 

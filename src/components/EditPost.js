@@ -1,37 +1,35 @@
 import React, {useState, useRef} from 'react';
-import {postCall} from '../utils/apiCalls';
+import {postCall, editPostCall} from '../utils/apiCalls';
 import {connect} from 'react-redux';
 import { useHistory } from "react-router-dom";
 
-function Post(props) {
+function EditPost(props) {
     const titleRef = useRef("");
     const messageRef = useRef("");
     const imageRef = useRef("");
     const [loader, setLoader] = useState(false);
     const [name, setName] = useState("");
+    let {title, message, image, id} = props.postData || '';
+    const [title1, setTitle1] = useState(title)
+    const [message1, setMessage1] = useState(message);
     const token = props.user.user.token
+    
     let history = useHistory();
     const setImage = () => {
+
         setName(imageRef.current.files[0].name)
     }
 
-    const onPost = async(evt) => {
+    const editPost = async(evt) => {
         evt.preventDefault();
-        let postType
-        if (props.public1 === true){
-            postType = "public"
-        }else if (props.support === true){
-            postType = "supporter"
+
+        const cred = {
+            title: title1,
+            message: message1
         }
        
-        let formData = new FormData();
         
-        formData.append("title", titleRef.current.value);
-        formData.append("message", messageRef.current.value);
-        formData.append("postType", postType);
-        formData.append("image", imageRef.current.files[0])
-        
-        const result = await postCall(formData, setLoader, token, history);
+        const result = await editPostCall(cred, id, token, history);
         
     }
     return (
@@ -70,7 +68,7 @@ function Post(props) {
                                     <div class="row">
                                         <div class="col-lg-12 mb-2">
                                             <div class="form-group">
-                                                <input type="text" ref={titleRef} class="form-control style2-input" placeholder=""/>
+                                                <input type="text" value={title1} onChange={(evt) => setTitle1(evt.target.value)} ref={titleRef} class="form-control style2-input" placeholder=""/>
                                             </div>
                                         </div>
                                     </div>
@@ -81,28 +79,13 @@ function Post(props) {
             
                                         <div class="col-lg-12 mb-3">
                                             <label class="mb-2">Message</label>
-                                            <textarea ref={messageRef} class="form-control mb-0 h-400"></textarea>
+                                            <textarea value={message1}  onChange={(evt) => setMessage1(evt.target.value)} ref={messageRef} class="form-control mb-0 h-400"></textarea>
                                         </div>
             
                                     </div>
-
-                                    <div class="row">
-                                        <div class="col-12 col-md-4">
-                                            
-                                    <div class="form-group upload-input mb-4">
-                                        <input type="file" ref={imageRef} onChange={setImage} name="file" id="file" class="input-file"/>
-                                        <label for="file"
-                                            class="rounded-3 text-center bg-white btn-tertiary js-labelFile p-4 w-100 border-dashed">
-                                            {
-                                                name === "" ?  (<i class="ti-camera large-icon me-3 d-block"></i>) : name
-                                            }
-                                            
-                                            <span class="js-fileName">Upload featured Image</span>
-                                        </label>
-                                    </div>
-                                        </div>
-                                    </div>
                                     
+                                    
+                                   
                                     <div className={ loader === true ? "loader" : "none"}>
                                         <div >Loading...</div>
                                     </div>
@@ -111,8 +94,8 @@ function Post(props) {
             
                                         <div class="col-lg-12">
             
-                                            <button type="submit" onClick={onPost}
-                                                class="form-control style2-input style2-main-button">Publish</button>
+                                            <button type="submit" onClick={editPost}
+                                                class="form-control style2-input style2-main-button">Edit Post</button>
                                         </div>
                                     </div>
                                 </form>
@@ -136,4 +119,4 @@ const mapStateToProps = (state) => {
     }
   }
   
-  export default connect(mapStateToProps)(Post);
+  export default connect(mapStateToProps)(EditPost);

@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {getPost} from '../utils/apiCalls';
+import {getPost, deletePostCall} from '../utils/apiCalls';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -7,9 +7,12 @@ import { Link } from 'react-router-dom';
 function PostView(props) {
     const [userPost, setUserPost] = useState([]);
     const [viewPost, setViewPost] = useState(null);
+    const [view, setView] = useState("dashboard");
+    const [modal, setModal] = useState(false);
     const token = props.user.user.token
     let {picture} = props.data.user || ""
     picture =  picture || "images/profile.jpg";
+
 
     
     useEffect(async() => {
@@ -25,7 +28,9 @@ function PostView(props) {
     }, [])
     return (
         <div>
-                 <div class="">
+        <div class="">
+
+            
 
 <div class="middle-sidebar-bottom" style={{paddingLeft: "20px"}}>
     <div class="middle-sidebar-left">
@@ -34,7 +39,7 @@ function PostView(props) {
             <div class="col-12">
                 <div class="card dash-card dash-card__records dash-card__posts">
                     {
-                        viewPost !== null ? (<span onClick={() => setViewPost(null)}  class="back-btn">
+                        viewPost !== null ? (<span onClick={() => setViewPost(null)} style={{cursor:"pointer"}}  class="back-btn">
                         <h3 class="card-title mb-3">Post</h3>
                         </span>) : null
                     }
@@ -57,13 +62,20 @@ function PostView(props) {
                             <span class="dropdown-menu-link ms-auto" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false"><i class="ti-more-alt text-grey-900 btn-round-md bg-greylight font-xss"></i></span>
                             <div class="dropdown-menu dropdown-menu-end p-4 rounded-xxl border-0 shadow-md" aria-labelledby="dropdownMenu2">
                                 <div class="card-body p-0">
-                                    <span onClick={() => {setViewPost(item)}} class="d-block font-xsss text-grey-600 mt-0">View Post</span>
+                                    <span onClick={() => {setViewPost(item)}} style={{cursor:"pointer"}} class="d-block font-xsss text-grey-600 mt-0">View Post</span>
                                 </div>
                                 <div class="card-body p-0 mt-2">
-                                    <a href="#" class="d-block font-xsss text-grey-600 mt-0">Edit</a>
+                                    <span href="#" style={{cursor:"pointer"}} onClick={() => {
+                                        props.setView('edit');
+                                        props.setPostData(item);
+                                    }
+                                        } class="d-block font-xsss text-grey-600 mt-0">Edit</span>
                                 </div>
                                 <div class="card-body p-0 mt-2">
-                                    <a href="#" class="deleteBtn d-block font-xsss text-danger mt-0">Delete</a>
+                                    <span onClick={() => {
+                                        props.setModal(true);
+                                        props.setPostId(item.id);
+                                        }} style={{cursor:"pointer"}} class="deleteBtn d-block font-xsss text-danger mt-0">Delete</span>
                                 </div>
                             </div>
                     </div>
@@ -93,18 +105,13 @@ function PostView(props) {
                     </div>
                     <div class="card-body p-0 me-lg-5">
                         <a href="#">
-                            <h3 class="card-creator-title">{viewPost.title}</h3>
+                            <h3 class="card-creator-title mt-3">{viewPost.title}</h3>
                             <p class="card-creator-text">{viewPost.message}</p>
                         </a>
                     </div>
                 </div>
             ) : null
-                }
-
-                       
-                    
-                                
-                                
+                }  
                
             
                 </div>
@@ -115,8 +122,15 @@ function PostView(props) {
     </div>
 
 </div>
+
+
+
 </div>
+
+        
+                
         </div>
+        
     )
 }
 
