@@ -6,11 +6,22 @@ import { useHistory } from "react-router-dom";
 import { NotificationManager} from 'react-notifications';
 
 function PrivateRoute({ component: Component, props, dispatch, ...rest }) {
-    let user = rest.user
+    let user
+    if (rest.location.search){
+        let data = {
+            token : rest.location.search.slice(6,-1)
+        }
+
+        localStorage.setItem('trend-user', JSON.stringify(data))
+        user = "something"
+    }else{
+        user = rest.user
+    }
+   
     let history = useHistory();
 
     
-        if (user !== null){
+        if (user !== null && user !== "something"){
             const decoded = jwt_decode(user.token);
       
             const expirationTime = new Date()/1000;

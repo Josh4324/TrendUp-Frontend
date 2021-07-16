@@ -1,5 +1,6 @@
 import React, {useState,useRef} from 'react';
 import { Link } from 'react-router-dom';
+import axios from "axios";
 import Login from '../components/Login';
 import {signupCall, verificationCall, resendCall} from '../utils/apiCalls';
 import { useHistory } from "react-router-dom";
@@ -46,6 +47,17 @@ function SignUp(props) {
         const result = await verificationCall(cred,setLoader,setError,history, props.dispatch);
     }
 
+    const callback = async() => {
+        try{
+            const res = await axios.get(`http://localhost:8080/auth/google`);
+            if (res){
+               console.log(res)
+            }
+        }catch(err){
+
+        }
+    }
+
     const resend = async(evt) => {
         evt.preventDefault();
 
@@ -85,10 +97,10 @@ function SignUp(props) {
 
                         <div className="col-sm-12 social-login">
                             
-                            <Link to="/auth/google" className="social-login-icon">
+                            <a href="http://localhost:8080/auth/google" className="social-login-icon">
                                 <img src="images/icon-google.svg" alt="google icon" className="" />
                                
-                            </Link>
+                            </a>
                             <a href="#" className="social-login-icon">
                                 <img src="images/icon-facebook.svg" alt="google icon" className=""/>
                                 
