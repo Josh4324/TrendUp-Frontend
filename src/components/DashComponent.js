@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import { Link } from 'react-router-dom';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
@@ -6,14 +6,16 @@ import { NotificationManager} from 'react-notifications';
 import { useHistory } from "react-router-dom";
 
 function DashComponent(props) {
-    const {firstName, picture, userName} = props.data.user || ""
-    const link = `/${userName}`
-    const newlink = "trendupp.com" + link
+    const {firstName, picture, userName} = props.data.user || "";
+    const link = `/${userName}`;
+    const newlink = "trendupp.com" + link;
     let history = useHistory();
     const generateLink = (email) => {
         props.dispatch({ type: "SEND_EMAIL", payload: email});
         history.push('/support-history')
     }
+
+   
     return (
         <div>
              <div className="middle-sidebar-bottom" style={{paddingLeft: "20px"}}>
@@ -25,7 +27,12 @@ function DashComponent(props) {
                         <div className="card-body d-flex p-0">
                             <i
                                 className="btn-round-lg d-inline-block me-3 bg-primary feather-shopping-bag font-md text-white"></i>
-                            <h4 className="text-primary font-xl fw-700">₦{props.amount}<span
+                            <h4 className="text-primary font-xl fw-700">
+                            {
+                                props.amount === "" ?  <div className="loader">
+                                                        <div >Loading...</div>
+                                                    </div> : "₦" + props.amount
+                            }<span
                                     className="fw-500 mt-0 d-block text-grey-500 font-xssss">Current Earning</span>
                             </h4>
                         </div>
@@ -36,8 +43,14 @@ function DashComponent(props) {
                         style={{backgroundColor: "#ffeee6"}}>
                         <div className="card-body d-flex p-0">
                             <i
-                                className="btn-round-lg d-inline-block me-3 bg-secondary feather-heart font-md text-white"></i>
-                            <h4 className="text-secondary font-xl fw-700">{props.supportersNum}<span
+                                className="btn-round-lg d-inline-block me-4 bg-secondary feather-heart font-md text-white"></i>
+                            <h4 className="text-secondary font-xl fw-700">
+                                {
+                                props.supportersNum === "" ? <div className="loader" style={{marginLeft:"40px"}}>
+                                <div>Loading...</div>
+                            </div> : props.supportersNum
+                                }
+                                <span
                                     className="fw-500 mt-0 d-block text-grey-500 font-xssss">Supported</span></h4>
                         </div>
                     </div>
@@ -47,14 +60,26 @@ function DashComponent(props) {
                                 <div class="card-body d-flex p-0">
                                     <i
                                         class="icon-round-lg me-3 bg-greydark feather-file"></i>
-                                    <h4 class="text-grey-600 font-xl fw-700">{props.post}<span
+                                    <h4 class="text-grey-600 font-xl fw-700">{
+                                    props.post === "" ? <div className="loader" style={{marginLeft:"40px"}}>
+                                    <div>Loading...</div>
+                                </div> : props.post
+                                    }<span
                                             class="fw-500 mt-0 d-block text-grey-500 font-xssss">Posts</span></h4>
                                 </div>
                             </div>
                         </div>
             </div>
             {
-                props.supportersNum === 0 ?
+                props.supportersNum === "" ?  
+                <div className="card w-100 border-0 shadow-1 p-4_5 rounded-xxl mb-3" >
+                <div className="loader" style={{marginTop: "20px", marginBottom: "40px"}}>
+                        <div >Loading...</div>
+                 </div></div> : null
+            }
+           
+            {
+               props.supportersNum === 0 ?
             
             <div className="row">
                 <div className="col-lg-12">
@@ -107,7 +132,7 @@ function DashComponent(props) {
                 : null
             }
              {
-                props.supportersNum > 0 ?
+               props.supportersNum > 0 ?
             <div class="row">
                         <div class="col-12">
                             <div class="card dash-card dash-card__records dash-card__supporters">

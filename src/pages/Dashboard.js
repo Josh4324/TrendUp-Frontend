@@ -24,10 +24,10 @@ function Dashboard(props) {
     const [view, setView] = useState("dashboard");
     const [public1, setPublic1] = useState(true);
     const [support, setSupport] = useState(false);
-    const [post, setPost] = useState(0);
-    const [amount, setAmount] = useState(0);
+    const [post, setPost] = useState("");
+    const [amount, setAmount] = useState("");
     const [supporters, setSupporters] = useState([]);
-    const [supportersNum, setSupportersNum] = useState(0)
+    const [supportersNum, setSupportersNum] = useState("");
     let history = useHistory();
     const token = props.user.user.token;
     const {firstName, picture, userName, onboardingStep} = props.data.user || ""

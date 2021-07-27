@@ -1,12 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import {editCall} from '../utils/apiCalls';
+import {editCall,getCallModal} from '../utils/apiCalls';
 import NotificationManager from 'react-notifications/lib/NotificationManager';
 import {connect} from 'react-redux';
 import banks from "../utils/bank";
 import {Sidebar} from "./index";
 import { useHistory } from "react-router-dom";
 import {front} from "../utils/constants";
+import jwt_decode from "jwt-decode";
 import "../themify-icons.css";
 import "../feather.css";
 import "../style1.css";
@@ -29,10 +30,36 @@ function Bank(props) {
     let history = useHistory();
     const token = props.user.user.token
     const onboard1 = props.user.user.onboardingStep
-    const {firstName, picture, userName, bankName, accName, accNumber, onboardingStep} = props.data.user || "";
+    let {firstName, picture, userName, bankName, accName, accNumber, onboardingStep} = props.data.user || "";
     const [name, setName] = useState(accName);
     const [number, setNumber] = useState(accNumber);
     const bankList = Object.entries(banks);
+
+    useEffect( async() => {
+        let user = JSON.parse(localStorage.getItem("trend-user"));
+        if (user !== null){
+            const decoded = jwt_decode(user.token);
+            const expirationTime = new Date()/1000;
+
+            if (expirationTime >= decoded.exp){
+                user = null;
+                props.dispatch({ type: "LOGIN_SUCCESS", payload: null });
+                localStorage.removeItem('trend-user');
+                NotificationManager.error("Session has expired, please log in again", "Error", 10000);
+                history.push("/login")
+            }
+        }
+        const res = await getCallModal(setModal, props.dispatch,token);
+        if (res){
+            setNumber(res.accNumber);
+            setBankCode(res.bankName);
+        }
+        return () => {
+           
+        }
+    }, [])
+
+
     let bank,bankcode
     if (bankList){
         bankList.map((item) => {
@@ -219,7 +246,7 @@ function Bank(props) {
                                         <div className="form-group">
                                             
                                             <select name="" id=""  className="form-control form-select style2-input">
-                                            <option value="">{bank}</option>
+                                            <option value={bankName}>{bank}</option>
                                                 {
                                                     Object.entries(banks).map((item) => {
                                                         return <option onChange={() => setBankCode(item[1])}  value={item[1]}>{item[0]}</option>

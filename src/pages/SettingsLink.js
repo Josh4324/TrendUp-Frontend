@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import {editCall,userVerify} from '../utils/apiCalls';
+import {editCall,getCallModal,userVerify} from '../utils/apiCalls';
 import {connect} from 'react-redux';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { NotificationManager} from 'react-notifications';
 import {Sidebar} from "./index";
 import { useHistory } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 import {front} from "../utils/constants";
 import "../themify-icons.css";
 import "../feather.css";
@@ -31,6 +32,31 @@ function SettingsLink(props) {
     let img1 = picture || "images/profile-image.jpg" ;
     const link = `/${userName}`
     const newlink = "trendupp.com" + link
+
+    useEffect( async() => {
+        let user = JSON.parse(localStorage.getItem("trend-user"));
+        if (user !== null){
+            const decoded = jwt_decode(user.token);
+            const expirationTime = new Date()/1000;
+
+            if (expirationTime >= decoded.exp){
+                user = null;
+                props.dispatch({ type: "LOGIN_SUCCESS", payload: null });
+                localStorage.removeItem('trend-user');
+                NotificationManager.error("Session has expired, please log in again", "Error", 10000);
+                history.push("/login")
+            }
+        }
+        const res = await getCallModal(setModal, props.dispatch,token);
+        if (res){
+            setUsername(res.userName)
+        }
+        console.log(res)
+        return () => {
+           
+        }
+    }, [])
+
     const changeUsername = (evt) => {
         setUsername(evt.target.value);
         usernameCheck(evt.target.value);

@@ -6,10 +6,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { NotificationManager} from 'react-notifications';
 import DashComponent from "../components/DashComponent";
 import Post from "../components/Post";
-import Supporter from "../components/Supporter";
-import PostView from "../components/PostView";
 import Wallet from "../components/Wallet";
-import Settings from "../components/Settings";
 import {Sidebar} from "./index";
 import { useHistory } from "react-router-dom";
 import {front} from "../utils/constants";
@@ -213,7 +210,6 @@ function WalletPage(props) {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         user: state.auth,
         data: state.user

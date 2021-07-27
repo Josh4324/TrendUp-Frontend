@@ -37,10 +37,10 @@ function App(props) {
           <PrivateRoute exact path="/supporters" component={SupporterPage} />
           <PrivateRoute exact path="/wallet" component={WalletPage} />
           <PrivateRoute exact path="/settings" component={SettingPage} />
-          <PrivateRoute exact path="/settings-link" component={SettingsLink} />
-          <PrivateRoute exact path="/settings-password" component={ResetPassword} />
-          <PrivateRoute exact path="/settings-user" component={Details} />
-          <PrivateRoute exact path="/settings-account" component={Bank} />
+          <PrivateRoute exact path="/settings/link" component={SettingsLink} />
+          <PrivateRoute exact path="/settings/password" component={ResetPassword} />
+          <PrivateRoute exact path="/settings/user" component={Details} />
+          <PrivateRoute exact path="/settings/account" component={Bank} />
           <PrivateRoute path="/support-history" component={SupportHistoryPage} />
           <PrivateRoute exact path="/fan-dashboard" component={FanDashboard} />
           <Route exact  path="/success" component={Success} />

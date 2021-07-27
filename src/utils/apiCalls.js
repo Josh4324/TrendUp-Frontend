@@ -239,7 +239,7 @@ export const getCallModal = async (setModal, dispatch, token, ) => {
           //setLoader(false);
           setModal(res.data.data.showComplete);
           dispatch({ type: "GET_USER", payload: res.data.data });
-
+          return res.data.data
           //setImage(res.data.data.picture);
       }
       

@@ -7,12 +7,14 @@ import { NotificationManager} from 'react-notifications';
 import {Sidebar} from "./index";
 import { useHistory } from "react-router-dom";
 import {front} from "../utils/constants";
+import jwt_decode from "jwt-decode";
 import "../themify-icons.css";
 import "../feather.css";
 import "../style1.css";
 import "../custom1.css";
 
 function Details(props) {
+    console.log(props)
     const {firstName, lastName,websiteUrl,facebookLink,phoneNumber, twitterLink,instagramLink,youtubeLink, brandName, picture,creating,about, userName, onboardingStep} = props.data.user || ""
     const [modal, setModal]  = useState(false);
     const [loader, setLoader] = useState(false);
@@ -36,10 +38,44 @@ function Details(props) {
     const [number, setNumber] = useState(phoneNumber);
     const [image, setImage] = useState(picture);
 
+    useEffect( async() => {
+        let user = JSON.parse(localStorage.getItem("trend-user"));
+        if (user !== null){
+            const decoded = jwt_decode(user.token);
+            const expirationTime = new Date()/1000;
+
+            if (expirationTime >= decoded.exp){
+                user = null;
+                props.dispatch({ type: "LOGIN_SUCCESS", payload: null });
+                localStorage.removeItem('trend-user');
+                NotificationManager.error("Session has expired, please log in again", "Error", 10000);
+                history.push("/login")
+            }
+        }
+        const res = await getCallModal(setModal, props.dispatch,token);
+        if (res){
+            setFirstname(res.firstName);
+            setLastname(res.lastName);
+            setWebsite(res.websiteUrl);
+            setBrand(res.brandName);
+            setCreated(res.creating);
+            setAbout(res.about);
+            setImage(res.picture);
+            setFacebook(res.facebookLink);
+            setInstagram(res.instagramLink);
+            setTwitter(res.twitterLink);
+            setYoutube(res.youtubeLink);
+            setNumber(res.phoneNumber);
+        }
+        return () => {
+           
+        }
+    }, [])
+
 
     let history = useHistory();
-    const token = props.user.user.token
-    const onboard1 = props.user.user.onboardingStep
+    const token = props.user.user.token;
+    const onboard1 = props.user.user.onboardingStep;
     
     let img1 = picture || "images/profile-image.jpg" ;
     const link = `/${userName}`

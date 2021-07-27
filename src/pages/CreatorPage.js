@@ -62,6 +62,7 @@ function CreatorPage(props) {
     let twitter = `https://twitter.com/${twitterLink}`;
     let youtube = `https://www.youtube.com/${youtubeLink}`
     let img1 = picture || "images/profile-image.jpg" ;
+    let website = `https://${websiteUrl}`
     //let name = firstNameRef.current.value + " " + lastNameRef.current.value;
 
     const onModal = () => {
@@ -180,15 +181,15 @@ function CreatorPage(props) {
              <div class="main-wrapper">
 
 
-<div class="main-content pt-0">
+    <div class="main-content pt-0">
 
-    <div class="nav-header border-0">
-        <div class="nav-top">
-            <Link to="/dashboard" class="logo"> <img src="images/trendupp-logo-icon.png"
-                    alt="Trendupp Logo"/>
-            </Link>
+        <div class="nav-header border-0">
+            <div class="nav-top">
+                <Link to="/dashboard" class="logo"> <img src="images/trendupp-logo-icon.png"
+                        alt="Trendupp Logo"/>
+                </Link>
+            </div>
         </div>
-    </div>
     {
         userData === null ? <Redirect  to="/404" /> :
     
@@ -206,6 +207,12 @@ function CreatorPage(props) {
                         >
                                         <img src="images/profile-image.jpg" alt=""/>
                                     </figure>
+
+                                {
+                                    Object.keys(userData).length === 0 ? <div className="loader" >
+                                    <div>Loading...</div>
+                                </div> : null
+                                }
                             <h3 class="card-creator-bio--title">{firstName} {lastName}</h3>
                                 <p class="card-creator-bio--body">
                                     {creating}
@@ -229,19 +236,32 @@ function CreatorPage(props) {
 
                                 </div>
                                 <div class="card-body card-creator-about-social">
-                                    <a href={twitter} class="card-creator-about-social--item"><i
+                                    <a href={twitter} target="_blank" class="card-creator-about-social--item"><i
                                             class="feather-twitter"></i> </a>
-                                    <a href={instagram} class="card-creator-about-social--item"><i
+                                    <a href={instagram} target="_blank" class="card-creator-about-social--item"><i
                                             class="feather-instagram"></i></a>
-                                    <a href={youtube} class="card-creator-about-social--item"><i
+                                    <a href={youtube} target="_blank" class="card-creator-about-social--item"><i
                                             class="feather-youtube"></i></a>
-                                    <a href={facebook} class="card-creator-about-social--item"><i
+                                    <a href={facebook}target="_blank" class="card-creator-about-social--item"><i
                                             class="feather-facebook"></i></a>
-                                    <a href={websiteUrl} class="card-creator-about-social--item"><i
+                                    <a href={website} target="_blank" class="card-creator-about-social--item"><i
                                             class="feather-link"></i></a>
                                 </div>
                         </div>
                     </div>
+
+                    
+                         {
+                            Object.keys(userPost).length === 0 ? 
+                            <div>
+                            <div className="card w-100 border-0 shadow-1 p-4_5 rounded-xxl mb-3" >
+                            <div className="loader" style={{marginTop: "20px", marginBottom: "40px"}}>
+                                    <div >Loading...</div>
+                             </div>
+                             </div>
+                             </div> : null
+                        }
+                    
 
                        {
                         userPost.map((item) => {
@@ -548,7 +568,6 @@ function CreatorPage(props) {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         user: state.auth,
         data: state.user

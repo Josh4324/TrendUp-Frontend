@@ -94,10 +94,17 @@ function Post(props) {
                                         <label for="file"
                                             class="rounded-3 text-center bg-white btn-tertiary js-labelFile p-4 w-100 border-dashed">
                                             {
-                                                name === "" ?  (<i class="ti-camera large-icon me-3 d-block"></i>) : name
+                                                name === "" ?  (
+                                                    <div>
+                                                        <i class="ti-camera large-icon me-3 d-block"></i>
+                                                        <span class="js-fileName">Upload featured Image</span>
+                                                    </div>
+                                                
+                                                
+                                                ) : name
                                             }
                                             
-                                            <span class="js-fileName">Upload featured Image</span>
+                                            
                                         </label>
                                     </div>
                                         </div>

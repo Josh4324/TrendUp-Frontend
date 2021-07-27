@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 function Supporter(props) {
     const [supporters, setSupporters] = useState([]);
-    const [supportersNum, setSupportersNum] = useState(0);
+    const [supportersNum, setSupportersNum] = useState("");
     let history = useHistory();
     const generateLink = (email) => {
         props.dispatch({ type: "SEND_EMAIL", payload: email});
@@ -33,7 +33,11 @@ function Supporter(props) {
                     <div class="card-body d-flex p-0">
                         <i
                             class="icon-round-lg me-3 bg-secondary feather-heart"></i>
-                        <h4 class="text-secondary font-xl fw-700">{supportersNum} <span
+                        <h4 class="text-secondary font-xl fw-700">{
+                        supportersNum === "" ?  <div className="loader" style={{marginLeft:"40px"}}>
+                        <div >Loading...</div>
+                    </div> : supportersNum
+                        } <span
                                 class="fw-500 mt-0 d-block text-grey-500 font-xssss">Supporters</span></h4>
                     </div>
                 </div>
@@ -72,7 +76,20 @@ function Supporter(props) {
                                 </div>
                                         )
                                     })
-                                }
+
+                                 
+                    }
+                    {
+                        supportersNum === "" ? (<div className="loader" >
+                        <div>Loading...</div>
+                    </div>) : null
+                    }
+                    {
+                        supportersNum === 0 ?  <div class="card dash-card dash-card__records dash-card__posts">
+                        <p>You do not have any supporters.</p>
+    
+                    </div>: null  
+                    }
 
 
                 </div>

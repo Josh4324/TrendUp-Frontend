@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 function PostView(props) {
     const [userPost, setUserPost] = useState([]);
+    const [postState, setPostState] = useState(false);
     const [viewPost, setViewPost] = useState(null);
     const [view, setView] = useState("dashboard");
     const [modal, setModal] = useState(false);
@@ -20,6 +21,7 @@ function PostView(props) {
         let post = await getPost(token);
         if (post){
             setUserPost(post);
+            setPostState(true);
         }
         
         return () => {
@@ -47,7 +49,14 @@ function PostView(props) {
                     {
                         viewPost === null ? (<h3 class="card-title mb-3">POSTS</h3>) : null
                     }
+
+                    {
+                        postState === false && userPost.length === 0 ? <div className="loader" >
+                        <div>Loading...</div>
+                    </div> : null
+                    }
                     
+
 
                 {
 
@@ -85,6 +94,12 @@ function PostView(props) {
 
                     : null    
                       
+                }
+                {
+                    postState === true && userPost.length === 0 ?  <div class="card dash-card dash-card__records dash-card__posts">
+                    <p>You have not made any posts yet.</p>
+
+                </div>: null
                 }
 
                 {

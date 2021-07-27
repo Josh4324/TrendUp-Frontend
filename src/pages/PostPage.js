@@ -25,8 +25,10 @@ function PostPage(props) {
     const [onboard, setOnboard] = useState(null);
     const [log, setLog] = useState(false);
     let history = useHistory();
+    
     const token = props.user.user.token
-    const {firstName, picture, userName} = props.data.user || ""
+    const {firstName, picture, userName} = props.data.user || "";
+    let img1 = picture || "images/profile-image.jpg" ;
     const link = `/${userName}`
     const newlink = "trendupp.com" + link
 
@@ -99,7 +101,7 @@ function PostPage(props) {
                     <Link to={link} className="nav-content-profile">
                     <figure class="nav-content-image" 
                      style={{
-                        backgroundImage: 'url('+picture+')'
+                        backgroundImage: 'url('+img1+')'
                       }}
                    >
                     <img src="images/profile-image.jpg" class="d-none" alt=""/>
