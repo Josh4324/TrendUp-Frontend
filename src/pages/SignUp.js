@@ -79,6 +79,7 @@ function SignUp(props) {
                             <img src="./logo.svg" />
                         </Link>
                     </div>
+
                     <div className="signup-button">
                         <div className="signup-acc">Already have an account?</div>
                             <Link to="/login">
@@ -93,7 +94,7 @@ function SignUp(props) {
             <div className="col-xl-4 mx-auto">
                 <div className="login-card mx-auto">
                     
-                        <h2 className="login-card-title">Create an account</h2>
+                        <h2 className="login-card-title" style={{fontSize: "28px"}}>Create an account</h2>
 
                         <div className="col-sm-12 social-login">
                             

@@ -43,7 +43,7 @@ function LoginPage(props) {
                         </div>
                 </header>
 
-                <section className="login-section1">
+                <section className="login-card mx-auto">
                 <h2 className="login-card-title">Welcome Back</h2>
 
                     <div className="col-sm-12 social-login">
