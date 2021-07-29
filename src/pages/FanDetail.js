@@ -51,9 +51,9 @@ export default function FanDetail() {
                 <div class="col-md-9">
                     
                     <div class="card dash-card dash-card__records dash-card__posts p-5">
-                        <a href="fan-settings.html" class="">
+                        <Link to="/fan-settings" class="">
                         <h3 class="card-title mb-3"><i class="feather-arrow-left"></i> settings</h3>
-                        </a>
+                        </Link>
                         
                         
             <div class="settings-userdetails-section">

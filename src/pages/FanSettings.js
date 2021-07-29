@@ -57,8 +57,8 @@ export default function FanSettings() {
                         
                         <ul class="list-inline">
                             
-                            <li class="list-inline-item d-block border-bottom me-0"><a href="fan-settings-user-details.html" class="pt-3 pb-3 d-flex align-items-center"><i class="btn-round-md bg-gold-gradiant text-white feather-info font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">User Details</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i></a></li>
-                            <li class="list-inline-item d-block border-bottom me-0"><a href="fan-settings-change-password.html" class="pt-3 pb-3 d-flex align-items-center"><i class="btn-round-md bg-red-gradiant text-white feather-lock font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">Change Password</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i></a></li>
+                            <li class="list-inline-item d-block border-bottom me-0"><Link to="/fan-settings/user" class="pt-3 pb-3 d-flex align-items-center"><i class="btn-round-md bg-gold-gradiant text-white feather-info font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">User Details</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i></Link></li>
+                            <li class="list-inline-item d-block border-bottom me-0"><Link to="/fan-settings/reset" class="pt-3 pb-3 d-flex align-items-center"><i class="btn-round-md bg-red-gradiant text-white feather-lock font-md me-3"></i> <h4 class="fw-600 font-xsss mb-0 mt-0">Change Password</h4><i class="ti-angle-right font-xsss text-grey-500 ms-auto mt-3"></i></Link></li>
                             
                         </ul>
                     </div>
