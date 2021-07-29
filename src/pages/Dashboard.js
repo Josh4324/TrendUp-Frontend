@@ -32,7 +32,7 @@ function Dashboard(props) {
     const butRef = useRef("");
     let history = useHistory();
     const token = props.user.user.token;
-    const {firstName, picture, userName, onboardingStep} = props.data.user || ""
+    const {firstName,lastName, picture, userName, onboardingStep} = props.data.user || ""
     let img1 = picture || "images/profile-image.jpg" ;
     const link = `/${userName}`
     const newlink = "trendupp.com" + link
@@ -124,7 +124,7 @@ function Dashboard(props) {
                     <img src="images/profile-image.jpg" class="d-none" alt=""/>
                     </figure>
                    
-                        <span>{firstName}</span>
+                        <span>{firstName} {lastName}</span>
                     </Link>
                     <div class="nav-content-button">
                                 <a class="nav-content-button-item" id="dropdownMenu4" data-bs-toggle="dropdown"

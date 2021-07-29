@@ -8,10 +8,10 @@ import { NotificationManager} from 'react-notifications';
 import {connect} from 'react-redux';
 
 function FanDashboard(props) {
-    let img1 = "images/profile-image.jpg";
     let img2 = "images/user-9.png";
     let history = useHistory();
-    console.log(props);
+   const {firstName, lastName, picture, userName, onboardingStep} = props.data.user || "";
+   let img1 = picture || "images/profile-image.jpg" ;
     const token = props.user.user.token;
     const [modal, setModal]  = useState(false);
     const navRef = useRef("");
@@ -75,7 +75,7 @@ function FanDashboard(props) {
                             >
                             <img src="images/profile-image.jpg" class="d-none" alt=""/>
                         </figure>
-                        <span>Twyse Ereme</span>
+                        <span>{firstName} {lastName}</span>
                     </Link>
 
                 </div>
@@ -198,7 +198,7 @@ function FanDashboard(props) {
                 </div>
 
                 <div class="col-12 text-center mb-3">
-                    <a href="#" class="btn-text"><i class="feather-plus-circle"></i> View all Creators</a>
+                    <Link to="/explore" class="btn-text"><i class="feather-plus-circle"></i> View all Creators</Link>
                 </div>
 
 
