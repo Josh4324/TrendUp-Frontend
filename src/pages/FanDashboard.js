@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { Link } from 'react-router-dom';
 import FanSidebar from "./FanSideBar";
 import { useHistory } from "react-router-dom";
@@ -14,6 +14,8 @@ function FanDashboard(props) {
     console.log(props);
     const token = props.user.user.token;
     const [modal, setModal]  = useState(false);
+    const navRef = useRef("");
+    const butRef = useRef("");
 
      useEffect( async() => {
         let user = JSON.parse(localStorage.getItem("trend-user"));
@@ -42,6 +44,10 @@ function FanDashboard(props) {
         props.dispatch({  type: "LOGIN_FAILURE" })
         history.push("/login");
     }
+    const navChange = () => {
+       butRef.current.classList.toggle("active");
+       navRef.current.classList.toggle("nav-active");
+    }
     return (
         <div className="dashboard-page" style={{background: "#f9f9f9"}}>
            <div class="main-wrapper">
@@ -51,12 +57,12 @@ function FanDashboard(props) {
             <div className="nav-top">
                 <Link to="/fan-dashboard" className="logo"> <img src="images/trenupp-logo.png" alt="Trendupp Logo"/> </Link>
 
-                <button className="nav-menu me-0 ms-2"></button>
+                <button ref={butRef} onClick={navChange} className="nav-menu me-0 ms-2"></button>
             </div>
 
         </div>
 
-<nav class="navigation scroll-bar">
+<nav ref={navRef} class="navigation scroll-bar">
     <div class="container ps-0 pe-0">
         <div class="nav-content">
             <div class="nav-wrap">

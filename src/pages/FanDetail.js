@@ -1,10 +1,18 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import { Link } from 'react-router-dom';
 import FanSidebar from "./FanSideBar";
 
 export default function FanDetail() {
     let img1 = "images/profile-image.jpg";
     let img2 = "images/user-9.png";
+    const navRef = useRef("");
+    const butRef = useRef("");
+
+    const navChange = () => {
+       butRef.current.classList.toggle("active");
+       navRef.current.classList.toggle("nav-active");
+    }
+
     return (
         <div className="dashboard-page" style={{background: "#f9f9f9"}}>
             <div class="main-wrapper">
@@ -13,25 +21,26 @@ export default function FanDetail() {
             <div className="nav-top">
                 <Link to="/fan-dashboard" className="logo"> <img src="images/trenupp-logo.png" alt="Trendupp Logo"/> </Link>
 
-                <button className="nav-menu me-0 ms-2"></button>
+                <button ref={butRef} onClick={navChange} className="nav-menu me-0 ms-2"></button>
             </div>
 
         </div>
 
-<nav class="navigation scroll-bar">
+<nav ref={navRef} class="navigation scroll-bar">
     <div class="container ps-0 pe-0">
         <div class="nav-content">
             <div class="nav-wrap">
                 <div class="top-content">
-                    <a href="user-page.html" class="nav-content-profile">
+                    <Link to="/fan-dashboard" class="nav-content-profile">
                         <figure class="nav-content-image"
-                             style={{
-                                backgroundImage: 'url('+img1+')'
-                              }}>
+                         style={{
+                            backgroundImage: 'url('+img1+')'
+                          }}
+                            >
                             <img src="images/profile-image.jpg" class="d-none" alt=""/>
                         </figure>
                         <span>Twyse Ereme</span>
-                    </a>
+                    </Link>
 
                 </div>
             </div>
