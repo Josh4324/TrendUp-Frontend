@@ -14,6 +14,12 @@ p {
   letter-spacing: 0.3px;
   line-height: 26px;
 }
+a.active, a:focus, a:hover {
+  text-decoration: none;
+  outline: 0;
+  color: #c4326c;
+}
+
 .h1,
 .h2,
 .h3,
@@ -27,6 +33,7 @@ h4,
 h5,
 h6 {
   font-weight: 600;
+  color: #484848;
 }
 
 /**Widget Elements Styles**/
@@ -122,7 +129,7 @@ h6 {
   font-weight: 600;
 }
 .form-group .style2-input {
-  height: 50px;
+  height: 50px !important;
   line-height: 1;
   display: block;
   border: 2px #eee solid;
@@ -365,12 +372,21 @@ label {
 
 .btn {
   background: #c84076;
-  color: #fff !important;
+  color: #fff;
   font-weight: 500;
   border-radius: 7px;
   line-height: 1;
   padding: 10px 25px;
   font-size: 15px;
+}
+.btn-light {
+  background: rgb(245 214 225);
+    color: #c84076;
+}
+
+.btn.bt-sm {
+  font-size: 10px;
+  letter-spacing: 1px;
 }
 
 .btn:hover {
@@ -389,7 +405,7 @@ label {
 
 .btn.btn-grey {
   background: rgb(238 238 238);
-    color: #636363;
+    color: #636363 !important;
 }
 
 .btn.btn-grey:hover {
@@ -409,7 +425,58 @@ label {
 .btn svg path {
   fill: rgb(255 255 255/ 60%);
 }
+.row.creator-row {
+  margin-left: -8px;
+  margin-right: -8px;
+}
+.row.creator-row [class^="col-"] {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.avatar {
+  height: 65px;
+  width: 65px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+  z-index: 10;
+}
+.avatar img {
+  display: none;
+}
+/*-Search Form-*/
+.search-form-2 input[type='text'] {
+  background-color: #ececec;
+  padding-right: 43px;
+}
+.search-form-2 button {
+  position: absolute;
+  top: 13px;
+  right: 15px;
+  display: inline-block;
+  border: none;
+  background: none;
+  height: 16px;
+  width: 16px;
+}
+.search-form-2 button i {
+  position: relative;
+    top: auto;
+    right: auto;
+}
+/**Desktop Styles**/
+@media (min-width: 991px) {
+  .search-form-2 {
+    width: 200px;
+  }
+  .search-form-2 input[type='text'] {
+    width: 200px;
+  }
+}
 
+
+/***Mobile***/
 @media (max-width: 991.98px) {
   .form-group .style2-input {
     height: 50px;
@@ -465,6 +532,9 @@ label {
   display: inline-block;
   width: auto;
   line-height: inherit;
+}
+.signup-acc {
+  line-height: 2.2;
 }
 @media (max-width: 991.98px) {
   .nav-header {
@@ -550,6 +620,9 @@ label {
 }
 
 /***User Onboard**/
+.user-onboard {
+  padding-bottom: 80px;
+}
 .step-header {
   display: flex;
   justify-content: space-around;
@@ -824,6 +897,10 @@ body.dashboard-page .nav-header {
   .main-content {
     height: 100vh;
   }
+
+  body.dashboard-page .nav-header {
+    background: #f9f9f9;
+  }
 }
 
 /**Sidebar Menu***/
@@ -993,7 +1070,6 @@ body.dashboard-page .nav-header {
   font-size: 14px;
   text-transform: uppercase;
 }
-
 .icon-round-lg {
   width: 50px;
   height: 50px;
@@ -1014,7 +1090,9 @@ body.dashboard-page .nav-header {
 .tip-single p {
   margin: 0;
 }
-
+.border-bottom {
+  border-bottom: 1px solid #f3f3f3!important;
+}
 /**Creator Page Styles*/
 .creator-page {
   background: #f9f9f9;
@@ -1124,7 +1202,6 @@ body.dashboard-page .nav-header {
 }
 .card.card-creator .card-creator-meta {
   display: flex;
-  margin-top: -10px;
 }
 .card.card-creator .card-creator-meta .avatar {
   border-radius: 50%!important;
@@ -1141,22 +1218,26 @@ body.dashboard-page .nav-header {
   font-size: 20px;
     margin-bottom: 10px;
 }
-.card.card-creator .card-creator-text {
+.card.card-creator .card-creator-text:last-child {
   margin-bottom: 0;
+}
+.card-creator-image {
+  margin-bottom: 20px !important;
+  border-radius: 5px;
+  overflow: hidden;
 }
 .card-creator-image > a {
   display: block;
-  padding-bottom: 15px;
   position: relative;
 }
-.card-creator-image > a img {
-  border-radius: 5px;
+.card-creator-image > a img, .card-creator-image img {
+  display: block;
   max-width: 100%;
 }
 .card-creator-image > a .locked-content-overlay {
   position: absolute;
   top: 0;
-  bottom: 15px;
+  bottom: 0;
   left: 0;
   right: 0;
   background: rgb(0 0 0 / 60%);
@@ -1194,6 +1275,18 @@ body.dashboard-page .nav-header {
 .card-creator-image > a .locked-content-overlay .locked-content-overlay-btn:hover {
   background: rgba(255,255,255,.15);
   color: #fff;
+}
+
+.creator-small-card .creator-small-card--title {
+  font-size: 14px;
+}
+.creator-small-card .creator-small-card--text {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.creator-small-card .avatar {
+  margin: 0 auto;
 }
 
 /**Mobile Styles**/

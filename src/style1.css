@@ -1762,13 +1762,6 @@ sup {
   top: -0.5em;
 }
 
-a {
-  color: #1E74FD;
-  text-decoration: underline;
-}
-a:hover {
-  color: #185dca;
-}
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
   color: inherit;
@@ -12310,11 +12303,12 @@ li {
 a {
   text-decoration: none;
   outline: none;
+  color: #c4326c;
 }
 a:hover, a:focus, a.active {
   text-decoration: none;
   outline: none;
-  color: #1E74FD;
+  color: #c4326c;
 }
 
 b,

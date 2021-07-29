@@ -104,19 +104,22 @@ export const resendCall = async (userCredential) => {
     }
 };
 
-export const onboard1Call = async (userCredential, setLoader, setError, history, token) => {
+export const onboard1Call = async (userCredential, setLoader, setError, history, token, userType) => {
     try {
        setLoader(true)
         axios.defaults.headers.common['Authorization'] = "JWT " + token;
         const res = await axios.patch(`${http}/api/v1/user`, userCredential);
+        console.log(res)
+        console.log(userType);
         if (res){
            setLoader(false);
-           if (userCredential.userType === "fan"){
+           if (userType === "fan"){
                return history.push("/fan-dashboard")
            }
            history.push("/step2")
         }
     }catch(err){
+        console.log(err)
         setLoader(false)
         setError(err.response.data.message);
     }

@@ -22,8 +22,13 @@ import Success from './Success';
 import SettingsLink from './SettingsLink';
 import Details from './Details';
 import Bank from './Bank';
+import ExploreCreators from './ExploreCreators';
+import SupportedCreators from './SupportedCreators';
+import FanSupportHistory from './FanSupportHistory';
+import FanSettings from './FanSettings';
+import FanDetail from './FanDetail';
+import FanResetPassword from './FanResetPassword';
 
 
 
-
-export { SignUp, PrivateRoute, LoginPage, Bank, Details, SettingsLink, PostPage, SupportHistoryPage, Success, CreatorPage, SettingPage, FanDashboard, Sidebar, Dashboard, Landing, ForgotPassword, NotFound, Onboard1, WalletPage, SupporterPage, Onboard2, Onboard3, OnboardComplete, ResetPassword};
+export { SignUp, PrivateRoute, FanResetPassword, ExploreCreators, FanDetail, FanSettings, FanSupportHistory, SupportedCreators, LoginPage, Bank, Details, SettingsLink, PostPage, SupportHistoryPage, Success, CreatorPage, SettingPage, FanDashboard, Sidebar, Dashboard, Landing, ForgotPassword, NotFound, Onboard1, WalletPage, SupporterPage, Onboard2, Onboard3, OnboardComplete, ResetPassword};

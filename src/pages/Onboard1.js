@@ -114,7 +114,7 @@ function Onboard1(props) {
         }
         
 
-        const result = await onboard1Call(cred, setLoader, setError, history, token);
+        const result = await onboard1Call(cred, setLoader, setError, history, token, userType);
 
     }
 
