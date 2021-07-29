@@ -386,4 +386,13 @@ a {
     }
 }
 
+@media (max-width: 360px){
+    .mobile-support{
+        margin-right: 20px;
+    }
+
+    .mobile-drop{
+        transform: translate3d(71px, 40px, 0px) !important;
+    }
+}
   

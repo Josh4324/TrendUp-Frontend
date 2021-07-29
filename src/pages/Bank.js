@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { Link } from 'react-router-dom';
 import {editCall,getCallModal} from '../utils/apiCalls';
 import NotificationManager from 'react-notifications/lib/NotificationManager';
@@ -27,6 +27,8 @@ function Bank(props) {
     const [loader1, setLoader1] = useState(false);
     const [button, setButton] = useState(false);
     const [log, setLog] = useState(false);
+    const navRef = useRef("");
+    const butRef = useRef("");
     let history = useHistory();
     const token = props.user.user.token
     const onboard1 = props.user.user.onboardingStep
@@ -98,6 +100,11 @@ function Bank(props) {
         setLog(true);
     }
 
+    const navChange = () => {
+       butRef.current.classList.toggle("active");
+       navRef.current.classList.toggle("nav-active");
+    }
+
   
     const verify = async(evt) => {
         evt.preventDefault();
@@ -159,12 +166,12 @@ function Bank(props) {
             <div className="nav-top">
                 <Link to="/dashboard" className="logo"> <img src="images/trenupp-logo.png" alt="Trendupp Logo"/> </Link>
 
-                <button className="nav-menu me-0 ms-2"></button>
+                <button ref={butRef} onClick={navChange} className="nav-menu me-0 ms-2"></button>
             </div>
 
         </div>
 
-        <nav className="navigation scroll-bar">
+        <nav ref={navRef} className="navigation scroll-bar">
     <div className="container ps-0 pe-0">
         <div className="nav-content">
             <div className="nav-wrap">

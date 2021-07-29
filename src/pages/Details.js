@@ -37,6 +37,8 @@ function Details(props) {
     const [youtube, setYoutube] = useState(youtubeLink);
     const [number, setNumber] = useState(phoneNumber);
     const [image, setImage] = useState(picture);
+    const navRef = useRef("");
+    const butRef = useRef("");
 
     useEffect( async() => {
         let user = JSON.parse(localStorage.getItem("trend-user"));
@@ -120,7 +122,10 @@ function Details(props) {
     }
 
   
-    
+    const navChange = () => {
+       butRef.current.classList.toggle("active");
+       navRef.current.classList.toggle("nav-active");
+    }
 
     const submit = async(evt) => {
         evt.preventDefault()
@@ -151,12 +156,12 @@ function Details(props) {
             <div className="nav-top">
                 <Link to="/dashboard" className="logo"> <img src="images/trenupp-logo.png" alt="Trendupp Logo"/> </Link>
 
-                <button className="nav-menu me-0 ms-2"></button>
+                <button ref={butRef} onClick={navChange} className="nav-menu me-0 ms-2"></button>
             </div>
 
         </div>
 
-        <nav className="navigation scroll-bar">
+        <nav ref={navRef} className="navigation scroll-bar">
     <div className="container ps-0 pe-0">
         <div className="nav-content">
             <div className="nav-wrap">

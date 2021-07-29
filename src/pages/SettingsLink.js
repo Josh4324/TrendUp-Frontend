@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { Link } from 'react-router-dom';
 import {editCall,getCallModal,userVerify} from '../utils/apiCalls';
 import {connect} from 'react-redux';
@@ -25,6 +25,8 @@ function SettingsLink(props) {
     const name = props.data?.user?.userName || ""
     const [username, setUsername] = useState(name);
     const [log, setLog] = useState(false);
+    const navRef = useRef("");
+    const butRef = useRef("");
     let history = useHistory();
     const token = props.user.user.token
     const onboard1 = props.user.user.onboardingStep
@@ -105,6 +107,11 @@ function SettingsLink(props) {
         }
     }
 
+    const navChange = () => {
+       butRef.current.classList.toggle("active");
+       navRef.current.classList.toggle("nav-active");
+    }
+
     const logout = () => {
         localStorage.removeItem('trend-user');
         props.dispatch({  type: "LOGIN_FAILURE" })
@@ -131,12 +138,12 @@ function SettingsLink(props) {
             <div className="nav-top">
                 <Link to="/dashboard" className="logo"> <img src="images/trenupp-logo.png" alt="Trendupp Logo"/> </Link>
 
-                <button className="nav-menu me-0 ms-2"></button>
+                <button ref={butRef} onClick={navChange} className="nav-menu me-0 ms-2"></button>
             </div>
 
         </div>
 
-        <nav className="navigation scroll-bar">
+        <nav ref={navRef} className="navigation scroll-bar">
     <div className="container ps-0 pe-0">
         <div className="nav-content">
             <div className="nav-wrap">

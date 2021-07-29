@@ -140,8 +140,8 @@ function DashComponent(props) {
                                     <div class="col-6 col-sm-8">
                                         <h3 class="card-title mb-3">RECENT SUPPORTERS </h3>
                                     </div>
-                                    <div class="col-6 col-sm-4 text-right">
-                                        <Link class="btn-card-title btn btn-grey mt--10 font-xssss" to="/supporters">View all Supporters</Link>
+                                    <div class="col-6 col-sm-4 text-right mobile-support">
+                                        <Link class="btn-card-title btn btn-grey mt--10 font-xssss " to="/supporters">View all Supporters</Link>
                                     </div>
                                 </div>
                                 
@@ -161,8 +161,8 @@ function DashComponent(props) {
                                             <div class="col-sm-5"><p>{item.email}</p></div>
                                             <div class="col-sm-2"> ₦{item.amount}</div>
                                         </div>
-                                        <a href="#" class="dropdown-menu-link ms-auto" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false"><i class="ti-more-alt text-grey-900 btn-round-md bg-greylight font-xss"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-end p-4 rounded-xxl border-0 shadow-md" aria-labelledby="dropdownMenu2">
+                                        <span  class="dropdown-menu-link ms-auto" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false"><i class="ti-more-alt text-grey-900 btn-round-md bg-greylight font-xss"></i></span>
+                                        <div class="dropdown-menu dropdown-menu-end p-4 rounded-xxl border-0 shadow-md mobile-drop" aria-labelledby="dropdownMenu2">
                                             <div class="card-body p-0">
                                                 <Link onClick={(evt) => {
                                                     evt.preventDefault();
