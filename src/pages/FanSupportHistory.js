@@ -24,15 +24,16 @@ export default function FanSupportHistory() {
         <div class="nav-content">
             <div class="nav-wrap">
                 <div class="top-content">
-                    <a href="user-page.html" class="nav-content-profile">
+                     <Link to="/fan-dashboard" class="nav-content-profile">
                         <figure class="nav-content-image"
-                             style={{
-                                backgroundImage: 'url('+img1+')'
-                              }}>
+                         style={{
+                            backgroundImage: 'url('+img1+')'
+                          }}
+                            >
                             <img src="images/profile-image.jpg" class="d-none" alt=""/>
                         </figure>
                         <span>Twyse Ereme</span>
-                    </a>
+                    </Link>
 
                 </div>
             </div>

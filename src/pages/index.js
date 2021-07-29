@@ -28,7 +28,8 @@ import FanSupportHistory from './FanSupportHistory';
 import FanSettings from './FanSettings';
 import FanDetail from './FanDetail';
 import FanResetPassword from './FanResetPassword';
+import FanPrivateRoute from './FanPrivateRoute';
 
 
 
-export { SignUp, PrivateRoute, FanResetPassword, ExploreCreators, FanDetail, FanSettings, FanSupportHistory, SupportedCreators, LoginPage, Bank, Details, SettingsLink, PostPage, SupportHistoryPage, Success, CreatorPage, SettingPage, FanDashboard, Sidebar, Dashboard, Landing, ForgotPassword, NotFound, Onboard1, WalletPage, SupporterPage, Onboard2, Onboard3, OnboardComplete, ResetPassword};
+export { SignUp, PrivateRoute, FanResetPassword, FanPrivateRoute, ExploreCreators, FanDetail, FanSettings, FanSupportHistory, SupportedCreators, LoginPage, Bank, Details, SettingsLink, PostPage, SupportHistoryPage, Success, CreatorPage, SettingPage, FanDashboard, Sidebar, Dashboard, Landing, ForgotPassword, NotFound, Onboard1, WalletPage, SupporterPage, Onboard2, Onboard3, OnboardComplete, ResetPassword};

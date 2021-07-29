@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, HashRouter, Router, Redirect } from 'react-router-dom';
 import {LoginPage, Dashboard,Landing,SignUp, Onboard1, Onboard2, Onboard3,
-   PrivateRoute, NotFound, Bank, WalletPage,OnboardComplete, SettingsLink, ExploreCreators, ResetPassword, SupportHistoryPage, SettingPage, FanDashboard, PostPage, CreatorPage, SupporterPage, Success, Details, SupportedCreators, FanSupportHistory, FanSettings, FanDetail, FanResetPassword} from './pages/index';
+   PrivateRoute, NotFound, Bank, WalletPage,OnboardComplete, SettingsLink, FanPrivateRoute, ExploreCreators, ResetPassword, SupportHistoryPage, SettingPage, FanDashboard, PostPage, CreatorPage, SupporterPage, Success, Details, SupportedCreators, FanSupportHistory, FanSettings, FanDetail, FanResetPassword} from './pages/index';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import {connect} from 'react-redux';
 import 'react-notifications/lib/notifications.css';
@@ -42,13 +42,13 @@ function App(props) {
           <PrivateRoute exact path="/settings/user" component={Details} />
           <PrivateRoute exact path="/settings/account" component={Bank} />
           <PrivateRoute path="/support-history" component={SupportHistoryPage} />
-          <PrivateRoute exact path="/fan-dashboard" component={FanDashboard} />
-          <PrivateRoute exact path="/explore" component={ExploreCreators} />
-          <PrivateRoute exact path="/supporter-creators" component={SupportedCreators} />
-          <PrivateRoute exact path="/fan-support-history" component={FanSupportHistory} />
-          <PrivateRoute exact path="/fan-settings" component={FanSettings} />
-          <PrivateRoute exact path="/fan-settings/user" component={FanDetail} />
-          <PrivateRoute exact path="/fan-settings/reset" component={FanResetPassword} />
+          <FanPrivateRoute exact path="/fan-dashboard" component={FanDashboard} />
+          <FanPrivateRoute exact path="/explore" component={ExploreCreators} />
+          <FanPrivateRoute exact path="/supporter-creators" component={SupportedCreators} />
+          <FanPrivateRoute exact path="/fan-support-history" component={FanSupportHistory} />
+          <FanPrivateRoute exact path="/fan-settings" component={FanSettings} />
+          <FanPrivateRoute exact path="/fan-settings/user" component={FanDetail} />
+          <FanPrivateRoute exact path="/fan-settings/reset" component={FanResetPassword} />
           <Route exact  path="/success" component={Success} />
           <Route path="/404" component={NotFound} />
           <Route   path="/:username" component={CreatorPage} />

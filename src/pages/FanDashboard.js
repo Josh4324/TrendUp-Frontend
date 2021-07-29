@@ -1,12 +1,40 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import FanSidebar from "./FanSideBar";
 import { useHistory } from "react-router-dom";
+import {onDash,getCallModal, getStat, getCall} from '../utils/apiCalls';
+import jwt_decode from "jwt-decode";
+import { NotificationManager} from 'react-notifications';
+import {connect} from 'react-redux';
 
-export default function FanDashboard(props) {
+function FanDashboard(props) {
     let img1 = "images/profile-image.jpg";
     let img2 = "images/user-9.png";
     let history = useHistory();
+    console.log(props);
+    const token = props.user.user.token;
+    const [modal, setModal]  = useState(false);
+
+     useEffect( async() => {
+        let user = JSON.parse(localStorage.getItem("trend-user"));
+        if (user !== null){
+            const decoded = jwt_decode(user.token);
+            const expirationTime = new Date()/1000;
+
+            if (expirationTime >= decoded.exp){
+                user = null;
+                props.dispatch({ type: "LOGIN_SUCCESS", payload: null });
+                localStorage.removeItem('trend-user');
+                NotificationManager.error("Session has expired, please log in again", "Error", 10000);
+                history.push("/login")
+            }
+        }
+        getCallModal(setModal, props.dispatch,token);
+       
+        return () => {
+           
+        }
+    }, [])
 
 
     const logout = () => {
@@ -33,7 +61,7 @@ export default function FanDashboard(props) {
         <div class="nav-content">
             <div class="nav-wrap">
                 <div class="top-content">
-                    <a href="user-page.html" class="nav-content-profile">
+                    <Link to="/fan-dashboard" class="nav-content-profile">
                         <figure class="nav-content-image"
                          style={{
                             backgroundImage: 'url('+img1+')'
@@ -42,7 +70,7 @@ export default function FanDashboard(props) {
                             <img src="images/profile-image.jpg" class="d-none" alt=""/>
                         </figure>
                         <span>Twyse Ereme</span>
-                    </a>
+                    </Link>
 
                 </div>
             </div>
@@ -180,3 +208,12 @@ export default function FanDashboard(props) {
         </div>
     )
 }
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.auth,
+        data: state.user
+    }
+  }
+  
+  export default connect(mapStateToProps)(FanDashboard);

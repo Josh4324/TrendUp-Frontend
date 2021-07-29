@@ -5,13 +5,13 @@ import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router-dom";
 import { NotificationManager} from 'react-notifications';
 
-function PrivateRoute({ component: Component, props, dispatch, ...rest }) {
+function FanPrivateRoute({ component: Component, props, dispatch, ...rest }) {
     let user
-    let history = useHistory();
+     let history = useHistory();
     if (rest !== null){
         console.log(rest);
-        if (rest.user.userType === "fan"){
-             history.push("/fan-dashboard")
+        if (rest.user.userType === "creator"){
+             history.push("/dashboard")
         }
          
     }
@@ -26,6 +26,9 @@ function PrivateRoute({ component: Component, props, dispatch, ...rest }) {
     }else{
         user = rest.user
     }
+   
+   
+
     
         if (user !== null && user !== "something"){
             const decoded = jwt_decode(user.token);
@@ -60,5 +63,5 @@ const mapStateToProps = (state) => {
     }
   }
   
-  export default connect(mapStateToProps)(PrivateRoute);
+  export default connect(mapStateToProps)(FanPrivateRoute);
   
