@@ -11,9 +11,12 @@ import { front } from "../utils/constants";
 function FanDashboard(props) {
   let img2 = "images/user-9.png";
   let history = useHistory();
-  const { firstName, lastName, picture, userName, onboardingStep } =
+  const { firstName, lastName, picture, email, userName, onboardingStep } =
     props.data.user || "";
   let img1 = picture || "images/profile-image.jpg";
+  localStorage.setItem("trend-fan-email", email);
+  localStorage.setItem("trend-fan-firstname", firstName);
+  localStorage.setItem("trend-fan-lastname", lastName);
   const token = props.user.user.token;
   const [modal, setModal] = useState(false);
   const [creators, setCreators] = useState([]);
