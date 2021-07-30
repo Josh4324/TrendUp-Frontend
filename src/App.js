@@ -20,13 +20,13 @@ function App(props) {
       <HashRouter basename="/">
         <Switch>
           <Route exact path="/">
-              { onboarding === 1 ? <Onboard1 /> : onboarding === 2 ? <Onboard2/> : onboarding === 3 ? <Onboard3/> : user !== null ?  <Dashboard/> : <Landing/>}
+              { onboarding === 1 ? <Onboard1 /> : onboarding === 2 ? <Onboard2/> : onboarding === 3 ? <Onboard3/> : user === null ? <Landing/> : user.userType === "fan" ?  <FanDashboard/> : <Dashboard/>}
           </Route>
           <Route exact path="/login">
-              {onboarding === 1 ? <Onboard1 /> : onboarding === 2 ? <Onboard2/> : onboarding === 3 ? <Onboard3/> : user !== null ?  <Dashboard/> : <LoginPage/>}
+              {onboarding === 1 ? <Onboard1 /> : onboarding === 2 ? <Onboard2/> : onboarding === 3 ? <Onboard3/> :  user === null ? <LoginPage/> : user.userType === "fan" ?  <FanDashboard/> : <Dashboard/>}
           </Route>
           <Route exact path="/signup">
-              { onboarding === 1 ? <Onboard1 /> : onboarding === 2 ? <Onboard2/> : onboarding === 3 ? <Onboard3/> : user !== null ?  <Dashboard/> : <SignUp/>}
+              { onboarding === 1 ? <Onboard1 /> : onboarding === 2 ? <Onboard2/> : onboarding === 3 ? <Onboard3/> :  user === null ? <SignUp/> : user.userType === "fan" ?  <FanDashboard/> : <Dashboard/>}
           </Route>
           <PrivateRoute exact path="/step1" component={Onboard1} />
           <PrivateRoute exact path="/step2" component={Onboard2} />

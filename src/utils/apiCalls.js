@@ -486,6 +486,21 @@ export const resetPasswordCall = async (userCredential, token) => {
     }
 };
 
+export const getCreators = async (token) => {
+    try {
+      const res = await axios.get(`${http}/api/v1/user/creators`,  {
+        headers: {
+          'Authorization': `JWT ${token}`
+        }
+      });
+      if (res.data.code === 200){
+          return res.data.data;
+      }
+    } catch (err) {
+          console.log(err.response.data);
+    }
+};
+
 
 
 
