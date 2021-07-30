@@ -44,7 +44,7 @@ function FanDashboard(props) {
     let creators = await getCreators(token);
     if (creators) {
       setLoading(false);
-      setCreators(creators.slice(0,4));
+      setCreators(creators.slice(0, 4));
     }
 
     return () => {};
@@ -126,13 +126,16 @@ function FanDashboard(props) {
                 <div class="col-12">
                   <h3 class="card-title mt-3 mb-3">Explore Creators</h3>
                 </div>
-                {
-                loading === true ?  
-                <div className="card w-100 border-0 shadow-1 p-4_5 rounded-xxl mb-3" >
-                <div className="loader" style={{marginTop: "20px", marginBottom: "40px"}}>
-                        <div >Loading...</div>
-                 </div></div> : null
-                }
+                {loading === true ? (
+                  <div className="card w-100 border-0 shadow-1 p-4_5 rounded-xxl mb-3">
+                    <div
+                      className="loader"
+                      style={{ marginTop: "20px", marginBottom: "40px" }}
+                    >
+                      <div>Loading...</div>
+                    </div>
+                  </div>
+                ) : null}
                 {creators.map((item) => {
                   return (
                     <div class="col-md-3" key={item.id}>
@@ -155,7 +158,7 @@ function FanDashboard(props) {
                               {item.about.split("").slice(0, 27).join("")}...
                             </p>
                             <a
-                              href={`${front}/${item.userName}`}
+                              href={`${front}/#/${item.userName}`}
                               target="_blank"
                               class="btn btn-light bt-sm"
                             >
@@ -165,8 +168,7 @@ function FanDashboard(props) {
                         </div>
                       </div>
                     </div>
-                 
-                 );
+                  );
                 })}
                 <div class="col-12 text-center mb-3">
                   <Link to="/explore" class="btn-text">

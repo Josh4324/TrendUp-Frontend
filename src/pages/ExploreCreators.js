@@ -131,7 +131,7 @@ function ExploreCreators(props) {
                               {item?.about?.split("").slice(0, 27).join("")}...
                             </p>
                             <a
-                              href={`${front}/${item.userName}`}
+                              href={`${front}/#/${item.userName}`}
                               target="_blank"
                               class="btn btn-light bt-sm"
                             >
