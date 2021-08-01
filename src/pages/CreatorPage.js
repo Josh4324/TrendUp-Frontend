@@ -21,6 +21,7 @@ function CreatorPage(props) {
   const [modal, setmodal] = useState(false);
   const [amount, setAmount] = useState(0);
   const [option, setOption] = useState("One-Time");
+  const [loading, setLoading] = useState(true);
   const [firstname, setFirstName] = useState(first);
   const [lastname, setLastName] = useState(last);
   const [email, setEmail] = useState(userEmail);
@@ -53,6 +54,7 @@ function CreatorPage(props) {
     }
 
     if (post) {
+      setLoading(false);
       setUserPost(post.data.data);
     }
 
@@ -193,7 +195,7 @@ function CreatorPage(props) {
         <div class="main-content pt-0">
           <div class="nav-header border-0">
             <div class="nav-top">
-              <Link to="/dashboard" class="logo">
+              <Link to="/" class="logo">
                 {" "}
                 <img src="images/trendupp-logo-icon.png" alt="Trendupp Logo" />
               </Link>
@@ -256,35 +258,55 @@ function CreatorPage(props) {
                           <a
                             href={twitter}
                             target="_blank"
-                            class="card-creator-about-social--item"
+                            className={
+                              twitterLink === ""
+                                ? "card-creator-about-social--item disable"
+                                : "card-creator-about-social--item"
+                            }
                           >
                             <i class="feather-twitter"></i>{" "}
                           </a>
                           <a
                             href={instagram}
                             target="_blank"
-                            class="card-creator-about-social--item"
+                            className={
+                              instagramLink === ""
+                                ? "card-creator-about-social--item disable"
+                                : "card-creator-about-social--item"
+                            }
                           >
                             <i class="feather-instagram"></i>
                           </a>
                           <a
                             href={youtube}
                             target="_blank"
-                            class="card-creator-about-social--item"
+                            className={
+                              youtubeLink === ""
+                                ? "card-creator-about-social--item disable"
+                                : "card-creator-about-social--item"
+                            }
                           >
                             <i class="feather-youtube"></i>
                           </a>
                           <a
                             href={facebook}
                             target="_blank"
-                            class="card-creator-about-social--item"
+                            className={
+                              facebookLink === ""
+                                ? "card-creator-about-social--item disable"
+                                : "card-creator-about-social--item"
+                            }
                           >
                             <i class="feather-facebook"></i>
                           </a>
                           <a
-                            href={website}
+                            href={`${website}`}
                             target="_blank"
-                            class="card-creator-about-social--item"
+                            className={
+                              websiteUrl === ""
+                                ? "card-creator-about-social--item disable"
+                                : "card-creator-about-social--item"
+                            }
                           >
                             <i class="feather-link"></i>
                           </a>
@@ -292,7 +314,7 @@ function CreatorPage(props) {
                       </div>
                     </div>
 
-                    {Object.keys(userPost).length === 0 ? (
+                    {loading ? (
                       <div>
                         <div className="card w-100 border-0 shadow-1 p-4_5 rounded-xxl mb-3">
                           <div
@@ -310,7 +332,7 @@ function CreatorPage(props) {
                         <div>
                           {item.postType === "public" ? (
                             <div>
-                              <div class="card card-creator mb-3">
+                              <div class="card card-creator">
                                 <div class="card-body card-creator-meta">
                                   <figure
                                     class="avatar me-3"
@@ -327,22 +349,14 @@ function CreatorPage(props) {
 
                                   <h4 class="card-creator-meta--author">
                                     {" "}
-                                    <a href="#">
-                                      {firstName} {lastName}
-                                    </a>{" "}
+                                    {firstName} {lastName}
                                     <span class="card-creator-meta--date">
                                       {new Date(item.createdAt).toDateString()}
                                     </span>
                                   </h4>
                                 </div>
                                 <div class="card-body card-creator-image">
-                                  <a href="#">
-                                    <img
-                                      src={item.image}
-                                      class="post-image"
-                                      alt="image"
-                                    />
-                                  </a>
+                                  <img src={item.image} class="" alt="image" />
                                 </div>
                                 <div class="card-body p-0 me-lg-5">
                                   <a href="#">
@@ -351,6 +365,11 @@ function CreatorPage(props) {
                                     </h3>
                                     <p class="card-creator-text">
                                       {item.message}
+                                      {/* {item.message
+                                        .split("")
+                                        .slice(0, 165)
+                                        .join("")}
+                                      ...<a href="#">Read More</a> */}
                                     </p>
                                   </a>
                                 </div>
@@ -434,7 +453,7 @@ function CreatorPage(props) {
         </div>
 
         <div class="app-footer border-0 shadow-lg bg-primary-gradiant">
-          <a href="#" class="btn supportBtn">
+          <span href="#" class="btn supportBtn" onClick={onModal}>
             <svg
               enable-background="new 0 0 512 512"
               height="512"
@@ -449,7 +468,7 @@ function CreatorPage(props) {
               </g>
             </svg>{" "}
             Support {firstName}
-          </a>
+          </span>
         </div>
       </div>
 

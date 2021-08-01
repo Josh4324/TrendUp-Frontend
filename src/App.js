@@ -1,18 +1,46 @@
-import React from 'react';
-import { Route, Switch, HashRouter, Router, Redirect } from 'react-router-dom';
-import {LoginPage, Dashboard,Landing,SignUp, Onboard1, Onboard2, Onboard3,
-   PrivateRoute, NotFound, Bank, WalletPage,OnboardComplete, SettingsLink, FanPrivateRoute, ExploreCreators, ResetPassword, SupportHistoryPage, SettingPage, FanDashboard, PostPage, CreatorPage, SupporterPage, Success, Details, SupportedCreators, FanSupportHistory, FanSettings, FanDetail, FanResetPassword} from './pages/index';
-import {NotificationContainer, NotificationManager} from 'react-notifications';
-import {connect} from 'react-redux';
-import 'react-notifications/lib/notifications.css';
+import React from "react";
+import { Route, Switch, HashRouter, Router, Redirect } from "react-router-dom";
+import {
+  LoginPage,
+  Dashboard,
+  Landing,
+  SignUp,
+  Onboard1,
+  Onboard2,
+  Onboard3,
+  PrivateRoute,
+  NotFound,
+  Bank,
+  WalletPage,
+  OnboardComplete,
+  SettingsLink,
+  FanPrivateRoute,
+  ExploreCreators,
+  ResetPassword,
+  SupportHistoryPage,
+  SettingPage,
+  FanDashboard,
+  PostPage,
+  CreatorPage,
+  SupporterPage,
+  Success,
+  Details,
+  SupportedCreators,
+  FanSupportHistory,
+  FanSettings,
+  FanDetail,
+  FanResetPassword,
+  CreatorPostPage,
+} from "./pages/index";
+import { NotificationContainer } from "react-notifications";
+import { connect } from "react-redux";
+import "react-notifications/lib/notifications.css";
 import "./custom.css";
-import jwt_decode from "jwt-decode";
-
 
 function App(props) {
   const user = props.user.user;
   let onboarding;
-  if (user !== null){
+  if (user !== null) {
     onboarding = Number(user.onboardingStep);
   }
   return (
@@ -20,13 +48,49 @@ function App(props) {
       <HashRouter basename="/">
         <Switch>
           <Route exact path="/">
-              { onboarding === 1 ? <Onboard1 /> : onboarding === 2 ? <Onboard2/> : onboarding === 3 ? <Onboard3/> : user === null ? <Landing/> : user.userType === "fan" ?  <FanDashboard/> : <Dashboard/>}
+            {onboarding === 1 ? (
+              <Onboard1 />
+            ) : onboarding === 2 ? (
+              <Onboard2 />
+            ) : onboarding === 3 ? (
+              <Onboard3 />
+            ) : user === null ? (
+              <Landing />
+            ) : user.userType === "fan" ? (
+              <FanDashboard />
+            ) : (
+              <Dashboard />
+            )}
           </Route>
           <Route exact path="/login">
-              {onboarding === 1 ? <Onboard1 /> : onboarding === 2 ? <Onboard2/> : onboarding === 3 ? <Onboard3/> :  user === null ? <LoginPage/> : user.userType === "fan" ?  <FanDashboard/> : <Dashboard/>}
+            {onboarding === 1 ? (
+              <Onboard1 />
+            ) : onboarding === 2 ? (
+              <Onboard2 />
+            ) : onboarding === 3 ? (
+              <Onboard3 />
+            ) : user === null ? (
+              <LoginPage />
+            ) : user.userType === "fan" ? (
+              <FanDashboard />
+            ) : (
+              <Dashboard />
+            )}
           </Route>
           <Route exact path="/signup">
-              { onboarding === 1 ? <Onboard1 /> : onboarding === 2 ? <Onboard2/> : onboarding === 3 ? <Onboard3/> :  user === null ? <SignUp/> : user.userType === "fan" ?  <FanDashboard/> : <Dashboard/>}
+            {onboarding === 1 ? (
+              <Onboard1 />
+            ) : onboarding === 2 ? (
+              <Onboard2 />
+            ) : onboarding === 3 ? (
+              <Onboard3 />
+            ) : user === null ? (
+              <SignUp />
+            ) : user.userType === "fan" ? (
+              <FanDashboard />
+            ) : (
+              <Dashboard />
+            )}
           </Route>
           <PrivateRoute exact path="/step1" component={Onboard1} />
           <PrivateRoute exact path="/step2" component={Onboard2} />
@@ -38,21 +102,50 @@ function App(props) {
           <PrivateRoute exact path="/wallet" component={WalletPage} />
           <PrivateRoute exact path="/settings" component={SettingPage} />
           <PrivateRoute exact path="/settings/link" component={SettingsLink} />
-          <PrivateRoute exact path="/settings/password" component={ResetPassword} />
+          <PrivateRoute
+            exact
+            path="/settings/password"
+            component={ResetPassword}
+          />
           <PrivateRoute exact path="/settings/user" component={Details} />
           <PrivateRoute exact path="/settings/account" component={Bank} />
-          <PrivateRoute path="/support-history" component={SupportHistoryPage} />
-          <FanPrivateRoute exact path="/fan-dashboard" component={FanDashboard} />
+          <PrivateRoute
+            path="/support-history"
+            component={SupportHistoryPage}
+          />
+          <FanPrivateRoute
+            exact
+            path="/fan-dashboard"
+            component={FanDashboard}
+          />
           <FanPrivateRoute exact path="/explore" component={ExploreCreators} />
-          <FanPrivateRoute exact path="/supporter-creators" component={SupportedCreators} />
-          <FanPrivateRoute exact path="/fan-support-history" component={FanSupportHistory} />
+          <FanPrivateRoute
+            exact
+            path="/supporter-creators"
+            component={SupportedCreators}
+          />
+          <FanPrivateRoute
+            exact
+            path="/fan-support-history"
+            component={FanSupportHistory}
+          />
           <FanPrivateRoute exact path="/fan-settings" component={FanSettings} />
-          <FanPrivateRoute exact path="/fan-settings/user" component={FanDetail} />
-          <FanPrivateRoute exact path="/fan-settings/reset" component={FanResetPassword} />
-          <Route exact  path="/success" component={Success} />
+          <FanPrivateRoute
+            exact
+            path="/fan-settings/user"
+            component={FanDetail}
+          />
+          <FanPrivateRoute
+            exact
+            path="/fan-settings/reset"
+            component={FanResetPassword}
+          />
+          <Route exact path="/success" component={Success} />
           <Route path="/404" component={NotFound} />
-          <Route   path="/:username" component={CreatorPage} />
-          <Route  component={NotFound} />
+          <Route path="/post/:id" component={CreatorPostPage} />
+          <Route path="/:username" component={CreatorPage} />
+
+          <Route component={NotFound} />
         </Switch>
         <NotificationContainer />
       </HashRouter>
@@ -62,9 +155,8 @@ function App(props) {
 
 const mapStateToProps = (state) => {
   return {
-      user: state.auth,
-  }
-}
+    user: state.auth,
+  };
+};
 
 export default connect(mapStateToProps)(App);
-
