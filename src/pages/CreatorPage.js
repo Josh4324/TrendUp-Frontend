@@ -364,12 +364,14 @@ function CreatorPage(props) {
                                       {item.title}
                                     </h3>
                                     <p class="card-creator-text">
-                                      {item.message}
-                                      {/* {item.message
+                                      {item.message
                                         .split("")
                                         .slice(0, 165)
                                         .join("")}
-                                      ...<a href="#">Read More</a> */}
+                                      ...
+                                      <a href={`#/post/${item.id}`}>
+                                        Read More
+                                      </a>
                                     </p>
                                   </a>
                                 </div>

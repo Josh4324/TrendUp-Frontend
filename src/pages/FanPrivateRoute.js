@@ -6,26 +6,15 @@ import { useHistory } from "react-router-dom";
 import { NotificationManager } from "react-notifications";
 
 function FanPrivateRoute({ component: Component, props, dispatch, ...rest }) {
-  let user;
+  let user = rest.user;
   let history = useHistory();
-  if (rest !== null) {
+  if (user !== null) {
     if (rest.user.userType === "creator") {
       history.push("/dashboard");
     }
   }
 
-  if (rest.location.search) {
-    let data = {
-      token: rest.location.search.slice(6, -1),
-    };
-
-    localStorage.setItem("trend-user", JSON.stringify(data));
-    user = "something";
-  } else {
-    user = rest.user;
-  }
-
-  if (user !== null && user !== "something") {
+  if (user !== null) {
     const decoded = jwt_decode(user.token);
 
     const expirationTime = new Date() / 1000;
