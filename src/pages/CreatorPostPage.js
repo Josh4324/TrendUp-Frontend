@@ -266,7 +266,13 @@ function CreatorPostPage(props) {
         </div>
 
         <div class="app-footer border-0 shadow-lg bg-primary-gradiant">
-          <a href="#" class="btn supportBtn">
+          <span
+            href="#"
+            onClick={() => {
+              onModal();
+            }}
+            class="btn supportBtn"
+          >
             <svg
               enable-background="new 0 0 512 512"
               height="512"
@@ -280,8 +286,8 @@ function CreatorPostPage(props) {
                 </g>
               </g>
             </svg>{" "}
-            Support Josh
-          </a>
+            Support {firstName}
+          </span>
         </div>
       </div>
       {modal ? (

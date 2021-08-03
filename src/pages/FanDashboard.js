@@ -50,6 +50,7 @@ function FanDashboard(props) {
     if (email) {
       let fanpost = await getFanPost(token, email);
       if (fanpost) {
+        console.log(fanpost);
         setFanLoading(false);
         setFanPost(fanpost);
       }

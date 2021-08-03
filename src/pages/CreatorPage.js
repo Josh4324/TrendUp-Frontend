@@ -359,7 +359,7 @@ function CreatorPage(props) {
                                   <img src={item.image} class="" alt="image" />
                                 </div>
                                 <div class="card-body p-0 me-lg-5">
-                                  <a href="#">
+                                  <a href={`#/post/${item.id}`}>
                                     <h3 class="card-creator-title">
                                       {item.title}
                                     </h3>

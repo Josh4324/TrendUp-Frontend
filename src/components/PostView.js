@@ -10,7 +10,7 @@ function PostView(props) {
   const [view, setView] = useState("dashboard");
   const [modal, setModal] = useState(false);
   const token = props.user.user.token;
-  let { picture } = props.data.user || "";
+  let { picture, firstName, lastName } = props.data.user || "";
   picture = picture || "images/profile.jpg";
 
   useEffect(async () => {
@@ -54,7 +54,13 @@ function PostView(props) {
                     ? userPost.map((item) => {
                         return (
                           <div class="single-record-row d-flex">
-                            <a href={`/#/post/${item.id}`} target="_blank">
+                            <span class=""></span>
+                            <a
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                setViewPost(item);
+                              }}
+                            >
                               <h4 class="post-single_title">
                                 {item.title}{" "}
                                 <span class="post-single_date">
@@ -90,7 +96,6 @@ function PostView(props) {
                               </div>
                               <div class="card-body p-0 mt-2">
                                 <span
-                                  href="#"
                                   style={{ cursor: "pointer" }}
                                   onClick={() => {
                                     props.setView("edit");
@@ -136,39 +141,31 @@ function PostView(props) {
                   ) : null}
 
                   {viewPost !== null ? (
-                    <div class="card card-creator mb-3">
-                      <div class="card-body card-creator-meta">
-                        <figure
-                          class="avatar me-3"
-                          style={{
-                            backgroundImage: "url(" + picture + ")",
-                          }}
-                        >
-                          <img src={picture} alt="" />
-                        </figure>
-                        <h4 class="card-creator-meta--author">
-                          {" "}
-                          <a href="#"></a>{" "}
-                          <span class="card-creator-meta--date">
-                            {" "}
-                            {new Date(viewPost.createdAt).toDateString()}
-                          </span>
-                        </h4>
-                      </div>
-                      <div class="card-body card-creator-image">
-                        <img
-                          src={viewPost.image}
-                          class="post-image"
-                          alt="image"
-                        />
-                      </div>
-                      <div class="card-body p-0 me-lg-5">
-                        <a href="#">
-                          <h3 class="card-creator-title mt-3">
-                            {viewPost.title}
-                          </h3>
+                    <div>
+                      <div class="card card-creator mb-3">
+                        <div class="card-body card-creator-meta">
+                          <figure
+                            class="avatar me-3"
+                            style={{
+                              backgroundImage: "url(" + picture + ")",
+                            }}
+                          >
+                            <img src={picture} alt="" />
+                          </figure>
+                          <h4 class="card-creator-meta--author">
+                            {firstName} {lastName}{" "}
+                            <span class="card-creator-meta--date">
+                              {new Date(viewPost.createdAt).toDateString()}
+                            </span>
+                          </h4>
+                        </div>
+                        <div class="card-body card-creator-image">
+                          <img src={viewPost.image} class="" alt="image" />
+                        </div>
+                        <div class="card-body p-0 me-lg-5">
+                          <h3 class="card-creator-title">{viewPost.title}</h3>
                           <p class="card-creator-text">{viewPost.message}</p>
-                        </a>
+                        </div>
                       </div>
                     </div>
                   ) : null}
