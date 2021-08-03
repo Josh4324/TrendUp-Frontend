@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import FanSidebar from "./FanSideBar";
 import { useHistory } from "react-router-dom";
-import { getCallModal, getCreators } from "../utils/apiCalls";
+import { getCallModal, getCreators, getFanPost } from "../utils/apiCalls";
 import jwt_decode from "jwt-decode";
 import { NotificationManager } from "react-notifications";
 import { connect } from "react-redux";
@@ -20,7 +20,9 @@ function FanDashboard(props) {
   const token = props.user.user.token;
   const [modal, setModal] = useState(false);
   const [creators, setCreators] = useState([]);
+  const [fanpost, setFanPost] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [fanloading, setFanLoading] = useState(true);
   const navRef = useRef("");
   const butRef = useRef("");
   const link = `/${userName}`;
@@ -45,6 +47,14 @@ function FanDashboard(props) {
     }
     getCallModal(setModal, props.dispatch, token);
     let creators = await getCreators(token);
+    if (email) {
+      let fanpost = await getFanPost(token, email);
+      if (fanpost) {
+        setFanLoading(false);
+        setFanPost(fanpost);
+      }
+    }
+
     if (creators) {
       setLoading(false);
       setCreators(creators.slice(0, 4));
@@ -107,42 +117,131 @@ function FanDashboard(props) {
 
         <div class="main-content">
           <div class="middle-sidebar-bottom">
-            <div class="middle-sidebar-left">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card dash-card">
-                    <i class="feather-heart btn-round-lg bg-grey font-md fw-700 text-grey-500 d-inline-block mx-auto mb-3"></i>
-                    <h2 class="fw-700 font-xs text-center mb-3">
-                      No Posts Available
-                    </h2>
-                    <p class="text-grey-600 text-center mw-600 mx-auto">
-                      Support a creator to see posts from the creator
-                    </p>
-                    <p class="text-grey-600 text-center mw-600 mx-auto">
-                      There are no posts from the creators you support.{" "}
-                    </p>
+            {fanpost.length === 0 && fanloading === false ? (
+              <div class="middle-sidebar-left">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="card dash-card">
+                      <i class="feather-heart btn-round-lg bg-grey font-md fw-700 text-grey-500 d-inline-block mx-auto mb-3"></i>
+                      <h2 class="fw-700 font-xs text-center mb-3">
+                        No Posts Available
+                      </h2>
+                      <p class="text-grey-600 text-center mw-600 mx-auto">
+                        Support a creator to see posts from the creator
+                      </p>
+                      <p class="text-grey-600 text-center mw-600 mx-auto">
+                        There are no posts from the creators you support.{" "}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row creator-row">
+                  <div class="col-12">
+                    <h3 class="card-title mt-3 mb-3">Explore Creators</h3>
+                  </div>
+                  {loading === true ? (
+                    <div className="card w-100 border-0 shadow-1 p-4_5 rounded-xxl mb-3">
+                      <div
+                        className="loader"
+                        style={{ marginTop: "20px", marginBottom: "40px" }}
+                      >
+                        <div>Loading...</div>
+                      </div>
+                    </div>
+                  ) : null}
+                  {creators.map((item) => {
+                    return (
+                      <div class="col-md-3" key={item.id}>
+                        <div class="item">
+                          <div class="card dash-card creator-small-card p-0 mb-3">
+                            <div class="card-body d-block w-100 ps-3 pe-3 pb-4 text-center">
+                              <figure
+                                class="avatar"
+                                style={{
+                                  backgroundImage: "url(" + item.picture + ")",
+                                }}
+                              >
+                                <img src="images/user-11.png" alt="creator" />
+                              </figure>
+                              <div class="clearfix"></div>
+                              <h4 class="creator-small-card--title mt-3 mb-2">
+                                {item.firstName} {item.lastName}
+                              </h4>
+                              <p class="creator-small-card--text mt-0 mb-3">
+                                {item.about.split("").slice(0, 27).join("")}...
+                              </p>
+                              <a
+                                href={`${front}/#/${item.userName}`}
+                                target="_blank"
+                                class="btn btn-light bt-sm"
+                              >
+                                VIEW CREATOR
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                  <div class="col-12 text-center mb-3">
+                    <Link to="/explore" class="btn-text">
+                      <i class="feather-plus-circle"></i> View all Creators
+                    </Link>
                   </div>
                 </div>
               </div>
-
-              <div class="row creator-row">
-                <div class="col-12">
-                  <h3 class="card-title mt-3 mb-3">Explore Creators</h3>
+            ) : null}
+            {fanloading === false ? (
+              <div class="row">
+                <div class="col-md-9">
+                  <h3 class="card-title mt-3 mb-3">
+                    Posts from Creators you support
+                  </h3>
+                  {fanpost.map((item) => {
+                    return (
+                      <div class="card card-creator mb-3">
+                        <div class="card-body card-creator-meta">
+                          <figure
+                            class="avatar me-3"
+                            style={{
+                              backgroundImage: "url(" + item.user.picture + ")",
+                            }}
+                          >
+                            <img src="images/profile.jpg" alt="" />
+                          </figure>
+                          <h4 class="card-creator-meta--author">
+                            {" "}
+                            <a href={`/#/post/${item.id}`} target="_blank">
+                              {item.firstName} {item.lastName}
+                            </a>{" "}
+                            <span class="card-creator-meta--date">
+                              {new Date(item.createdAt).toDateString()}
+                            </span>
+                          </h4>
+                        </div>
+                        <div class="card-body card-creator-image">
+                          <a href={`/#/post/${item.id}`}>
+                            <img src={item.image} class="" alt="image" />
+                          </a>
+                        </div>
+                        <div class="card-body p-0 me-lg-5">
+                          <a href={`/#/post/${item.id}`}>
+                            <h3 class="card-creator-title">{item.title}</h3>
+                            <p class="card-creator-text">
+                              {item.message.split("").slice(0, 100).join("")}...
+                            </p>
+                          </a>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-                {loading === true ? (
-                  <div className="card w-100 border-0 shadow-1 p-4_5 rounded-xxl mb-3">
-                    <div
-                      className="loader"
-                      style={{ marginTop: "20px", marginBottom: "40px" }}
-                    >
-                      <div>Loading...</div>
-                    </div>
-                  </div>
-                ) : null}
-                {creators.map((item) => {
-                  return (
-                    <div class="col-md-3" key={item.id}>
-                      <div class="item">
+                <div class="col-md-3">
+                  <h3 class="card-title mt-3 mb-3">Explore Creators</h3>
+                  {creators.map((item) => {
+                    return (
+                      <div class="item mb-3">
                         <div class="card dash-card creator-small-card p-0 mb-3">
                           <div class="card-body d-block w-100 ps-3 pe-3 pb-4 text-center">
                             <figure
@@ -170,16 +269,29 @@ function FanDashboard(props) {
                           </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
-                <div class="col-12 text-center mb-3">
-                  <Link to="/explore" class="btn-text">
+                    );
+                  })}
+
+                  <div></div>
+                  <Link
+                    to="/explore"
+                    class="btn-text d-block text-center mb-3 "
+                  >
                     <i class="feather-plus-circle"></i> View all Creators
                   </Link>
                 </div>
               </div>
-            </div>
+            ) : null}
+            {fanloading === true ? (
+              <div className="card w-100 border-0 shadow-1 p-4_5 rounded-xxl mb-3">
+                <div
+                  className="loader"
+                  style={{ marginTop: "20px", marginBottom: "40px" }}
+                >
+                  <div>Loading...</div>
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

@@ -571,3 +571,54 @@ export const getPostAndUser = async (postId) => {
     console.log(err.response.data);
   }
 };
+
+export const getFanPost = async (token, email) => {
+  try {
+    const res = await axios.get(`${http}/api/v1/post/fanpost?email=${email}`, {
+      headers: {
+        Authorization: `JWT ${token}`,
+      },
+    });
+    if (res.data.code === 200) {
+      return res.data.data;
+    }
+  } catch (err) {
+    console.log(err.response.data);
+  }
+};
+
+export const getSupportCreators = async (token, email) => {
+  try {
+    const res = await axios.get(
+      `${http}/api/v1/user/support-creators?email=${email}`,
+      {
+        headers: {
+          Authorization: `JWT ${token}`,
+        },
+      }
+    );
+    if (res.data.code === 200) {
+      return res.data.data;
+    }
+  } catch (err) {
+    console.log(err.response.data);
+  }
+};
+
+export const getPaymentHistory = async (token, email) => {
+  try {
+    const res = await axios.get(
+      `${http}/api/v1/statistic/payment-history?email=${email}`,
+      {
+        headers: {
+          Authorization: `JWT ${token}`,
+        },
+      }
+    );
+    if (res.data.code === 200) {
+      return res.data.data;
+    }
+  } catch (err) {
+    console.log(err.response.data);
+  }
+};
