@@ -63,7 +63,16 @@ function ResetPassword(props) {
 
   const submit = async (evt) => {
     evt.preventDefault();
-
+    if (
+      !newPasswordRef.current.value ||
+      !confirmPasswordRef.current.value ||
+      !oldPasswordRef.current.value
+    ) {
+      return NotificationManager.error(
+        "Please fill all required fields",
+        "Error"
+      );
+    }
     if (newPasswordRef.current.value !== confirmPasswordRef.current.value) {
       NotificationManager.error("Password do not match", "Error");
     } else {

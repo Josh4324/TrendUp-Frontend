@@ -125,6 +125,12 @@ function SettingsLink(props) {
   const submit = async (evt) => {
     evt.preventDefault();
     console.log(username);
+    if (username.length < 1) {
+      return NotificationManager.error(
+        "You cannnot submit an empty username",
+        Error
+      );
+    }
     let cred = {
       userName: username,
     };

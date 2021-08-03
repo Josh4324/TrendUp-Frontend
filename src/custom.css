@@ -396,3 +396,9 @@ a {
   pointer-events: none;
   cursor: default;
 }
+
+@media (max-width: 768px) {
+  .remove {
+    display: none !important;
+  }
+}

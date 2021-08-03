@@ -165,6 +165,7 @@ function Dashboard(props) {
                             evt.preventDefault();
                             setPostType("public", true);
                             setView("post");
+                            navChange();
                           }}
                           href="#"
                         >
@@ -182,6 +183,7 @@ function Dashboard(props) {
                             evt.preventDefault();
                             setPostType("support", true);
                             setView("post");
+                            navChange();
                           }}
                           href="#"
                         >

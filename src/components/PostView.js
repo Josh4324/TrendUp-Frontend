@@ -54,14 +54,17 @@ function PostView(props) {
                     ? userPost.map((item) => {
                         return (
                           <div class="single-record-row d-flex">
-                            <span class="link-cover"></span>
-                            <h4 class="post-single_title">
-                              {item.title}{" "}
-                              <span class="post-single_date">
-                                {new Date(item.createdAt).toDateString()} at{" "}
-                                {new Date(item.createdAt).toLocaleTimeString()}
-                              </span>
-                            </h4>
+                            <a href={`/#/post/${item.id}`} target="_blank">
+                              <h4 class="post-single_title">
+                                {item.title}{" "}
+                                <span class="post-single_date">
+                                  {new Date(item.createdAt).toDateString()} at{" "}
+                                  {new Date(
+                                    item.createdAt
+                                  ).toLocaleTimeString()}
+                                </span>
+                              </h4>
+                            </a>
                             <span
                               class="dropdown-menu-link ms-auto"
                               id="dropdownMenu2"
@@ -118,6 +121,17 @@ function PostView(props) {
                   {postState === true && userPost.length === 0 ? (
                     <p style={{ marginTop: "30px" }}>
                       You have not made any posts yet.
+                      <Link
+                        style={{ paddingLeft: "5px" }}
+                        onClick={(evt) => {
+                          evt.preventDefault();
+                          props.setPostType("public", true);
+                          props.setView("post");
+                          props.navChange();
+                        }}
+                      >
+                        Click here to make a post
+                      </Link>
                     </p>
                   ) : null}
 

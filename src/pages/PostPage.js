@@ -201,6 +201,9 @@ function PostPage(props) {
               setView={setView}
               setPostData={setPostData}
               setPostId={setPostId}
+              setPostType={setPostType}
+              setView={setView}
+              navChange={navChange}
             />
           )}
         </div>

@@ -161,6 +161,32 @@ function Details(props) {
       youtubeLink: youtube,
       creating: created,
     };
+
+    if (!brand || !firstname || !lastname || !website || !number || !About) {
+      let fields = "";
+      if (!brand) {
+        fields = fields + " " + "brand";
+      }
+      if (!firstname) {
+        fields = fields + " " + "firstname";
+      }
+      if (!lastname) {
+        fields = fields + " " + "lastname";
+      }
+      if (!website) {
+        fields = fields + " " + "website";
+      }
+      if (!number) {
+        fields = fields + " " + "number";
+      }
+      if (!About) {
+        fields = fields + " " + "about";
+      }
+
+      fields = "Please fill the following fields" + fields;
+
+      return NotificationManager.error(fields, "Error");
+    }
     const result = await editCall(
       cred,
       setLoader,
@@ -292,10 +318,7 @@ function Details(props) {
                           Update User Details
                         </h2>
 
-                        <form
-                          class="userdetails-onboard-form"
-                          onSubmit={submit}
-                        >
+                        <form class="userdetails-onboard-form">
                           <div class="form-group upload-input mb-4">
                             <input
                               type="file"
@@ -346,7 +369,6 @@ function Details(props) {
                               <div class="form-group">
                                 <input
                                   type="text"
-                                  required
                                   onChange={(evt) => setBrand(evt.target.value)}
                                   value={brand}
                                   class="form-control style2-input"
@@ -561,6 +583,7 @@ function Details(props) {
                             <div class="col-lg-12">
                               <button
                                 type="submit"
+                                onClick={submit}
                                 class="form-control style2-input style2-main-button"
                               >
                                 Update User Details
