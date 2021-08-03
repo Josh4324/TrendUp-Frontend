@@ -199,14 +199,14 @@ function FanDashboard(props) {
                     Posts from Creators you support
                   </h3>
                   {fanpost.map((item) => {
+                    let pic = item.user.picture || "images/user-9.png";
                     return (
                       <div class="card card-creator mb-3">
                         <div class="card-body card-creator-meta">
                           <figure
                             class="avatar me-3"
                             style={{
-                              backgroundImage:
-                                "url(" + item.user.picture || "" + ")",
+                              backgroundImage: "url(" + pic + ")",
                             }}
                           >
                             <img src="images/profile.jpg" alt="" />
