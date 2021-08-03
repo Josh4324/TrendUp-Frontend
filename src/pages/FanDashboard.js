@@ -205,7 +205,8 @@ function FanDashboard(props) {
                           <figure
                             class="avatar me-3"
                             style={{
-                              backgroundImage: "url(" + item.user.picture + ")",
+                              backgroundImage:
+                                "url(" + item.user.picture || "" + ")",
                             }}
                           >
                             <img src="images/profile.jpg" alt="" />
