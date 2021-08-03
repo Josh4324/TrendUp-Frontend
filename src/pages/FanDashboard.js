@@ -48,6 +48,7 @@ function FanDashboard(props) {
     getCallModal(setModal, props.dispatch, token);
     let creators = await getCreators(token);
     if (email) {
+      console.log(email);
       let fanpost = await getFanPost(token, email);
       if (fanpost) {
         console.log(fanpost);
@@ -62,7 +63,7 @@ function FanDashboard(props) {
     }
 
     return () => {};
-  }, []);
+  }, [email]);
 
   const navChange = () => {
     butRef.current.classList.toggle("active");
