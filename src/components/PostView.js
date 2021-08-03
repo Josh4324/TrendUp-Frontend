@@ -142,8 +142,8 @@ function PostView(props) {
 
                   {viewPost !== null ? (
                     <div>
-                      <div class="card card-creator mb-3">
-                        <div class="card-body card-creator-meta">
+                      <div class="card-creator mb-3">
+                        <div class="card-body card-creator-meta d-flex">
                           <figure
                             class="avatar me-3"
                             style={{
