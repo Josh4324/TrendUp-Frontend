@@ -194,14 +194,14 @@ function FanDashboard(props) {
                 </div>
               </div>
             ) : null}
-            {fanloading === false ? (
+            {fanloading === false && fanpost.length > 0 ? (
               <div class="row">
                 <div class="col-md-9">
                   <h3 class="card-title mt-3 mb-3">
                     Posts from Creators you support
                   </h3>
                   {fanpost.map((item) => {
-                    let pic = item.user.picture || "images/user-9.png";
+                    let pic = item?.user?.picture || "images/user-9.png";
                     return (
                       <div class="card card-creator mb-3">
                         <div class="card-body card-creator-meta">
