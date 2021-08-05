@@ -313,7 +313,7 @@ export const postCall = async (userCredential, setLoader, token, history) => {
       console.log(res.data);
       setLoader(false);
       NotificationManager.success("Post created successfully", "Success");
-      return (window.location.href = `${front}/#/dashboard`);
+      window.location.href = `${front}/#/post`;
     }
   } catch (err) {
     NotificationManager.error("Error occured while creating post", "Error");

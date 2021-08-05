@@ -91,6 +91,11 @@ function CreatorPage(props) {
     }
   };
 
+  function topFunction() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  }
+
   const onOption = (value) => {
     setOption(value);
   };
@@ -389,17 +394,22 @@ function CreatorPage(props) {
                                   />
 
                                   <h4 class="card-creator-meta--author">
-                                    <a href="#">
-                                      {firstName} {lastName}
-                                    </a>{" "}
+                                    {firstName} {lastName}{" "}
                                     <span class="card-creator-meta--date">
-                                      March 2, 2022
+                                      {new Date(item.createdAt).toDateString()}
                                     </span>
                                   </h4>
                                 </div>
 
                                 <div class="card-body card-creator-image">
-                                  <a href="#" class="supportBtn">
+                                  <a
+                                    onClick={() => {
+                                      onModal();
+                                      topFunction();
+                                    }}
+                                    class="supportBtn"
+                                    style={{ cursor: "pointer" }}
+                                  >
                                     <img
                                       src="images/jamaica-lg.jpg"
                                       class=""
@@ -411,7 +421,10 @@ function CreatorPage(props) {
                                         This posts is for supporters
                                       </h3>
 
-                                      <span class="btn locked-content-overlay-btn">
+                                      <span
+                                        class="btn locked-content-overlay-btn"
+                                        onClick={onModal}
+                                      >
                                         <svg
                                           enable-background="new 0 0 512 512"
                                           height="512"
@@ -432,14 +445,14 @@ function CreatorPage(props) {
                                 </div>
 
                                 <div class="card-body p-0 me-lg-5">
-                                  <a href="#">
+                                  <span onClick={onModal}>
                                     <h3 class="card-creator-title">
                                       {item.title}
                                     </h3>
                                     <p class="card-creator-text">
                                       Unlock this post by supporting {firstName}
                                     </p>
-                                  </a>
+                                  </span>
                                 </div>
                               </div>
                             </div>

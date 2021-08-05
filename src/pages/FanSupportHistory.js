@@ -108,7 +108,7 @@ function FanSupportHistory(props) {
                   <div class="card dash-card dash-card__records dash-card__supporters">
                     <h3 class="card-title mb-3">SUPPORT HISTORY</h3>
                     {loading === true ? (
-                      <div className="card w-100 border-0 shadow-1 p-4_5 rounded-xxl mb-3">
+                      <div className="">
                         <div
                           className="loader"
                           style={{ marginTop: "20px", marginBottom: "40px" }}
