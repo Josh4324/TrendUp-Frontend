@@ -535,14 +535,17 @@ export const resetPasswordCall = async (userCredential, token) => {
   try {
     axios.defaults.headers.common["Authorization"] = "JWT " + token;
     const res = await axios.patch(`${http}/api/v1/user/reset`, userCredential);
+
     if (res) {
       NotificationManager.success("Password reset successfully", "Success");
+      return res;
     }
   } catch (err) {
     NotificationManager.error(
       "Old password incorrect or an error occurred",
       "Error"
     );
+    return err;
   }
 };
 

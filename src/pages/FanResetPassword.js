@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import FanSidebar from "./FanSideBar";
 import { useHistory } from "react-router-dom";
@@ -13,7 +13,9 @@ function FanResetPassword(props) {
   const token = props.user.user.token;
   const { firstName, lastName, picture, email, userName, onboardingStep } =
     props.data.user || "";
+  const formRef = useRef("");
   let img1 = picture || "images/profile-image.jpg";
+  const [loader, setLoader] = useState(false);
   const navRef = useRef("");
   const butRef = useRef("");
   let oldPasswordRef = useRef("");
@@ -26,6 +28,7 @@ function FanResetPassword(props) {
   };
 
   const submit = async (evt) => {
+    setLoader(true);
     evt.preventDefault();
     if (
       !newPasswordRef.current.value ||
@@ -45,6 +48,10 @@ function FanResetPassword(props) {
         newPassword: newPasswordRef.current.value,
       };
       const result = await resetPasswordCall(cred, token);
+      if (result) {
+        setLoader(false);
+        formRef.current.reset();
+      }
     }
   };
 
@@ -117,6 +124,7 @@ function FanResetPassword(props) {
                         class="mw-400 mx-auto"
                         action="user_onboard3.html"
                         method="GET"
+                        ref={formRef}
                       >
                         <div class="row">
                           <div class="col-lg-6 mb-2">
@@ -173,6 +181,10 @@ function FanResetPassword(props) {
                               />
                             </div>
                           </div>
+                        </div>
+
+                        <div className={loader === true ? "loader" : "none"}>
+                          <div>Loading...</div>
                         </div>
 
                         <div class="row">
