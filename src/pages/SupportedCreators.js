@@ -41,7 +41,7 @@ function SupportedCreators(props) {
         history.push("/login");
       }
     }
-
+    console.log(email);
     if (email) {
       let creators = await getSupportCreators(token, email);
       console.log(creators);
@@ -49,7 +49,7 @@ function SupportedCreators(props) {
     }
 
     return () => {};
-  }, []);
+  }, [email]);
   return (
     <div className="dashboard-page" style={{ background: "#f9f9f9" }}>
       <div class="main-wrapper">
