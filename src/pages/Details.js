@@ -15,7 +15,6 @@ import "../style1.css";
 import "../custom1.css";
 
 function Details(props) {
-  console.log(props);
   const {
     firstName,
     lastName,

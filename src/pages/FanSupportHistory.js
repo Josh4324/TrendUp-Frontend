@@ -40,6 +40,7 @@ function FanSupportHistory(props) {
     if (email) {
       let historyData = await getPaymentHistory(token, email);
       if (historyData) {
+        console.log("his", historyData);
         setLoading(false);
         setHis(historyData);
       }
@@ -131,7 +132,7 @@ function FanSupportHistory(props) {
                           <div class="row supporters-row">
                             <div class="col-sm-5">
                               <h4 class="post-single_title">
-                                {item.firstName} {item.lastName}
+                                {item.user[0].firstName} {item.user[0].lastName}
                                 <span class="post-single_date">
                                   {new Date(item.createdAt).toDateString()} at{" "}
                                   {new Date(

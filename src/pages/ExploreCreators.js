@@ -9,7 +9,9 @@ function ExploreCreators(props) {
   let img2 = "images/user-9.png";
   const navRef = useRef("");
   const butRef = useRef("");
+  const searchRef = useRef("");
   const [creators, setCreators] = useState([]);
+  const [constantCreator, setConstantCreators] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = props.user.user.token;
   const { firstName, lastName, picture, userName, onboardingStep } =
@@ -20,11 +22,21 @@ function ExploreCreators(props) {
     navRef.current.classList.toggle("nav-active");
   };
 
+  const search = () => {
+    let constantList = constantCreator;
+    let filtered = constantList.filter((item) => {
+      return item.userName.includes(searchRef.current.value);
+    });
+
+    setCreators(filtered);
+  };
+
   useEffect(async () => {
     let creators = await getCreators(token);
     if (creators) {
       setLoading(false);
       setCreators(creators);
+      setConstantCreators(creators);
     }
 
     return () => {};
@@ -92,6 +104,8 @@ function ExploreCreators(props) {
 
                     <input
                       type="text"
+                      ref={searchRef}
+                      onChange={search}
                       class="form-control text-grey-500 mb-0 border-0"
                       placeholder="Search here."
                     />

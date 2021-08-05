@@ -54,6 +54,7 @@ function CreatorPage(props) {
     }
 
     if (post) {
+      console.log(post);
       setLoading(false);
       setUserPost(post.data.data);
     }

@@ -11,17 +11,28 @@ function SupportedCreators(props) {
   let img2 = "images/user-9.png";
   const navRef = useRef("");
   const butRef = useRef("");
+  const searchRef = useRef("");
   const token = props.user.user.token;
   let history = useHistory();
   const { firstName, lastName, picture, email, userName, onboardingStep } =
     props.data.user || "";
   let img1 = picture || "images/profile-image.jpg";
   const [creator, setCreator] = useState([]);
+  const [constantCreator, setConstantCreators] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const navChange = () => {
     butRef.current.classList.toggle("active");
     navRef.current.classList.toggle("nav-active");
+  };
+
+  const search = () => {
+    let constantList = constantCreator;
+    let filtered = constantList.filter((item) => {
+      return item.userName.includes(searchRef.current.value);
+    });
+
+    setCreator(filtered);
   };
 
   useEffect(async () => {
@@ -42,11 +53,14 @@ function SupportedCreators(props) {
         history.push("/login");
       }
     }
+    console.log(email);
     if (email) {
       let creators = await getSupportCreators(token, email);
       if (creators) {
+        console.log(creators);
         setLoading(false);
         setCreator(creators);
+        setConstantCreators(creators);
       }
     }
 
@@ -117,6 +131,8 @@ function SupportedCreators(props) {
                       type="text"
                       class="form-control text-grey-500 mb-0 border-0"
                       placeholder="Search here."
+                      ref={searchRef}
+                      onChange={search}
                     />
                   </form>
                 </div>
@@ -133,7 +149,9 @@ function SupportedCreators(props) {
                     </div>
                   </div>
                 ) : null}
-                {creator.length === 0 && loading === false ? (
+                {creator.length === 0 &&
+                loading === false &&
+                searchRef.current.value === "" ? (
                   <div className="card w-100 border-0 shadow-1 p-4_5 rounded-xxl mb-3">
                     <p style={{ marginTop: "30px" }}>
                       You have not supported any creator.{" "}
@@ -141,6 +159,13 @@ function SupportedCreators(props) {
                         View list of creators you can support.
                       </Link>
                     </p>
+                  </div>
+                ) : null}
+                {creator.length === 0 &&
+                loading === false &&
+                searchRef.current.value.length > 0 ? (
+                  <div className="card w-100 border-0 shadow-1 p-4_5 rounded-xxl mb-3">
+                    <p style={{ marginTop: "30px" }}>No creators found</p>
                   </div>
                 ) : null}
                 {creator.map((item) => {
