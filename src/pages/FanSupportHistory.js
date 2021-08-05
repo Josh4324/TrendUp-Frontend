@@ -9,14 +9,14 @@ import { connect } from "react-redux";
 import { front } from "../utils/constants";
 
 function FanSupportHistory(props) {
-  let img1 = "images/profile-image.jpg";
-  let img2 = "images/user-9.png";
   let history = useHistory();
   const { firstName, lastName, picture, email, userName, onboardingStep } =
     props.data.user || "";
+  let img1 = picture || "images/profile-image.jpg";
   const navRef = useRef("");
   const butRef = useRef("");
   const [his, setHis] = useState([]);
+  const [loading, setLoading] = useState(true);
   const token = props.user.user.token;
 
   useEffect(async () => {
@@ -40,13 +40,13 @@ function FanSupportHistory(props) {
     if (email) {
       let historyData = await getPaymentHistory(token, email);
       if (historyData) {
-        console.log(historyData);
+        setLoading(false);
         setHis(historyData);
       }
     }
 
     return () => {};
-  }, []);
+  }, [email]);
 
   const navChange = () => {
     butRef.current.classList.toggle("active");
@@ -107,6 +107,24 @@ function FanSupportHistory(props) {
                 <div class="col-md-9">
                   <div class="card dash-card dash-card__records dash-card__supporters">
                     <h3 class="card-title mb-3">SUPPORT HISTORY</h3>
+                    {loading === true ? (
+                      <div className="card w-100 border-0 shadow-1 p-4_5 rounded-xxl mb-3">
+                        <div
+                          className="loader"
+                          style={{ marginTop: "20px", marginBottom: "40px" }}
+                        >
+                          <div>Loading...</div>
+                        </div>
+                      </div>
+                    ) : null}
+                    {his.length === 0 && loading === false ? (
+                      <p style={{ marginTop: "30px" }}>
+                        You have not supported any creator.
+                        <Link to="/explore" style={{ paddingLeft: "5px" }}>
+                          View list of creators you can support.
+                        </Link>
+                      </p>
+                    ) : null}
                     {his.map((item) => {
                       return (
                         <div class="single-record-row d-flex">

@@ -8,7 +8,6 @@ import { NotificationManager } from "react-notifications";
 import { front } from "../utils/constants";
 
 function SupportedCreators(props) {
-  let img1 = "images/profile-image.jpg";
   let img2 = "images/user-9.png";
   const navRef = useRef("");
   const butRef = useRef("");
@@ -16,7 +15,9 @@ function SupportedCreators(props) {
   let history = useHistory();
   const { firstName, lastName, picture, email, userName, onboardingStep } =
     props.data.user || "";
+  let img1 = picture || "images/profile-image.jpg";
   const [creator, setCreator] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const navChange = () => {
     butRef.current.classList.toggle("active");
@@ -41,11 +42,12 @@ function SupportedCreators(props) {
         history.push("/login");
       }
     }
-    console.log(email);
     if (email) {
       let creators = await getSupportCreators(token, email);
-      console.log(creators);
-      setCreator(creators);
+      if (creators) {
+        setLoading(false);
+        setCreator(creators);
+      }
     }
 
     return () => {};
@@ -77,7 +79,7 @@ function SupportedCreators(props) {
                     <figure
                       class="nav-content-image"
                       style={{
-                        backgroundImage: "url(" + picture + ")",
+                        backgroundImage: "url(" + img1 + ")",
                       }}
                     >
                       <img
@@ -121,6 +123,26 @@ function SupportedCreators(props) {
               </div>
 
               <div class="row creator-row d-flex">
+                {loading === true ? (
+                  <div className="card w-100 border-0 shadow-1 p-4_5 rounded-xxl mb-3">
+                    <div
+                      className="loader"
+                      style={{ marginTop: "20px", marginBottom: "40px" }}
+                    >
+                      <div>Loading...</div>
+                    </div>
+                  </div>
+                ) : null}
+                {creator.length === 0 && loading === false ? (
+                  <div className="card w-100 border-0 shadow-1 p-4_5 rounded-xxl mb-3">
+                    <p style={{ marginTop: "30px" }}>
+                      You have not supported any creator.{" "}
+                      <Link to="/explore">
+                        View list of creators you can support.
+                      </Link>
+                    </p>
+                  </div>
+                ) : null}
                 {creator.map((item) => {
                   return (
                     <div class="col-md-3">
