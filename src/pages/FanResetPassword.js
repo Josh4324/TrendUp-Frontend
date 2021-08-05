@@ -28,7 +28,6 @@ function FanResetPassword(props) {
   };
 
   const submit = async (evt) => {
-    setLoader(true);
     evt.preventDefault();
     if (
       !newPasswordRef.current.value ||
@@ -40,9 +39,11 @@ function FanResetPassword(props) {
         "Error"
       );
     }
+
     if (newPasswordRef.current.value !== confirmPasswordRef.current.value) {
-      NotificationManager.error("Password do not match", "Error");
+      return NotificationManager.error("Password do not match", "Error");
     } else {
+      setLoader(true);
       let cred = {
         oldPassword: oldPasswordRef.current.value,
         newPassword: newPasswordRef.current.value,
