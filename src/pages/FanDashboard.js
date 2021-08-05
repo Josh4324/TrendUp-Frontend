@@ -23,6 +23,7 @@ function FanDashboard(props) {
   const [fanpost, setFanPost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [fanloading, setFanLoading] = useState(true);
+  const [viewPost, setViewPost] = useState(null);
   const navRef = useRef("");
   const butRef = useRef("");
   const link = `/${userName}`;
@@ -194,14 +195,14 @@ function FanDashboard(props) {
                 </div>
               </div>
             ) : null}
-            {fanloading === false && fanpost.length > 0 ? (
+            {fanloading === false && fanpost.length > 0 && viewPost === null ? (
               <div class="row">
                 <div class="col-md-9">
                   <h3 class="card-title mt-3 mb-3">
                     Posts from Creators you support
                   </h3>
                   {fanpost.map((item) => {
-                    let pic = item?.user?.picture || "images/user-9.png";
+                    let pic = item?.user?.picture || "images/profile-image.jpg";
                     return (
                       <div class="card card-creator mb-3">
                         <div class="card-body card-creator-meta">
@@ -211,30 +212,46 @@ function FanDashboard(props) {
                               backgroundImage: "url(" + pic + ")",
                             }}
                           >
-                            <img src="images/profile.jpg" alt="" />
+                            <img src="images/profile-image.jpg" alt="" />
                           </figure>
                           <h4 class="card-creator-meta--author">
                             {" "}
-                            <a href={`/#/post/${item.id}`} target="_blank">
+                            <span
+                              style={{ cursor: "pointer" }}
+                              onClick={() => {
+                                setViewPost(item);
+                                console.log(item);
+                              }}
+                            >
                               {item.firstName} {item.lastName}
-                            </a>{" "}
+                            </span>{" "}
                             <span class="card-creator-meta--date">
                               {new Date(item.createdAt).toDateString()}
                             </span>
                           </h4>
                         </div>
                         <div class="card-body card-creator-image">
-                          <a href={`/#/post/${item.id}`}>
+                          <span
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setViewPost(item);
+                            }}
+                          >
                             <img src={item.image} class="" alt="image" />
-                          </a>
+                          </span>
                         </div>
                         <div class="card-body p-0 me-lg-5">
-                          <a href={`/#/post/${item.id}`}>
+                          <span
+                            style={{ cursor: "pointer" }}
+                            onClick={() => {
+                              setViewPost(item);
+                            }}
+                          >
                             <h3 class="card-creator-title">{item.title}</h3>
                             <p class="card-creator-text">
                               {item.message.split("").slice(0, 100).join("")}...
                             </p>
-                          </a>
+                          </span>
                         </div>
                       </div>
                     );
@@ -292,6 +309,43 @@ function FanDashboard(props) {
                   style={{ marginTop: "20px", marginBottom: "40px" }}
                 >
                   <div>Loading...</div>
+                </div>
+              </div>
+            ) : null}
+
+            {viewPost !== null ? (
+              <div>
+                <span
+                  onClick={() => setViewPost(null)}
+                  style={{ cursor: "pointer" }}
+                  class="back-btn"
+                >
+                  <span class="card-title mb-3">Dashboard</span>
+                </span>
+                <div class="card-creator mb-3">
+                  <div class="card-body card-creator-meta d-flex">
+                    <figure
+                      class="avatar me-3"
+                      style={{
+                        backgroundImage: "url(" + viewPost?.user?.picture + ")",
+                      }}
+                    >
+                      <img src={picture} alt="" />
+                    </figure>
+                    <h4 class="card-creator-meta--author">
+                      {firstName} {lastName}{" "}
+                      <span class="card-creator-meta--date">
+                        {new Date(viewPost.createdAt).toDateString()}
+                      </span>
+                    </h4>
+                  </div>
+                  <div class="card-body card-creator-image">
+                    <img src={viewPost.image} class="" alt="image" />
+                  </div>
+                  <div class="card-body p-0 me-lg-5">
+                    <h3 class="card-creator-title">{viewPost.title}</h3>
+                    <p class="card-creator-text">{viewPost.message}</p>
+                  </div>
                 </div>
               </div>
             ) : null}
