@@ -211,9 +211,7 @@ function FanDashboard(props) {
                             style={{
                               backgroundImage: "url(" + pic + ")",
                             }}
-                          >
-                            <img src="images/profile-image.jpg" alt="" />
-                          </figure>
+                          ></figure>
                           <h4 class="card-creator-meta--author">
                             {" "}
                             <span
