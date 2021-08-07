@@ -61,7 +61,8 @@ function Supporter(props) {
                             <h4 class="post-single_title">
                               {item.firstName} {item.lastName}{" "}
                               <span class="post-single_date">
-                                Jun 10, 2021 at 02:12 PM
+                                {new Date(item.createdAt).toDateString()} at{" "}
+                                {new Date(item.createdAt).toLocaleTimeString()}
                               </span>
                             </h4>
                           </div>
