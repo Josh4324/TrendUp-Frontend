@@ -159,9 +159,12 @@ function PostView(props) {
                             </span>
                           </h4>
                         </div>
-                        <div class="card-body card-creator-image">
-                          <img src={viewPost.image} class="" alt="image" />
-                        </div>
+                        {viewPost.image ? (
+                          <div class="card-body card-creator-image">
+                            <img src={viewPost.image} class="" alt="image" />
+                          </div>
+                        ) : null}
+
                         <div class="card-body p-0 me-lg-5">
                           <h3 class="card-creator-title">{viewPost.title}</h3>
                           <p class="card-creator-text">{viewPost.message}</p>

@@ -306,19 +306,21 @@ export const getCallModal = async (setModal, dispatch, token) => {
 export const postCall = async (userCredential, setLoader, token, history) => {
   try {
     setLoader(true);
+    let res;
     axios.defaults.headers.common["Authorization"] = "JWT " + token;
-    const res = await axios.post(`${http}/api/v1/post`, userCredential);
-    console.log(res);
+    if (Object.values(userCredential).length) {
+      res = await axios.post(`${http}/api/v1/post/noimage`, userCredential);
+    } else {
+      res = await axios.post(`${http}/api/v1/post`, userCredential);
+    }
+
     if (res) {
-      console.log(res.data);
       setLoader(false);
       NotificationManager.success("Post created successfully", "Success");
       window.location.href = `${front}/#/post`;
     }
   } catch (err) {
     NotificationManager.error("Error occured while creating post", "Error");
-    console.log(err);
-    console.log(err.response);
     setLoader(false);
   }
 };

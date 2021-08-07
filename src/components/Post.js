@@ -24,12 +24,21 @@ function Post(props) {
       postType = "supporter";
     }
 
-    let formData = new FormData();
+    let formData;
+    if (!imageRef.current.files[0]) {
+      formData = {
+        title: titleRef.current.value,
+        message: messageRef.current.value,
+        postType: postType,
+      };
+    } else {
+      formData = new FormData();
 
-    formData.append("title", titleRef.current.value);
-    formData.append("message", messageRef.current.value);
-    formData.append("postType", postType);
-    formData.append("image", imageRef.current.files[0]);
+      formData.append("title", titleRef.current.value);
+      formData.append("message", messageRef.current.value);
+      formData.append("postType", postType);
+      formData.append("image", imageRef.current.files[0]);
+    }
 
     const result = await postCall(formData, setLoader, token, history);
   };
