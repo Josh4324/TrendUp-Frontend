@@ -32,8 +32,15 @@ function Dashboard(props) {
   const butRef = useRef("");
   let history = useHistory();
   const token = props.user.user.token;
-  const { firstName, email, lastName, picture, userName, onboardingStep } =
-    props.data.user || "";
+  const {
+    firstName,
+    email,
+    lastName,
+    brandName,
+    picture,
+    userName,
+    onboardingStep,
+  } = props.data.user || "";
   let img1 = picture || "images/profile-image.jpg";
   localStorage.setItem("trend-fan-email", email);
   localStorage.setItem("trend-fan-firstname", firstName);
@@ -139,9 +146,7 @@ function Dashboard(props) {
                       />
                     </figure>
 
-                    <span>
-                      {firstName} {lastName}
-                    </span>
+                    <span>{brandName}</span>
                   </Link>
                   <div class="nav-content-button">
                     <a

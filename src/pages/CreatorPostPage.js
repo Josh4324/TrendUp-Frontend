@@ -54,12 +54,15 @@ function CreatorPostPage(props) {
     creating,
     about,
     userName,
+    brandName,
     facebookLink,
     twitterLink,
     instagramLink,
     youtubeLink,
     websiteUrl,
   } = user || "";
+
+  const creatorEmail = user.email;
 
   function topFunction() {
     document.body.scrollTop = 0; // For Safari
@@ -138,6 +141,7 @@ function CreatorPostPage(props) {
             let cred = {
               status: "approved",
               reference: data.tx_ref,
+              creatorEmail
             };
             let userCred = {
               email,
@@ -206,7 +210,7 @@ function CreatorPostPage(props) {
                   <div class="col-md-9 mx-auto">
                     <a href={`#/${userName}`} class="">
                       <h3 class="card-title mb-3">
-                        <i class="feather-arrow-left"></i> {firstName}'s Page
+                        <i class="feather-arrow-left"></i> {brandName}'s Page
                       </h3>
                     </a>
                     <div class="card card-creator mb-3">
@@ -220,7 +224,7 @@ function CreatorPostPage(props) {
                           <img src="images/profile.jpg" alt="" />
                         </figure>
                         <h4 class="card-creator-meta--author">
-                          {firstName} {lastName}{" "}
+                          {brandName}
                           <span class="card-creator-meta--date">
                             {new Date(post.createdAt).toDateString()}
                           </span>
@@ -253,7 +257,7 @@ function CreatorPostPage(props) {
                                 </g>
                               </g>
                             </svg>{" "}
-                            Support {firstName}
+                            Support {brandName}
                           </span>
                         </p>
                       </div>
@@ -286,7 +290,7 @@ function CreatorPostPage(props) {
                 </g>
               </g>
             </svg>{" "}
-            Support {firstName}
+            Support {brandName}
           </span>
         </div>
       </div>
@@ -299,7 +303,7 @@ function CreatorPostPage(props) {
             </span>
             <div class="card-body">
               <h3 class="card-creator-bio--title mb-4 text-center">
-                Support {firstName} {lastName}
+                Support {brandName}
               </h3>
               {payment === false ? (
                 <form action="">
@@ -451,7 +455,7 @@ function CreatorPostPage(props) {
                   </div>
                   <div class="row mt-3">
                     <div class="col-lg-12 mb-3">
-                      <label for=""> Send {firstName} a message</label>
+                      <label for=""> Send {brandName} a message</label>
                       <textarea
                         ref={messageRef}
                         onChange={(evt) => setMessage(evt.target.value)}
@@ -481,7 +485,7 @@ function CreatorPostPage(props) {
                             </g>
                           </g>
                         </svg>{" "}
-                        Support {firstName}
+                        Support {brandName}
                       </button>
                     </div>
                   </div>

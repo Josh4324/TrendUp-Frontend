@@ -10,7 +10,7 @@ function PostView(props) {
   const [view, setView] = useState("dashboard");
   const [modal, setModal] = useState(false);
   const token = props.user.user.token;
-  let { picture, firstName, lastName } = props.data.user || "";
+  let { picture, firstName, brandName, lastName } = props.data.user || "";
   picture = picture || "images/profile.jpg";
 
   useEffect(async () => {
@@ -153,7 +153,7 @@ function PostView(props) {
                             <img src={picture} alt="" />
                           </figure>
                           <h4 class="card-creator-meta--author">
-                            {firstName} {lastName}{" "}
+                            {brandName}
                             <span class="card-creator-meta--date">
                               {new Date(viewPost.createdAt).toDateString()}
                             </span>

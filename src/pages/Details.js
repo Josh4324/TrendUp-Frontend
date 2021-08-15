@@ -232,7 +232,7 @@ function Details(props) {
                       />
                     </figure>
 
-                    <span>{firstName}</span>
+                    <span>{brandName}</span>
                   </Link>
                   <div class="nav-content-button">
                     <a

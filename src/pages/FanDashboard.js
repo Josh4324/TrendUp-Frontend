@@ -272,7 +272,7 @@ function FanDashboard(props) {
                             </figure>
                             <div class="clearfix"></div>
                             <h4 class="creator-small-card--title mt-3 mb-2">
-                              {item.firstName} {item.lastName}
+                              {item.brandName}
                             </h4>
                             <p class="creator-small-card--text mt-0 mb-3">
                               {item.about.split("").slice(0, 27).join("")}...

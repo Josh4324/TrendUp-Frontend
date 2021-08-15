@@ -16,7 +16,6 @@ import "../style1.css";
 import "../custom1.css";
 
 function SettingPage(props) {
-  console.log(props);
   const [modal, setModal] = useState(false);
   const [view, setView] = useState("dashboard");
   const [public1, setPublic1] = useState(true);
@@ -28,7 +27,7 @@ function SettingPage(props) {
   let history = useHistory();
   const token = props.user.user.token;
   const onboard1 = props.user.user.onboardingStep;
-  const { firstName, picture, userName, onboardingStep } =
+  const { firstName, brandName, picture, userName, onboardingStep } =
     props.data.user || "";
   let img1 = picture || "images/profile-image.jpg";
   const link = `/${userName}`;
@@ -114,7 +113,7 @@ function SettingPage(props) {
                       />
                     </figure>
 
-                    <span>{firstName}</span>
+                    <span>{brandName}</span>
                   </Link>
                   <div class="nav-content-button">
                     <a

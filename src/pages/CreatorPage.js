@@ -68,7 +68,9 @@ function CreatorPage(props) {
     lastName,
     picture,
     creating,
+    email: creatorEmail,
     about,
+    brandName,
     userName,
     facebookLink,
     twitterLink,
@@ -82,6 +84,8 @@ function CreatorPage(props) {
   let youtube = `https://www.youtube.com/${youtubeLink}`;
   let img1 = picture || "images/profile-image.jpg";
   let website = `https://${websiteUrl}`;
+
+
 
   //let name = firstNameRef.current.value + " " + lastNameRef.current.value;
 
@@ -162,6 +166,7 @@ function CreatorPage(props) {
             let cred = {
               status: "approved",
               reference: data.tx_ref,
+              creatorEmail
             };
             let userCred = {
               email,
@@ -253,7 +258,7 @@ function CreatorPage(props) {
                                 </g>
                               </g>
                             </svg>{" "}
-                            Support {firstName}
+                            Support {brandName}
                           </a>
                         </p>
 
@@ -261,61 +266,71 @@ function CreatorPage(props) {
                           <p class="card-creator-about-text">{about}</p>
                         </div>
                         <div class="card-body card-creator-about-social">
-                          <a
-                            href={twitter}
-                            target="_blank"
-                            className={
-                              twitterLink === ""
-                                ? "card-creator-about-social--item disable"
-                                : "card-creator-about-social--item"
-                            }
-                          >
-                            <i class="feather-twitter"></i>{" "}
-                          </a>
-                          <a
-                            href={instagram}
-                            target="_blank"
-                            className={
-                              instagramLink === ""
-                                ? "card-creator-about-social--item disable"
-                                : "card-creator-about-social--item"
-                            }
-                          >
-                            <i class="feather-instagram"></i>
-                          </a>
-                          <a
-                            href={youtube}
-                            target="_blank"
-                            className={
-                              youtubeLink === ""
-                                ? "card-creator-about-social--item disable"
-                                : "card-creator-about-social--item"
-                            }
-                          >
-                            <i class="feather-youtube"></i>
-                          </a>
-                          <a
-                            href={facebook}
-                            target="_blank"
-                            className={
-                              facebookLink === ""
-                                ? "card-creator-about-social--item disable"
-                                : "card-creator-about-social--item"
-                            }
-                          >
-                            <i class="feather-facebook"></i>
-                          </a>
-                          <a
-                            href={`${website}`}
-                            target="_blank"
-                            className={
-                              websiteUrl === ""
-                                ? "card-creator-about-social--item disable"
-                                : "card-creator-about-social--item"
-                            }
-                          >
-                            <i class="feather-link"></i>
-                          </a>
+                          {twitterLink === "" ? null : (
+                            <a
+                              href={twitter}
+                              target="_blank"
+                              className={
+                                twitterLink === ""
+                                  ? "card-creator-about-social--item disable"
+                                  : "card-creator-about-social--item"
+                              }
+                            >
+                              <i class="feather-twitter"></i>{" "}
+                            </a>
+                          )}
+                          {instagramLink === "" ? null : (
+                            <a
+                              href={instagram}
+                              target="_blank"
+                              className={
+                                instagramLink === ""
+                                  ? "card-creator-about-social--item disable"
+                                  : "card-creator-about-social--item"
+                              }
+                            >
+                              <i class="feather-instagram"></i>
+                            </a>
+                          )}
+                          {youtubeLink === "" ? null : (
+                            <a
+                              href={youtube}
+                              target="_blank"
+                              className={
+                                youtubeLink === ""
+                                  ? "card-creator-about-social--item disable"
+                                  : "card-creator-about-social--item"
+                              }
+                            >
+                              <i class="feather-youtube"></i>
+                            </a>
+                          )}
+                          {facebookLink === "" ? null : (
+                            <a
+                              href={facebook}
+                              target="_blank"
+                              className={
+                                facebookLink === ""
+                                  ? "card-creator-about-social--item disable"
+                                  : "card-creator-about-social--item"
+                              }
+                            >
+                              <i class="feather-facebook"></i>
+                            </a>
+                          )}
+                          {websiteUrl === "" ? null : (
+                            <a
+                              href={`${website}`}
+                              target="_blank"
+                              className={
+                                websiteUrl === ""
+                                  ? "card-creator-about-social--item disable"
+                                  : "card-creator-about-social--item"
+                              }
+                            >
+                              <i class="feather-link"></i>
+                            </a>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -355,7 +370,7 @@ function CreatorPage(props) {
 
                                   <h4 class="card-creator-meta--author">
                                     {" "}
-                                    {firstName} {lastName}
+                                    {brandName}
                                     <span class="card-creator-meta--date">
                                       {new Date(item.createdAt).toDateString()}
                                     </span>
@@ -395,7 +410,7 @@ function CreatorPage(props) {
                                   />
 
                                   <h4 class="card-creator-meta--author">
-                                    {firstName} {lastName}{" "}
+                                    {brandName}
                                     <span class="card-creator-meta--date">
                                       {new Date(item.createdAt).toDateString()}
                                     </span>
@@ -439,7 +454,7 @@ function CreatorPage(props) {
                                             </g>
                                           </g>
                                         </svg>{" "}
-                                        Support {firstName}
+                                        Support {brandName}
                                       </span>
                                     </span>
                                   </a>
@@ -451,7 +466,7 @@ function CreatorPage(props) {
                                       {item.title}
                                     </h3>
                                     <p class="card-creator-text">
-                                      Unlock this post by supporting {firstName}
+                                      Unlock this post by supporting {brandName}
                                     </p>
                                   </span>
                                 </div>
@@ -483,7 +498,7 @@ function CreatorPage(props) {
                 </g>
               </g>
             </svg>{" "}
-            Support {firstName}
+            Support {brandName}
           </span>
         </div>
       </div>
@@ -497,7 +512,7 @@ function CreatorPage(props) {
             </span>
             <div class="card-body">
               <h3 class="card-creator-bio--title mb-4 text-center">
-                Support {firstName} {lastName}
+                Support {brandName}
               </h3>
               {payment === false ? (
                 <form action="">
@@ -635,9 +650,11 @@ function CreatorPage(props) {
                         <input
                           type="text"
                           ref={InputRef5}
+                          
                           onChange={(evt) => {
                             onAmount(evt.target.value);
                             radioRef3.current.checked = false;
+                            radioRef4.current.checked = false;
                             radioRef1.current.checked = false;
                             radioRef2.current.checked = false;
                           }}
@@ -649,10 +666,18 @@ function CreatorPage(props) {
                   </div>
                   <div class="row mt-3">
                     <div class="col-lg-12 mb-3">
-                      <label for=""> Send {firstName} a message</label>
+                      <label for=""> Send {brandName} a message</label>
                       <textarea
                         ref={messageRef}
-                        onChange={(evt) => setMessage(evt.target.value)}
+                       maxlength="140"
+                        onChange={(evt) => {
+                        
+                        if (evt.target.value.length === 140){
+                           NotificationManager.error("Maximum character allowed is 140", "Error"); 
+                        }
+                          setMessage(evt.target.value);
+                        }
+                        }
                         class="form-control mb-0 p-3 h100 bg-greylight lh-16"
                         rows="5"
                         placeholder="Say something nice... (optional)"
@@ -679,7 +704,7 @@ function CreatorPage(props) {
                             </g>
                           </g>
                         </svg>{" "}
-                        Support {firstName}
+                        Support {brandName}
                       </button>
                     </div>
                   </div>

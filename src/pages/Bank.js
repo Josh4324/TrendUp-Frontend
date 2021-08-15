@@ -35,6 +35,7 @@ function Bank(props) {
   const onboard1 = props.user.user.onboardingStep;
   let {
     firstName,
+    brandName,
     picture,
     userName,
     bankName,
@@ -212,7 +213,7 @@ function Bank(props) {
                       />
                     </figure>
 
-                    <span>{firstName}</span>
+                    <span>{brandName}</span>
                   </Link>
                   <div class="nav-content-button">
                     <a

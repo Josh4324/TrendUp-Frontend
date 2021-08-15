@@ -31,7 +31,7 @@ function SettingsLink(props) {
   let history = useHistory();
   const token = props.user.user.token;
   const onboard1 = props.user.user.onboardingStep;
-  const { firstName, picture, userName, onboardingStep } =
+  const { firstName, brandName, picture, userName, onboardingStep } =
     props.data.user || "";
   let img1 = picture || "images/profile-image.jpg";
   const link = `/${userName}`;
@@ -180,7 +180,7 @@ function SettingsLink(props) {
                       />
                     </figure>
 
-                    <span>{firstName}</span>
+                    <span>{brandName}</span>
                   </Link>
                   <div class="nav-content-button">
                     <a

@@ -34,7 +34,7 @@ function PostPage(props) {
   const butRef = useRef("");
 
   const token = props.user.user.token;
-  const { firstName, picture, userName } = props.data.user || "";
+  const { firstName, picture, brandName, userName } = props.data.user || "";
   let img1 = picture || "images/profile-image.jpg";
   const link = `/${userName}`;
   const newlink = "trendupp.com" + link;
@@ -122,7 +122,7 @@ function PostPage(props) {
                         alt=""
                       />
                     </figure>
-                    <span>{firstName}</span>
+                    <span>{brandName}</span>
                   </Link>
                   <div class="nav-content-button">
                     <a
