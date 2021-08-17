@@ -4,7 +4,7 @@ import {loginCall} from '../utils/apiCalls';
 import { useHistory } from "react-router-dom";
 import {connect} from 'react-redux';
 
-function ForgotPassword(props) {
+function Reset(props) {
     console.log(props);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
@@ -34,27 +34,32 @@ function ForgotPassword(props) {
                                 <img src="./logo.svg" />
                             </Link>
                         </div>
-                        <div className="signup-button">
-                        <div className="signup-acc">Already have an account?</div>
-                            <Link to="/login">
-                                <div className="landing-login">Login</div>
-                            </Link>
-                            
-                    </div>
+                       
                 </header>
 
-                <section className="login-card mx-auto mt-5" >
-                <h2 className="login-card-title">Forgot Password</h2>
+                <section className="login-card mx-auto">
+                <h2 className="login-card-title">Reset Password</h2>
 
-                  
+                   
+
+                   
                     <form onSubmit={login}>
+                        
                             <div className="form-group icon-input">
-                                <i className="font-sm ti-email text-grey-500 pe-0"></i>
-                                <input type="text" className="form-control style2-input ps-5" ref={emailRef} placeholder="Your Email Address"/>
+                                <input type="Password" className="form-control style2-input ps-5" ref={passwordRef} placeholder="Enter new Password"/>
+                                <i className="font-sm ti-lock text-grey-500 pe-0"></i>
                                 <div className="invalid-feedback">
-                                    Please fill in your email address
-                                  </div>                        
+                                    Please fill in your new password
+                                  </div>  
                             </div>
+                             <div className="form-group icon-input">
+                                <input type="Password" className="form-control style2-input ps-5" ref={passwordRef} placeholder="Confirm Password"/>
+                                <i className="font-sm ti-lock text-grey-500 pe-0"></i>
+                                <div className="invalid-feedback">
+                                    Please confirm your new password
+                                  </div>  
+                            </div>
+
 
                         <div className={ error.length > 0 ? "alert alert-danger" : "none" }>
                             <div >{error}</div>
@@ -65,6 +70,7 @@ function ForgotPassword(props) {
 
                         <button type="submit" className="form-control style2-input style2-main-button">Submit</button>
 
+
                     </form>
                     
                 </section>
@@ -74,4 +80,4 @@ function ForgotPassword(props) {
     )
 }
 
-export default connect()(ForgotPassword);
+export default connect()(Reset);

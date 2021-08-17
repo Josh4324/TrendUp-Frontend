@@ -21,6 +21,7 @@ function FanSupportHistory(props) {
 
   useEffect(async () => {
     let user = JSON.parse(localStorage.getItem("trend-user"));
+    let email = localStorage.getItem("fan-email")
     if (user !== null) {
       const decoded = jwt_decode(user.token);
       const expirationTime = new Date() / 1000;

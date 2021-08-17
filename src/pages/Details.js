@@ -161,7 +161,7 @@ function Details(props) {
       creating: created,
     };
 
-    if (!brand || !firstname || !lastname || !website || !number || !About) {
+    if (!brand || !firstname || !lastname || !number || !About) {
       let fields = "";
       if (!brand) {
         fields = fields + " " + "brand";
@@ -171,9 +171,6 @@ function Details(props) {
       }
       if (!lastname) {
         fields = fields + " " + "lastname";
-      }
-      if (!website) {
-        fields = fields + " " + "website";
       }
       if (!number) {
         fields = fields + " " + "number";

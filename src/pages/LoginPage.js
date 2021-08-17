@@ -89,6 +89,8 @@ function LoginPage(props) {
 
                         <button type="submit" className="form-control style2-input style2-main-button">Continue with email</button>
 
+                        <Link className="text-align-center" to="/forgot-password">Forgot Password?</Link>
+
                     </form>
                     
                 </section>

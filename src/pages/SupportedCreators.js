@@ -14,7 +14,7 @@ function SupportedCreators(props) {
   const searchRef = useRef("");
   const token = props.user.user.token;
   let history = useHistory();
-  const { firstName, lastName, picture, email, userName, onboardingStep } =
+  const { firstName, lastName, picture, userName, onboardingStep } =
     props.data.user || "";
   let img1 = picture || "images/profile-image.jpg";
   const [creator, setCreator] = useState([]);
@@ -37,6 +37,7 @@ function SupportedCreators(props) {
 
   useEffect(async () => {
     let user = JSON.parse(localStorage.getItem("trend-user"));
+    let email = localStorage.getItem('fan-email');
     if (user !== null) {
       const decoded = jwt_decode(user.token);
       const expirationTime = new Date() / 1000;
@@ -53,7 +54,7 @@ function SupportedCreators(props) {
         history.push("/login");
       }
     }
-    console.log(email);
+    
     if (email) {
       let creators = await getSupportCreators(token, email);
       if (creators) {
@@ -65,7 +66,7 @@ function SupportedCreators(props) {
     }
 
     return () => {};
-  }, [email]);
+  }, []);
   return (
     <div className="dashboard-page" style={{ background: "#f9f9f9" }}>
       <div class="main-wrapper">
@@ -184,7 +185,7 @@ function SupportedCreators(props) {
                             </figure>
                             <div class="clearfix"></div>
                             <h4 class="creator-small-card--title mt-3 mb-2">
-                              {item.firstName} {item.lastName}
+                              {item.brandName}
                             </h4>
                             <p class="creator-small-card--text mt-0 mb-3">
                               {item.about.split("").slice(0, 27).join("")}...

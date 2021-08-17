@@ -495,6 +495,7 @@ export const editCall = async (
     if (res) {
       setLoader(false);
       NotificationManager.success("Data updated successfully", "Success");
+      window.location.reload();
     }
   } catch (err) {
     setLoader(false);

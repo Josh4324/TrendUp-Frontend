@@ -30,6 +30,7 @@ import FanDetail from "./FanDetail";
 import FanResetPassword from "./FanResetPassword";
 import FanPrivateRoute from "./FanPrivateRoute";
 import CreatorPostPage from "./CreatorPostPage";
+import Reset from "./Reset";
 
 export {
   SignUp,
@@ -40,6 +41,7 @@ export {
   ExploreCreators,
   FanDetail,
   FanSettings,
+  Reset,
   FanSupportHistory,
   SupportedCreators,
   LoginPage,

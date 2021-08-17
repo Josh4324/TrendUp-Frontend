@@ -29,8 +29,10 @@ import {
   FanSupportHistory,
   FanSettings,
   FanDetail,
+  Reset,
   FanResetPassword,
   CreatorPostPage,
+  ForgotPassword
 } from "./pages/index";
 import { NotificationContainer } from "react-notifications";
 import { connect } from "react-redux";
@@ -92,6 +94,8 @@ function App(props) {
               <Dashboard />
             )}
           </Route>
+          <Route path="/forgot-password" component={ForgotPassword} />
+           <Route path="/reset" component={Reset} />
           <PrivateRoute exact path="/step1" component={Onboard1} />
           <PrivateRoute exact path="/step2" component={Onboard2} />
           <PrivateRoute exact path="/step3" component={Onboard3} />

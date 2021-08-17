@@ -9,6 +9,7 @@ function FanSidebar(props) {
     localStorage.removeItem("trend-fan-email");
     localStorage.removeItem("trend-fan-firstname");
     localStorage.removeItem("trend-fan-lastname");
+    localStorage.removeItem("fan-email");
     props.dispatch({ type: "LOGIN_FAILURE" });
     history.push("/login");
   };

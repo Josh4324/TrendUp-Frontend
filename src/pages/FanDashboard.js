@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import FanSidebar from "./FanSideBar";
 import { useHistory } from "react-router-dom";
-import { getCallModal, getCreators, getFanPost } from "../utils/apiCalls";
+import { getCallModal, getCreators, getFanPost,getSupportCreators } from "../utils/apiCalls";
 import jwt_decode from "jwt-decode";
 import { NotificationManager } from "react-notifications";
 import { connect } from "react-redux";
@@ -20,6 +20,7 @@ function FanDashboard(props) {
   const token = props.user.user.token;
   const [modal, setModal] = useState(false);
   const [creators, setCreators] = useState([]);
+   const [supportedCreators, setSupportedCreators] = useState([]);
   const [fanpost, setFanPost] = useState([]);
   const [loading, setLoading] = useState(true);
   const [fanloading, setFanLoading] = useState(true);
@@ -48,13 +49,18 @@ function FanDashboard(props) {
     }
     getCallModal(setModal, props.dispatch, token);
     let creators = await getCreators(token);
+    
     if (email) {
-      console.log(email);
+      localStorage.setItem('fan-email', email)
       let fanpost = await getFanPost(token, email);
+      let supportedcreators = await getSupportCreators(token, email);
       if (fanpost) {
-        console.log(fanpost);
         setFanLoading(false);
         setFanPost(fanpost);
+      }
+
+      if (supportedcreators){
+        setSupportedCreators(supportedcreators);
       }
     }
 
@@ -129,12 +135,17 @@ function FanDashboard(props) {
                       <h2 class="fw-700 font-xs text-center mb-3">
                         No Posts Available
                       </h2>
-                      <p class="text-grey-600 text-center mw-600 mx-auto">
+                      {
+                        supportedCreators.length === 0 ? (<p class="text-grey-600 text-center mw-600 mx-auto">
                         Support a creator to see posts from the creator
-                      </p>
-                      <p class="text-grey-600 text-center mw-600 mx-auto">
+                      </p>) : null
+                      }
+                      {
+                        supportedCreators.length > 0 ? ( <p class="text-grey-600 text-center mw-600 mx-auto">
                         There are no posts from the creators you support.{" "}
-                      </p>
+                      </p>) : null
+                      }
+                     
                     </div>
                   </div>
                 </div>
