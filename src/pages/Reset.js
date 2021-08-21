@@ -1,28 +1,45 @@
 import React, {useState, useRef} from 'react';
 import { Link } from 'react-router-dom';
-import {loginCall} from '../utils/apiCalls';
+import {loginCall,resetPasswordCall2 } from '../utils/apiCalls';
+import { NotificationManager } from "react-notifications";
 import { useHistory } from "react-router-dom";
 import {connect} from 'react-redux';
 
 function Reset(props) {
-    console.log(props);
+    const token = props.location.search.slice(6,)
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
     const [loader, setLoader] = useState(false);
     const emailRef = useRef("");
     const passwordRef = useRef("");
+    const passwordRef2 = useRef("");
    
     let history = useHistory();
 
-    const login = async(evt) => {
+    const resetpassword = async(evt) => {
         evt.preventDefault();
+        setLoader(true);
+
+        if (passwordRef.current.value !== passwordRef2.current.value){
+            return NotificationManager.error("Passwords do not match", "Error")
+        }
     
         const cred = {
-            email: emailRef.current.value,
-            password: passwordRef.current.value
+            newPassword: passwordRef.current.value,
+            token
         }
 
-        const result = await loginCall(cred, props.dispatch, setLoader, setError, history);
+        const result = await resetPasswordCall2(cred);
+        if (result.code === 200){
+            setLoader(false);
+            NotificationManager.success("Password Reset Successful", "Success");
+            history.push("./login")
+        }else{
+            setLoader(false);
+            NotificationManager.error("An error occurred", "Error");
+        }
+        
+        
     }
 
     return (
@@ -43,7 +60,7 @@ function Reset(props) {
                    
 
                    
-                    <form onSubmit={login}>
+                    <form onSubmit={resetpassword}>
                         
                             <div className="form-group icon-input">
                                 <input type="Password" className="form-control style2-input ps-5" ref={passwordRef} placeholder="Enter new Password"/>
@@ -53,7 +70,7 @@ function Reset(props) {
                                   </div>  
                             </div>
                              <div className="form-group icon-input">
-                                <input type="Password" className="form-control style2-input ps-5" ref={passwordRef} placeholder="Confirm Password"/>
+                                <input type="Password" className="form-control style2-input ps-5" ref={passwordRef2} placeholder="Confirm Password"/>
                                 <i className="font-sm ti-lock text-grey-500 pe-0"></i>
                                 <div className="invalid-feedback">
                                     Please confirm your new password

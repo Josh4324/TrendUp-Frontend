@@ -56,10 +56,7 @@ function LoginPage(props) {
                             <img src="images/icon-facebook.svg" alt="google icon" className=""/>
                             
                         </a>
-                        <a href="#" className="social-login-icon">
-                            <img src="images/icon-twitter.svg" alt="google icon" className=""/>
-                            
-                        </a>
+                      
                     </div>
 
                     <h6 className="social-login-divider">

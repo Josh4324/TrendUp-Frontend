@@ -20,6 +20,7 @@ function SupportedCreators(props) {
   const [creator, setCreator] = useState([]);
   const [constantCreator, setConstantCreators] = useState([]);
   const [loading, setLoading] = useState(true);
+     const [modal, setModal] = useState(false);
 
   const navChange = () => {
     butRef.current.classList.toggle("active");
@@ -53,6 +54,7 @@ function SupportedCreators(props) {
         );
         history.push("/login");
       }
+       getCallModal(setModal, props.dispatch, token);
     }
     
     if (email) {

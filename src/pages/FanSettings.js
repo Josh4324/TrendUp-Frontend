@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import FanSidebar from "./FanSideBar";
 import { useHistory } from "react-router-dom";
@@ -11,6 +11,9 @@ import { front } from "../utils/constants";
 function FanSettings(props) {
   const navRef = useRef("");
   const butRef = useRef("");
+  let history = useHistory();
+   const token = props.user.user.token;
+  const [modal, setModal] = useState(false);
   const { firstName, lastName, picture, email, userName, onboardingStep } =
     props.data.user || "";
   let img1 = picture || "images/profile-image.jpg";
@@ -19,6 +22,30 @@ function FanSettings(props) {
     butRef.current.classList.toggle("active");
     navRef.current.classList.toggle("nav-active");
   };
+
+  useEffect(async () => {
+    let user = JSON.parse(localStorage.getItem("trend-user"));
+    if (user !== null) {
+      const decoded = jwt_decode(user.token);
+      const expirationTime = new Date() / 1000;
+
+      if (expirationTime >= decoded.exp) {
+        user = null;
+        props.dispatch({ type: "LOGIN_SUCCESS", payload: null });
+        localStorage.removeItem("trend-user");
+        NotificationManager.error(
+          "Session has expired, please log in again",
+          "Error",
+          10000
+        );
+        history.push("/login");
+      }
+    }
+    getCallModal(setModal, props.dispatch, token);
+  
+    return () => {};
+  }, []);
+  
   return (
     <div className="dashboard-page" style={{ background: "#f9f9f9" }}>
       <div class="main-wrapper">

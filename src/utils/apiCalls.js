@@ -628,3 +628,23 @@ export const getPaymentHistory = async (token, email) => {
     console.log(err.response.data);
   }
 };
+
+export const postForgot = async (userCredential) => {
+  try {
+    let res = await axios.post(`${http}/api/v1/user/forgot-password`, userCredential);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
+
+export const resetPasswordCall2 = async (userCredential) => {
+  try {
+   
+    const res = await axios.patch(`${http}/api/v1/user/reset-password`, userCredential);
+    return res.data;
+  } catch (err) {  
+    return err;
+  }
+};

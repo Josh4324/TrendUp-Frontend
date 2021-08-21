@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FanSidebar from "./FanSideBar";
 import { useHistory } from "react-router-dom";
-import { getPaymentHistory } from "../utils/apiCalls";
+import { getPaymentHistory,getCallModal } from "../utils/apiCalls";
 import jwt_decode from "jwt-decode";
 import { NotificationManager } from "react-notifications";
 import { connect } from "react-redux";
@@ -13,6 +13,7 @@ function FanSupportHistory(props) {
   const { firstName, lastName, picture, email, userName, onboardingStep } =
     props.data.user || "";
   let img1 = picture || "images/profile-image.jpg";
+   const [modal, setModal] = useState(false);
   const navRef = useRef("");
   const butRef = useRef("");
   const [his, setHis] = useState([]);
@@ -37,6 +38,7 @@ function FanSupportHistory(props) {
         );
         history.push("/login");
       }
+      getCallModal(setModal, props.dispatch, token);
     }
     if (email) {
       let historyData = await getPaymentHistory(token, email);
@@ -133,7 +135,7 @@ function FanSupportHistory(props) {
                           <div class="row supporters-row">
                             <div class="col-sm-5">
                               <h4 class="post-single_title">
-                                {item.user[0].firstName} {item.user[0].lastName}
+                                {item.user[0].brandName}
                                 <span class="post-single_date">
                                   {new Date(item.createdAt).toDateString()} at{" "}
                                   {new Date(

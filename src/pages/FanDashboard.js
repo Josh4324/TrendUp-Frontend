@@ -165,6 +165,7 @@ function FanDashboard(props) {
                     </div>
                   ) : null}
                   {creators.map((item) => {
+                    let image = item.picture || "images/profile-image.jpg"
                     return (
                       <div class="col-md-3" key={item.id}>
                         <div class="item">
@@ -173,14 +174,14 @@ function FanDashboard(props) {
                               <figure
                                 class="avatar"
                                 style={{
-                                  backgroundImage: "url(" + item.picture + ")",
+                                  backgroundImage: "url(" + image + ")",
                                 }}
                               >
                                 <img src="images/user-11.png" alt="creator" />
                               </figure>
                               <div class="clearfix"></div>
                               <h4 class="creator-small-card--title mt-3 mb-2">
-                                {item.firstName} {item.lastName}
+                                {item.brandName}
                               </h4>
                               <p class="creator-small-card--text mt-0 mb-3">
                                 {item.about.split("").slice(0, 27).join("")}...
@@ -268,7 +269,9 @@ function FanDashboard(props) {
                 </div>
                 <div class="col-md-3">
                   <h3 class="card-title mt-3 mb-3">Explore Creators</h3>
+                  
                   {creators.map((item) => {
+                     let image = item.picture || "images/profile-image.jpg";
                     return (
                       <div class="item mb-3">
                         <div class="card dash-card creator-small-card p-0 mb-3">
@@ -276,7 +279,7 @@ function FanDashboard(props) {
                             <figure
                               class="avatar"
                               style={{
-                                backgroundImage: "url(" + item.picture + ")",
+                                backgroundImage: "url(" + image + ")",
                               }}
                             >
                               <img src="images/user-11.png" alt="creator" />

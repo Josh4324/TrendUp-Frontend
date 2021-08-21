@@ -5,6 +5,8 @@ import Login from '../components/Login';
 import {signupCall, verificationCall, resendCall} from '../utils/apiCalls';
 import { useHistory } from "react-router-dom";
 import {connect} from 'react-redux';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
+import GoogleLogin from 'react-google-login';
 
 function SignUp(props) {
     const [loginToggle, setLoginToggle] = useState(false);
@@ -69,6 +71,15 @@ function SignUp(props) {
         const result = await resendCall(cred);
     }
 
+    const responseFacebook = (response) => {
+        console.log(response);
+    }
+
+     const responseGoogle = (response) => {
+        console.log(response);
+    }
+
+
 
     return (
         <>
@@ -98,18 +109,33 @@ function SignUp(props) {
 
                         <div className="col-sm-12 social-login">
                             
-                            <a href="http://localhost:8080/auth/google" className="social-login-icon">
-                                <img src="images/icon-google.svg" alt="google icon" className="" />
+                            <a href="#" className="social-login-icon">
+                                 <GoogleLogin
+                                clientId="247293153353-f740pqjuo3bmob4mjb8upd26auia6hlv.apps.googleusercontent.com"
+                                render={renderProps => (
+                                    <img onClick={renderProps.onClick} src="images/icon-google.svg" alt="google icon" className="" />
+                                )}
+                                buttonText="Login"
+                                onSuccess={responseGoogle}
+                                onFailure={responseGoogle}
+                                autoLoad={false}
+                                cookiePolicy={'single_host_origin'}
+                            />
                                
                             </a>
+                           
                             <a href="#" className="social-login-icon">
-                                <img src="images/icon-facebook.svg" alt="google icon" className=""/>
+                                <FacebookLogin
+                                    appId="803651167213839"
+                                    autoLoad={false}
+                                    callback={responseFacebook}
+                                    render={renderProps => (
+                                          <img onClick={renderProps.onClick} src="images/icon-facebook.svg" alt="google icon" className=""/>
+                                    )}
+                                    />
                                 
                             </a>
-                            <a href="#" className="social-login-icon">
-                                <img src="images/icon-twitter.svg" alt="google icon" className=""/>
-                                
-                            </a>
+                           
                         </div>
                             <h6 className="social-login-divider">
                                 <span>Or, sign up with email</span> </h6>

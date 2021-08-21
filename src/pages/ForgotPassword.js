@@ -1,11 +1,11 @@
 import React, {useState, useRef} from 'react';
 import { Link } from 'react-router-dom';
-import {loginCall} from '../utils/apiCalls';
+import {postForgot} from '../utils/apiCalls';
 import { useHistory } from "react-router-dom";
 import {connect} from 'react-redux';
+import { NotificationManager } from "react-notifications";
 
 function ForgotPassword(props) {
-    console.log(props);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(false);
     const [loader, setLoader] = useState(false);
@@ -14,15 +14,22 @@ function ForgotPassword(props) {
    
     let history = useHistory();
 
-    const login = async(evt) => {
+    const forgot = async(evt) => {
         evt.preventDefault();
+        setLoader(true);
     
         const cred = {
             email: emailRef.current.value,
-            password: passwordRef.current.value
         }
 
-        const result = await loginCall(cred, props.dispatch, setLoader, setError, history);
+        const result = await postForgot(cred);
+        if (result.code === 200){
+            setLoader(false);
+            NotificationManager.success("Reset Email has been sent to your mail box");
+        }else{
+            NotificationManager.error("This email does not exist or an error occured");
+        }
+        console.log(result);
     }
 
     return (
@@ -47,7 +54,7 @@ function ForgotPassword(props) {
                 <h2 className="login-card-title">Forgot Password</h2>
 
                   
-                    <form onSubmit={login}>
+                    <form onSubmit={forgot}>
                             <div className="form-group icon-input">
                                 <i className="font-sm ti-email text-grey-500 pe-0"></i>
                                 <input type="text" className="form-control style2-input ps-5" ref={emailRef} placeholder="Your Email Address"/>

@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import FanSidebar from "./FanSideBar";
 import { connect } from "react-redux";
-import { getCreators } from "../utils/apiCalls";
+import { getCreators,getCallModal } from "../utils/apiCalls";
 import { front } from "../utils/constants";
 
 function ExploreCreators(props) {
@@ -13,6 +13,7 @@ function ExploreCreators(props) {
   const [creators, setCreators] = useState([]);
   const [constantCreator, setConstantCreators] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [modal, setModal] = useState(false);
   const token = props.user.user.token;
   const { firstName, lastName, picture, userName, onboardingStep } =
     props.data.user || "";
@@ -38,6 +39,7 @@ function ExploreCreators(props) {
       setCreators(creators);
       setConstantCreators(creators);
     }
+    getCallModal(setModal, props.dispatch, token);
 
     return () => {};
   }, []);
@@ -124,6 +126,7 @@ function ExploreCreators(props) {
               ) : null}
               <div class="row creator-row d-flex">
                 {creators.map((item) => {
+                  let image = item.picture || "images/profile-image.jpg";
                   return (
                     <div class="col-md-3" key={item.id}>
                       <div class="item">
@@ -132,7 +135,7 @@ function ExploreCreators(props) {
                             <figure
                               class="avatar"
                               style={{
-                                backgroundImage: "url(" + item.picture + ")",
+                                backgroundImage: "url(" + image + ")",
                               }}
                             >
                               <img src="images/user-11.png" alt="creator" />
