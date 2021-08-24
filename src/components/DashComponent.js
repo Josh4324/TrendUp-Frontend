@@ -6,7 +6,8 @@ import { NotificationManager} from 'react-notifications';
 import { useHistory } from "react-router-dom";
 
 function DashComponent(props) {
-    const {firstName, picture, userName} = props.data.user || "";
+    const {firstName, picture, userName, amount} = props.data.user || "";
+    console.log("real", amount)
     const link = `/${userName}`;
     const newlink = "trendupp.com" + link;
     let history = useHistory();
@@ -29,9 +30,9 @@ function DashComponent(props) {
                                 className="btn-round-lg d-inline-block me-3 bg-primary feather-shopping-bag font-md text-white"></i>
                             <h4 className="text-primary font-xl fw-700">
                             {
-                                props.amount === "" ?  <div className="loader">
+                                amount === "" || amount === undefined ?  <div className="loader">
                                                         <div >Loading...</div>
-                                                    </div> : "₦" + props.amount
+                                                    </div> : "₦" + amount
                             }<span
                                     className="fw-500 mt-0 d-block text-grey-500 font-xssss">Current Earning</span>
                             </h4>

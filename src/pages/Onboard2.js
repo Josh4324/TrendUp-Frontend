@@ -137,7 +137,21 @@ function Onboard2(props) {
                 <label for="file"
                     class="rounded-3 text-center bg-white btn-tertiary js-labelFile p-4 w-100 border-dashed">
                         {
-                            image ?  <img src={image} className="pic" />  : <div>
+                            image ?  
+                           
+                             <figure
+                      class="pic"
+                      style={{
+                        backgroundImage: "url(" + image + ")",
+                      }}
+                    >
+                      <img
+                        src="images/profile-image.jpg"
+                        class="d-none"
+                        alt=""
+                      />
+                    </figure>
+                            : <div>
                             <i class="ti-camera large-icon me-3 d-block"></i>
                             <span class="js-fileName">Upload profile picture</span>
                             </div>

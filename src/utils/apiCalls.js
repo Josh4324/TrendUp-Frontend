@@ -641,10 +641,33 @@ export const postForgot = async (userCredential) => {
 
 export const resetPasswordCall2 = async (userCredential) => {
   try {
-   
     const res = await axios.patch(`${http}/api/v1/user/reset-password`, userCredential);
     return res.data;
   } catch (err) {  
     return err;
   }
 };
+
+export const payoutCall = async (userCredential, token) => {
+  try {
+    axios.defaults.headers.common["Authorization"] = "JWT " + token;
+    const res = await axios.post(`${http}/api/v1/payout`, userCredential);
+    console.log(res)
+    return res.data;
+  } catch (err) {  
+    return err;
+  }
+};
+
+export const payoutHistoryCall = async (token) => {
+  try {
+    axios.defaults.headers.common["Authorization"] = "JWT " + token;
+    const res = await axios.get(`${http}/api/v1/payout/history`);
+    console.log(res)
+    return res.data;
+  } catch (err) {  
+    return err;
+  }
+};
+
+

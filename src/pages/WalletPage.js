@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { onDash, getStat } from "../utils/apiCalls";
+import { onDash, getStat,getCallModal } from "../utils/apiCalls";
 import { connect } from "react-redux";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { NotificationManager } from "react-notifications";
@@ -28,7 +28,7 @@ function WalletPage(props) {
   const butRef = useRef("");
   const token = props.user.user.token;
   const onboard1 = props.user.user.onboardingStep;
-  const { firstName, brandName, picture, userName, onboardingStep } =
+  const { firstName, brandName, picture, userName, onboardingStep, bankName, accNumber,  amount: currentAmount } =
     props.data.user || "";
   let img1 = picture || "images/profile-image.jpg";
   const link = `/${userName}`;
@@ -74,8 +74,8 @@ function WalletPage(props) {
 
   useEffect(async () => {
     const stat = await getStat(token);
-    setAmount(stat.amount);
-
+    setAmount(currentAmount);
+     getCallModal(setModal, props.dispatch, token);
     return () => {};
   }, []);
   return (
@@ -186,7 +186,7 @@ function WalletPage(props) {
               setPostType={setPostType}
             />
           ) : (
-            <Wallet amount={amount} />
+            <Wallet amount={currentAmount} bank={bankName} account={accNumber} token={token} />
           )}
         </div>
       </div>

@@ -147,6 +147,7 @@ function CreatorPage(props) {
         amount,
         redirect_url: `${front}/#/success`,
         currency: "NGN",
+        payment_plan: payment_plan,
         payment_options: "card",
         // specified redirect URL
         redirect_url: "",
@@ -156,10 +157,12 @@ function CreatorPage(props) {
           name: firstname + " " + lastname,
         },
         callback: async function (data) {
+          console.log(data);
           let cred = {
             txref: data.tx_ref,
             SECKEY: "FLWSECK_TEST-ff7d39867a3cc21da33e8dfcb7bf94c6-X",
           };
+
           let result = await Pay2(cred);
 
           if (result.data.status === "success") {
@@ -236,7 +239,7 @@ function CreatorPage(props) {
                           </div>
                         ) : null}
                         <h3 class="card-creator-bio--title">
-                          {firstName} {lastName}
+                          {brandName}
                         </h3>
                         <p class="card-creator-bio--body">
                           {creating}

@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { getHistory } from "../utils/apiCalls";
 
 function SupportHistory(props) {
-  console.log(props);
   const [supporters, setSupporters] = useState([]);
   const [supportersNum, setSupportersNum] = useState(0);
   const [picture, setPicture] = useState("");
@@ -61,6 +60,7 @@ function SupportHistory(props) {
                   <h3 class="card-title mb-3">SUPPORTERS</h3>
 
                   {history.map((item) => {
+                    console.log(item);
                     return (
                       <div class="single-record-row d-flex">
                         <div class="row supporters-row">
@@ -75,6 +75,13 @@ function SupportHistory(props) {
                               {new Date(item.createdAt).toLocaleTimeString()}
                             </span>
                           </div>
+                          <div class="col-sm-3">
+                            {" "}
+                            <span class="post-single_date">
+                             {item.message || "No message from fan"}
+                            </span>
+                          </div>
+                          
                         </div>
                       </div>
                     );

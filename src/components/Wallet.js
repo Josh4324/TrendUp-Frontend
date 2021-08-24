@@ -1,6 +1,40 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react';
+import { payoutCall, payoutHistoryCall } from "../utils/apiCalls";
+import { NotificationManager } from "react-notifications";
+import banks from "../utils/bank";
 
-export default function Wallet(props) {
+export default function Wallet(props) {  
+    console.log(props)
+    const [history, setHistory] = useState([]);
+    const payout = async() => {
+        NotificationManager.info("Your payout is processing", "Info")
+    
+        let cred = {
+            amount: props.amount,
+            account_bank: props.bank,
+            account_number: props.account
+        }
+
+        const pay = await payoutCall(cred, props.token);
+        console.log(pay);
+        if(pay.code === 200){
+            NotificationManager.success("Payout completed successfully", "Success");
+            window.location.reload();
+        }else{
+            NotificationManager.error("An error occurred", "Error")
+        }
+    }
+
+    useEffect(async () => {
+        const history = await payoutHistoryCall(props.token);
+        if (history){
+            console.log(history.data);
+            setHistory(history.data);
+        }
+        return () => {
+        
+        }
+    }, [])
     return (
         <div>
              <div class="">
@@ -40,7 +74,7 @@ export default function Wallet(props) {
                         </h4>
                     </div>
                     <div class="card-body p-0 pt-3 text-center">
-                        <a href="#" class="btn btn-success btn-block mb-2"> Request Pay Out</a>
+                        <span onClick={payout} class="btn btn-success btn-block mb-2"> Request Pay Out</span>
                         <p class="mb-0">Yay, you have hit the minimum payout. You are eligible to request pay out.</p>
                     </div>
 
@@ -62,67 +96,37 @@ export default function Wallet(props) {
                 <div class="card dash-card dash-card__records dash-card__supporters">
                     <h3 class="card-title mb-3">PAYOUT HISTORY</h3>
 
+                    {
+                        history.length === 0 ? <p> You have not made any payouts </p> : null
+                    }
 
-                    <div class="single-record-row d-flex">
+                    {
+                        history.map((item) => {
+                            return (
+                                 <div class="single-record-row d-flex">
 
-                        <a href="support_history.html" class="link-cover"></a>
+                        <span href="support_history.html" class="link-cover"></span>
                         <div class="row supporters-row">
                             <div class="col-sm-3">
-                                <h4 class="post-single_title">₦5,000 <span class="post-single_date">
+                                <h4 class="post-single_title">₦{item.amount}<span class="post-single_date">
                                     </span></h4>
                             </div>
                             <div class="col-sm-5">
-                                <p>Jun 10, 2021 at 02:12 PM</p>
+                                <p>{new Date(item.createdAt).toDateString()} at {""}
+                                  {new Date(
+                                    item.createdAt
+                                  ).toLocaleTimeString()}</p>
                             </div>
-                            <div class="col-sm-4"> <span class="badge bg-warning text-dark">Pending
+                            <div class="col-sm-4"> <span class="badge badge bg-success">Successful
                                     Payout</span></div>
                         </div>
                     </div>
-                    <div class="single-record-row d-flex">
+                            )
+                        })
+                    }
+                   
 
-                        <a href="support_history.html" class="link-cover"></a>
-                        <div class="row supporters-row">
-                            <div class="col-sm-3">
-                                <h4 class="post-single_title">₦35,000 <span class="post-single_date">
-                                    </span></h4>
-                            </div>
-                            <div class="col-sm-5">
-                                <p>Jun 10, 2021 at 02:12 PM</p>
-                            </div>
-                            <div class="col-sm-4"> <span class="badge bg-success">Payout Successful</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="single-record-row d-flex">
-
-                        <a href="support_history.html" class="link-cover"></a>
-                        <div class="row supporters-row">
-                            <div class="col-sm-3">
-                                <h4 class="post-single_title">₦25,000 <span class="post-single_date">
-                                    </span></h4>
-                            </div>
-                            <div class="col-sm-5">
-                                <p>Jun 10, 2021 at 02:12 PM</p>
-                            </div>
-                            <div class="col-sm-4"> <span class="badge bg-success">Payout Successful</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="single-record-row d-flex">
-
-                        <a href="support_history.html" class="link-cover"></a>
-                        <div class="row supporters-row">
-                            <div class="col-sm-3">
-                                <h4 class="post-single_title">₦20,000 <span class="post-single_date">
-                                    </span></h4>
-                            </div>
-                            <div class="col-sm-5">
-                                <p>Jun 10, 2021 at 02:12 PM</p>
-                            </div>
-                            <div class="col-sm-4"> <span class="badge bg-success">Payout Successful</span>
-                            </div>
-                        </div>
-                    </div>
+                   
 
 
                 </div>

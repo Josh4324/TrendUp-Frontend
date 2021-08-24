@@ -39,8 +39,10 @@ function Dashboard(props) {
     brandName,
     picture,
     userName,
+    amount: currentAmount,
     onboardingStep,
   } = props.data.user || "";
+  console.log(currentAmount);
   let img1 = picture || "images/profile-image.jpg";
   localStorage.setItem("trend-fan-email", email);
   localStorage.setItem("trend-fan-firstname", firstName);
@@ -103,9 +105,12 @@ function Dashboard(props) {
     getCallModal(setModal, props.dispatch, token);
     const stat = await getStat(token);
     setPost(stat.posts);
-    setAmount(stat.amount);
-    setSupportersNum(stat.supporters_number);
-    setSupporters(stat.supporters.slice(0, 5));
+    if (stat){
+      setAmount(currentAmount || 0);
+      setSupportersNum(stat.supporters_number);
+      setSupporters(stat.supporters.slice(0, 5));
+    }
+    
 
     return () => {};
   }, []);
@@ -305,6 +310,7 @@ function Dashboard(props) {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state)
   return {
     user: state.auth,
     data: state.user,
