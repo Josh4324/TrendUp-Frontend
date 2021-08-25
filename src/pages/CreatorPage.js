@@ -46,36 +46,6 @@ function CreatorPage(props) {
   const AmountRadio1 = useRef("");
   const AmountRadio2 = useRef("");
 
-  useEffect(async () => {
-    let username = props.match.params.username;
-    let user = localStorage.getItem("trend-fan-email");
-    let data = await getCall2(username);
-    let post = await getPost2(username);
-    console.log(data);
-    if (data) {
-      setUserData(data.data.data);
-    }
-
-    if (post) {
-      console.log(post);
-      setLoading(false);
-      setUserPost(post.data.data);
-    }
-
-    if (user === creatorEmail){
-      setIsFan(true);
-    }
-
-    const support = await getSupportCreators2(user);
-    support.map((item) => {
-      if (item.email === creatorEmail){
-         setIsFan(true);
-      }
-    })
-
-    return () => {};
-  }, []);
-
   const {
     firstName,
     id,
@@ -98,6 +68,39 @@ function CreatorPage(props) {
   let youtube = `https://www.youtube.com/${youtubeLink}`;
   let img1 = picture || "images/profile-image.jpg";
   let website = `https://${websiteUrl}`;
+
+  useEffect(async () => {
+    let username = props.match.params.username;
+    let user = localStorage.getItem("trend-fan-email");
+    let data = await getCall2(username);
+    let post = await getPost2(username);
+    console.log(data);
+    if (data) {
+      setUserData(data.data.data);
+      if(data.data.data.email === user){
+        setIsFan(true)
+      }
+    }
+
+    if (post) {
+      console.log(post);
+      setLoading(false);
+      setUserPost(post.data.data);
+    }
+    console.log(user);
+    console.log(creatorEmail);
+
+    const support = await getSupportCreators2(user);
+
+      support.map((item) => {
+      if (item.email === creatorEmail){
+         setIsFan(true);
+      }
+    })
+    return () => {};
+  }, []);
+
+  
 
 
 
