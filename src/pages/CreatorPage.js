@@ -80,6 +80,14 @@ function CreatorPage(props) {
       if(data.data.data.email === user){
         setIsFan(true)
       }
+
+      const support = await getSupportCreators2(user);
+
+      support.map((item) => {
+      if (item.email === data.data.data.email){
+         setIsFan(true);
+      }
+    })
     }
 
     if (post) {
@@ -87,14 +95,8 @@ function CreatorPage(props) {
       setLoading(false);
       setUserPost(post.data.data);
     }
+    
 
-    const support = await getSupportCreators2(user);
-
-      support.map((item) => {
-      if (item.email === creatorEmail){
-         setIsFan(true);
-      }
-    })
     return () => {};
   }, []);
 
