@@ -231,7 +231,10 @@ function CreatorPostPage(props) {
                         </h4>
                       </div>
                       <div class="card-body card-creator-image">
-                        <img src={post.image} class="" alt="image" />
+                      {
+                        post.image ? (<img src={post.image} class="" alt="image" />) : null
+                      }
+                        
                       </div>
                       <div class="card-body p-0 me-lg-5">
                         <h3 class="card-creator-title">{post.title}</h3>

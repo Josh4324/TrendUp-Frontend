@@ -145,7 +145,7 @@ function ExploreCreators(props) {
                               {item.brandName}
                             </h4>
                             <p class="creator-small-card--text mt-0 mb-3">
-                              {item?.about?.split("").slice(0, 27).join("")}...
+                              {item?.about?.split("").slice(0, 20).join("")}...
                             </p>
                             <a
                               href={`${front}/#/${item.userName}`}

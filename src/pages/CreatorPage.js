@@ -8,6 +8,7 @@ import {
   anonSignupCall,
   initializePaymentCall,
   verifyPaymentCall,
+  getSupportCreators2
 } from "../utils/apiCalls";
 import { useHistory } from "react-router-dom";
 import { front } from "../utils/constants";
@@ -32,6 +33,7 @@ function CreatorPage(props) {
   const [payment, setPayment] = useState(false);
   const [message, setMessage] = useState("");
   const [button, setButton] = useState(false);
+  const [isFan, setIsFan] = useState(false);
   const messageRef = useRef("");
   const emailRef = useRef("");
   const firstNameRef = useRef("");
@@ -46,6 +48,7 @@ function CreatorPage(props) {
 
   useEffect(async () => {
     let username = props.match.params.username;
+    let user = localStorage.getItem("trend-fan-email");
     let data = await getCall2(username);
     let post = await getPost2(username);
     console.log(data);
@@ -58,6 +61,17 @@ function CreatorPage(props) {
       setLoading(false);
       setUserPost(post.data.data);
     }
+
+    if (user === creatorEmail){
+      setIsFan(true);
+    }
+
+    const support = await getSupportCreators2(user);
+    support.map((item) => {
+      if (item.email === creatorEmail){
+         setIsFan(true);
+      }
+    })
 
     return () => {};
   }, []);
@@ -354,7 +368,7 @@ function CreatorPage(props) {
                     {userPost.map((item) => {
                       return (
                         <div>
-                          {item.postType === "public" ? (
+                          {item.postType === "public" || (item.postType === "supporter" && isFan === true) ? (
                             <div>
                               <div class="card card-creator">
                                 <div class="card-body card-creator-meta">
@@ -380,7 +394,10 @@ function CreatorPage(props) {
                                   </h4>
                                 </div>
                                 <div class="card-body card-creator-image">
-                                  <img src={item.image} class="" alt="image" />
+                                {
+                                  item.image ? ( <img src={item.image} class="" alt="image" />) : null
+                                }
+                                 
                                 </div>
                                 <div class="card-body p-0 me-lg-5">
                                   <a href={`#/post/${item.id}`}>
@@ -402,7 +419,7 @@ function CreatorPage(props) {
                               </div>
                             </div>
                           ) : null}
-                          {item.postType === "supporter" ? (
+                          {item.postType === "supporter" && isFan === false ? (
                             <div>
                               <div class="card card-creator card-creator-locked mb-3">
                                 <div class="card-body card-creator-meta">

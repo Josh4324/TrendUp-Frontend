@@ -611,6 +611,19 @@ export const getSupportCreators = async (token, email) => {
   }
 };
 
+export const getSupportCreators2 = async (email) => {
+  try {
+    const res = await axios.get(
+      `${http}/api/v1/user/creators-support?email=${email}`
+    );
+    if (res.data.code === 200) {
+      return res.data.data;
+    }
+  } catch (err) {
+    console.log(err.response.data);
+  }
+};
+
 export const getPaymentHistory = async (token, email) => {
   try {
     const res = await axios.get(

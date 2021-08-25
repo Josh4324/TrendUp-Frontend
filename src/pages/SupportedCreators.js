@@ -125,6 +125,7 @@ function SupportedCreators(props) {
                   <h3 class="card-title mt-3 mb-3">Supported Creators</h3>
                 </div>
                 <div class="col-md-4 offset-md-4">
+                
                   <form action="" class="search-form-2 ms-auto">
                     <button type="submit">
                       <i class="ti-search font-xss"></i>

@@ -126,8 +126,9 @@ function FanDashboard(props) {
 
         <div class="main-content">
           <div class="middle-sidebar-bottom">
+           <div class="middle-sidebar-left">
             {fanpost.length === 0 && fanloading === false ? (
-              <div class="middle-sidebar-left">
+                <div>
                 <div class="row">
                   <div class="col-12">
                     <div class="card dash-card">
@@ -184,7 +185,7 @@ function FanDashboard(props) {
                                 {item.brandName}
                               </h4>
                               <p class="creator-small-card--text mt-0 mb-3">
-                                {item.about.split("").slice(0, 27).join("")}...
+                                {item.about.split("").slice(0, 20).join("")}...
                               </p>
                               <a
                                 href={`${front}/#/${item.userName}`}
@@ -205,7 +206,8 @@ function FanDashboard(props) {
                     </Link>
                   </div>
                 </div>
-              </div>
+                </div>
+            
             ) : null}
             {fanloading === false && fanpost.length > 0 && viewPost === null ? (
               <div class="row">
@@ -247,7 +249,9 @@ function FanDashboard(props) {
                               setViewPost(item);
                             }}
                           >
-                            <img src={item.image} class="" alt="image" />
+                          {
+                            item.image ? (<img src={item.image} class="" alt="image" />) : null
+                          }
                           </span>
                         </div>
                         <div class="card-body p-0 me-lg-5">
@@ -324,7 +328,7 @@ function FanDashboard(props) {
                 </div>
               </div>
             ) : null}
-
+           
             {viewPost !== null ? (
               <div>
                 <span
@@ -352,7 +356,10 @@ function FanDashboard(props) {
                     </h4>
                   </div>
                   <div class="card-body card-creator-image">
-                    <img src={viewPost.image} class="" alt="image" />
+                  {
+                    viewPost.image ? ( <img src={viewPost.image} class="" alt="image" />) : null
+                  }
+                   
                   </div>
                   <div class="card-body p-0 me-lg-5">
                     <h3 class="card-creator-title">{viewPost.title}</h3>
@@ -361,6 +368,7 @@ function FanDashboard(props) {
                 </div>
               </div>
             ) : null}
+              </div>
           </div>
         </div>
       </div>
