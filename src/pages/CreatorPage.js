@@ -87,8 +87,6 @@ function CreatorPage(props) {
       setLoading(false);
       setUserPost(post.data.data);
     }
-    console.log(user);
-    console.log(creatorEmail);
 
     const support = await getSupportCreators2(user);
 
