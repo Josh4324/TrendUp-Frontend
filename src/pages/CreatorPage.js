@@ -60,7 +60,7 @@ function CreatorPage(props) {
     twitterLink,
     instagramLink,
     youtubeLink,
-    websiteUrl,
+    websiteUrl
   } = userData || "";
   let facebook = `https://www.facebook.com/${facebookLink}`;
   let instagram = `https://www.instagram.com/${instagramLink}`;
@@ -77,17 +77,17 @@ function CreatorPage(props) {
     console.log(data);
     if (data) {
       setUserData(data.data.data);
-      if(data.data.data.email === user){
-        setIsFan(true)
+      if (data.data.data.email === user) {
+        setIsFan(true);
       }
 
       const support = await getSupportCreators2(user);
 
       support.map((item) => {
-      if (item.email === data.data.data.email){
-         setIsFan(true);
-      }
-    })
+        if (item.email === data.data.data.email) {
+          setIsFan(true);
+        }
+      });
     }
 
     if (post) {
@@ -95,14 +95,9 @@ function CreatorPage(props) {
       setLoading(false);
       setUserPost(post.data.data);
     }
-    
 
     return () => {};
   }, []);
-
-  
-
-
 
   //let name = firstNameRef.current.value + " " + lastNameRef.current.value;
 
@@ -153,7 +148,7 @@ function CreatorPage(props) {
       email,
       firstName: firstname,
       lastName: lastname,
-      message,
+      message
     };
 
     let payment = await initializePaymentCall(cred);
@@ -162,7 +157,7 @@ function CreatorPage(props) {
         public_key: "FLWPUBK_TEST-d0b3befc83b20f52316dc9176b5f412a-X",
         tx_ref: payment.data.data.reference,
         amount,
-        redirect_url: `${front}/#/success`,
+        redirect_url: `${front}/success`,
         currency: "NGN",
         payment_plan: payment_plan,
         payment_options: "card",
@@ -171,13 +166,13 @@ function CreatorPage(props) {
         customer: {
           email: email,
           phonenumber: "",
-          name: firstname + " " + lastname,
+          name: firstname + " " + lastname
         },
         callback: async function (data) {
           console.log(data);
           let cred = {
             txref: data.tx_ref,
-            SECKEY: "FLWSECK_TEST-ff7d39867a3cc21da33e8dfcb7bf94c6-X",
+            SECKEY: "FLWSECK_TEST-ff7d39867a3cc21da33e8dfcb7bf94c6-X"
           };
 
           let result = await Pay2(cred);
@@ -192,7 +187,7 @@ function CreatorPage(props) {
               email,
               firstName: firstname,
               lastName: lastname,
-              onboardingStep: 1,
+              onboardingStep: 1
             };
             let createdUser = await anonSignupCall(userCred);
             if (createdUser?.data?.data) {
@@ -214,8 +209,8 @@ function CreatorPage(props) {
         customizations: {
           title: "TrendUpp",
           description: "Connecting Creators to Fans",
-          logo: "https://res.cloudinary.com/josh4324/image/upload/v1625061582/trendupp-logo-icon_wzh6da.png",
-        },
+          logo: "https://res.cloudinary.com/josh4324/image/upload/v1625061582/trendupp-logo-icon_wzh6da.png"
+        }
       });
     }
   };
@@ -227,7 +222,6 @@ function CreatorPage(props) {
           <div class="nav-header border-0">
             <div class="nav-top">
               <Link to="/" class="logo">
-                {" "}
                 <img src="images/trendupp-logo-icon.png" alt="Trendupp Logo" />
               </Link>
             </div>
@@ -244,7 +238,7 @@ function CreatorPage(props) {
                         <figure
                           class="avatar"
                           style={{
-                            backgroundImage: "url(" + img1 + ")",
+                            backgroundImage: "url(" + img1 + ")"
                           }}
                         >
                           <img src="images/profile-image.jpg" alt="" />
@@ -255,9 +249,7 @@ function CreatorPage(props) {
                             <div>Loading...</div>
                           </div>
                         ) : null}
-                        <h3 class="card-creator-bio--title">
-                          {brandName}
-                        </h3>
+                        <h3 class="card-creator-bio--title">{brandName}</h3>
                         <p class="card-creator-bio--body">
                           {creating}
 
@@ -371,14 +363,15 @@ function CreatorPage(props) {
                     {userPost.map((item) => {
                       return (
                         <div>
-                          {item.postType === "public" || (item.postType === "supporter" && isFan === true) ? (
+                          {item.postType === "public" ||
+                          (item.postType === "supporter" && isFan === true) ? (
                             <div>
                               <div class="card card-creator">
                                 <div class="card-body card-creator-meta">
                                   <figure
                                     class="avatar me-3"
                                     style={{
-                                      backgroundImage: "url(" + picture + ")",
+                                      backgroundImage: "url(" + picture + ")"
                                     }}
                                   >
                                     <img
@@ -397,13 +390,16 @@ function CreatorPage(props) {
                                   </h4>
                                 </div>
                                 <div class="card-body card-creator-image">
-                                {
-                                  item.image ? ( <img src={item.image} class="" alt="image" />) : null
-                                }
-                                 
+                                  {item.image ? (
+                                    <img
+                                      src={item.image}
+                                      class=""
+                                      alt="image"
+                                    />
+                                  ) : null}
                                 </div>
                                 <div class="card-body p-0 me-lg-5">
-                                  <a href={`#/post/${item.id}`}>
+                                  <a href={`post/${item.id}`}>
                                     <h3 class="card-creator-title">
                                       {item.title}
                                     </h3>
@@ -413,9 +409,7 @@ function CreatorPage(props) {
                                         .slice(0, 165)
                                         .join("")}
                                       ...
-                                      <a href={`#/post/${item.id}`}>
-                                        Read More
-                                      </a>
+                                      <a href={`post/${item.id}`}>Read More</a>
                                     </p>
                                   </a>
                                 </div>
@@ -673,7 +667,6 @@ function CreatorPage(props) {
                         <input
                           type="text"
                           ref={InputRef5}
-                          
                           onChange={(evt) => {
                             onAmount(evt.target.value);
                             radioRef3.current.checked = false;
@@ -692,15 +685,16 @@ function CreatorPage(props) {
                       <label for=""> Send {brandName} a message</label>
                       <textarea
                         ref={messageRef}
-                       maxlength="140"
+                        maxlength="140"
                         onChange={(evt) => {
-                        
-                        if (evt.target.value.length === 140){
-                           NotificationManager.error("Maximum character allowed is 140", "Error"); 
-                        }
+                          if (evt.target.value.length === 140) {
+                            NotificationManager.error(
+                              "Maximum character allowed is 140",
+                              "Error"
+                            );
+                          }
                           setMessage(evt.target.value);
-                        }
-                        }
+                        }}
                         class="form-control mb-0 p-3 h100 bg-greylight lh-16"
                         rows="5"
                         placeholder="Say something nice... (optional)"
@@ -823,7 +817,7 @@ function CreatorPage(props) {
 const mapStateToProps = (state) => {
   return {
     user: state.auth,
-    data: state.user,
+    data: state.user
   };
 };
 

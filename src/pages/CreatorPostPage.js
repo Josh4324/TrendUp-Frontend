@@ -8,7 +8,7 @@ import {
   Pay2,
   anonSignupCall,
   initializePaymentCall,
-  verifyPaymentCall,
+  verifyPaymentCall
 } from "../utils/apiCalls";
 import { useHistory } from "react-router-dom";
 import { front } from "../utils/constants";
@@ -59,7 +59,7 @@ function CreatorPostPage(props) {
     twitterLink,
     instagramLink,
     youtubeLink,
-    websiteUrl,
+    websiteUrl
   } = user || "";
 
   const creatorEmail = user.email;
@@ -111,7 +111,7 @@ function CreatorPostPage(props) {
       email,
       firstName: firstname,
       lastName: lastname,
-      message,
+      message
     };
 
     let payment = await initializePaymentCall(cred);
@@ -120,7 +120,7 @@ function CreatorPostPage(props) {
         public_key: "FLWPUBK_TEST-d0b3befc83b20f52316dc9176b5f412a-X",
         tx_ref: payment.data.data.reference,
         amount,
-        redirect_url: `${front}/#/success`,
+        redirect_url: `${front}/success`,
         currency: "NGN",
         payment_options: "card",
         // specified redirect URL
@@ -128,12 +128,12 @@ function CreatorPostPage(props) {
         customer: {
           email: email,
           phonenumber: "",
-          name: firstname + " " + lastname,
+          name: firstname + " " + lastname
         },
         callback: async function (data) {
           let cred = {
             txref: data.tx_ref,
-            SECKEY: "FLWSECK_TEST-ff7d39867a3cc21da33e8dfcb7bf94c6-X",
+            SECKEY: "FLWSECK_TEST-ff7d39867a3cc21da33e8dfcb7bf94c6-X"
           };
           let result = await Pay2(cred);
 
@@ -147,7 +147,7 @@ function CreatorPostPage(props) {
               email,
               firstName: firstname,
               lastName: lastname,
-              onboardingStep: 1,
+              onboardingStep: 1
             };
             let createdUser = await anonSignupCall(userCred);
             if (createdUser?.data?.data) {
@@ -169,8 +169,8 @@ function CreatorPostPage(props) {
         customizations: {
           title: "TrendUpp",
           description: "Connecting Creators to Fans",
-          logo: "https://res.cloudinary.com/josh4324/image/upload/v1625061582/trendupp-logo-icon_wzh6da.png",
-        },
+          logo: "https://res.cloudinary.com/josh4324/image/upload/v1625061582/trendupp-logo-icon_wzh6da.png"
+        }
       });
     }
   };
@@ -193,7 +193,10 @@ function CreatorPostPage(props) {
             <div class="nav-top">
               <Link to="/" class="logo">
                 {" "}
-                <img src="images/trendupp-logo-icon.png" alt="Trendupp Logo" />
+                <img
+                  src={`${front}/images/trendupp-logo-icon.png`}
+                  alt="Trendupp Logo"
+                />
               </Link>
             </div>
           </div>
@@ -208,7 +211,7 @@ function CreatorPostPage(props) {
               <div class="middle-sidebar-left">
                 <div class="row">
                   <div class="col-md-9 mx-auto">
-                    <a href={`#/${userName}`} class="">
+                    <a href={`${front}/${userName}`} class="">
                       <h3 class="card-title mb-3">
                         <i class="feather-arrow-left"></i> {brandName}'s Page
                       </h3>
@@ -218,7 +221,7 @@ function CreatorPostPage(props) {
                         <figure
                           class="avatar me-3"
                           style={{
-                            backgroundImage: "url(" + picture + ")",
+                            backgroundImage: "url(" + picture + ")"
                           }}
                         >
                           <img src="images/profile.jpg" alt="" />
@@ -231,10 +234,9 @@ function CreatorPostPage(props) {
                         </h4>
                       </div>
                       <div class="card-body card-creator-image">
-                      {
-                        post.image ? (<img src={post.image} class="" alt="image" />) : null
-                      }
-                        
+                        {post.image ? (
+                          <img src={post.image} class="" alt="image" />
+                        ) : null}
                       </div>
                       <div class="card-body p-0 me-lg-5">
                         <h3 class="card-creator-title">{post.title}</h3>
@@ -584,7 +586,7 @@ function CreatorPostPage(props) {
 const mapStateToProps = (state) => {
   return {
     user: state.auth,
-    data: state.user,
+    data: state.user
   };
 };
 

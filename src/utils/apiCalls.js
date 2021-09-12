@@ -20,12 +20,12 @@ export const loginCall = async (
       localStorage.setItem("trend-user", JSON.stringify(res.data.data));
       let onboard = Number(res.data.data.onboardingStep);
       if (res.data.data.userType === "fan") {
-        return (window.location.href = `${front}/#/fan-dashboard`);
+        return (window.location.href = `${front}/fan-dashboard`);
       }
       if (Number(onboard) === 4) {
-        window.location.href = `${front}/#/dashboard`;
+        window.location.href = `${front}/dashboard`;
       } else {
-        window.location.href = `${front}/#/step${onboard}`;
+        window.location.href = `${front}/step${onboard}`;
       }
     }
   } catch (err) {
@@ -238,8 +238,8 @@ export const getCall = async (setOnboard, token) => {
     //setError(false);
     const res = await axios.get(`${http}/api/v1/user`, {
       headers: {
-        Authorization: `JWT ${token}`,
-      },
+        Authorization: `JWT ${token}`
+      }
     });
     if (res.data.code === 200) {
       //setLoader(false);
@@ -286,8 +286,8 @@ export const getCallModal = async (setModal, dispatch, token) => {
   try {
     const res = await axios.get(`${http}/api/v1/user`, {
       headers: {
-        Authorization: `JWT ${token}`,
-      },
+        Authorization: `JWT ${token}`
+      }
     });
     if (res.data.code === 200) {
       //setLoader(false);
@@ -317,7 +317,7 @@ export const postCall = async (userCredential, setLoader, token, history) => {
     if (res) {
       setLoader(false);
       NotificationManager.success("Post created successfully", "Success");
-      window.location.href = `${front}/#/post`;
+      window.location.href = `${front}/post`;
     }
   } catch (err) {
     NotificationManager.error("Error occured while creating post", "Error");
@@ -331,8 +331,8 @@ export const getPost = async (token) => {
     //setError(false);
     const res = await axios.get(`${http}/api/v1/post/all`, {
       headers: {
-        Authorization: `JWT ${token}`,
-      },
+        Authorization: `JWT ${token}`
+      }
     });
 
     if (res.data.code === 200) {
@@ -442,8 +442,8 @@ export const getStat = async (token) => {
     //setError(false);
     const res = await axios.get(`${http}/api/v1/statistic`, {
       headers: {
-        Authorization: `JWT ${token}`,
-      },
+        Authorization: `JWT ${token}`
+      }
     });
 
     if (res.data.code === 200) {
@@ -464,8 +464,8 @@ export const getHistory = async (token, email) => {
       `${http}/api/v1/statistic/history?email=${email}`,
       {
         headers: {
-          Authorization: `JWT ${token}`,
-        },
+          Authorization: `JWT ${token}`
+        }
       }
     );
 
@@ -556,8 +556,8 @@ export const getCreators = async (token) => {
   try {
     const res = await axios.get(`${http}/api/v1/user/creators`, {
       headers: {
-        Authorization: `JWT ${token}`,
-      },
+        Authorization: `JWT ${token}`
+      }
     });
     if (res.data.code === 200) {
       return res.data.data;
@@ -582,8 +582,8 @@ export const getFanPost = async (token, email) => {
   try {
     const res = await axios.get(`${http}/api/v1/post/fanpost?email=${email}`, {
       headers: {
-        Authorization: `JWT ${token}`,
-      },
+        Authorization: `JWT ${token}`
+      }
     });
     if (res.data.code === 200) {
       return res.data.data;
@@ -599,8 +599,8 @@ export const getSupportCreators = async (token, email) => {
       `${http}/api/v1/user/support-creators?email=${email}`,
       {
         headers: {
-          Authorization: `JWT ${token}`,
-        },
+          Authorization: `JWT ${token}`
+        }
       }
     );
     if (res.data.code === 200) {
@@ -630,8 +630,8 @@ export const getPaymentHistory = async (token, email) => {
       `${http}/api/v1/statistic/payment-history?email=${email}`,
       {
         headers: {
-          Authorization: `JWT ${token}`,
-        },
+          Authorization: `JWT ${token}`
+        }
       }
     );
     if (res.data.code === 200) {
@@ -644,7 +644,10 @@ export const getPaymentHistory = async (token, email) => {
 
 export const postForgot = async (userCredential) => {
   try {
-    let res = await axios.post(`${http}/api/v1/user/forgot-password`, userCredential);
+    let res = await axios.post(
+      `${http}/api/v1/user/forgot-password`,
+      userCredential
+    );
     return res.data;
   } catch (err) {
     console.log(err);
@@ -654,9 +657,12 @@ export const postForgot = async (userCredential) => {
 
 export const resetPasswordCall2 = async (userCredential) => {
   try {
-    const res = await axios.patch(`${http}/api/v1/user/reset-password`, userCredential);
+    const res = await axios.patch(
+      `${http}/api/v1/user/reset-password`,
+      userCredential
+    );
     return res.data;
-  } catch (err) {  
+  } catch (err) {
     return err;
   }
 };
@@ -665,9 +671,9 @@ export const payoutCall = async (userCredential, token) => {
   try {
     axios.defaults.headers.common["Authorization"] = "JWT " + token;
     const res = await axios.post(`${http}/api/v1/payout`, userCredential);
-    console.log(res)
+    console.log(res);
     return res.data;
-  } catch (err) {  
+  } catch (err) {
     return err;
   }
 };
@@ -676,11 +682,9 @@ export const payoutHistoryCall = async (token) => {
   try {
     axios.defaults.headers.common["Authorization"] = "JWT " + token;
     const res = await axios.get(`${http}/api/v1/payout/history`);
-    console.log(res)
+    console.log(res);
     return res.data;
-  } catch (err) {  
+  } catch (err) {
     return err;
   }
 };
-
-

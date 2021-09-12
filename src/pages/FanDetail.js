@@ -24,7 +24,7 @@ function FanDetail(props) {
     youtubeLink,
     brandName,
     creating,
-    about,
+    about
   } = props.data.user || "";
   let img1 = picture || "images/profile-image.jpg";
   let history = useHistory();
@@ -81,7 +81,7 @@ function FanDetail(props) {
       twitterLink: twitter,
       instagramLink: instagram,
       youtubeLink: youtube,
-      creating: created,
+      creating: created
     };
 
     if (!firstname || !lastname) {
@@ -149,7 +149,10 @@ function FanDetail(props) {
           <div className="nav-top">
             <Link to="/fan-dashboard" className="logo">
               {" "}
-              <img src="images/trenupp-logo.png" alt="Trendupp Logo" />{" "}
+              <img
+                src={`${front}/images/trenupp-logo.png`}
+                alt="Trendupp Logo"
+              />{" "}
             </Link>
 
             <button
@@ -169,7 +172,7 @@ function FanDetail(props) {
                     <figure
                       class="nav-content-image"
                       style={{
-                        backgroundImage: "url(" + img1 + ")",
+                        backgroundImage: "url(" + img1 + ")"
                       }}
                     >
                       <img
@@ -233,7 +236,7 @@ function FanDetail(props) {
                                   marginLeft: "auto",
                                   marginRight: "auto",
                                   width: "100px",
-                                  height: "100px",
+                                  height: "100px"
                                 }}
                               ></figure>
                             ) : (
@@ -298,7 +301,10 @@ function FanDetail(props) {
                           <div class="col-12 mb-2">
                             <div class="form-group form-group-icon social-platform-input">
                               <span class="input-icon">
-                                <img src="images/icon-twitter.svg" alt="" />
+                                <img
+                                  src={`${front}/images/icon-twitter.svg`}
+                                  alt=""
+                                />
                               </span>
                               <input
                                 type="text"
@@ -314,7 +320,7 @@ function FanDetail(props) {
                             <div class="form-group form-group-icon social-platform-input">
                               <span class="input-icon">
                                 <img
-                                  src="images/Instagram_AppIcon_Aug2017.png"
+                                  src={`${front}/images/Instagram_AppIcon_Aug2017.png`}
                                   alt=""
                                 />
                               </span>
@@ -333,7 +339,10 @@ function FanDetail(props) {
                           <div class="col-12 mb-2">
                             <div class="form-group form-group-icon social-platform-input">
                               <span class="input-icon">
-                                <img src="images/icon-youtube.svg" alt="" />
+                                <img
+                                  src={`${front}/images/icon-youtube.svg`}
+                                  alt=""
+                                />
                               </span>
                               <input
                                 type="text"
@@ -348,7 +357,10 @@ function FanDetail(props) {
                           <div class="col-12 mb-2">
                             <div class="form-group form-group-icon social-platform-input">
                               <span class="input-icon">
-                                <img src="images/icon-facebook.svg" alt="" />
+                                <img
+                                  src={`${front}/images/icon-facebook.svg`}
+                                  alt=""
+                                />
                               </span>
                               <input
                                 type="text"
@@ -395,7 +407,7 @@ function FanDetail(props) {
 const mapStateToProps = (state) => {
   return {
     user: state.auth,
-    data: state.user,
+    data: state.user
   };
 };
 

@@ -46,7 +46,7 @@ function FanResetPassword(props) {
       setLoader(true);
       let cred = {
         oldPassword: oldPasswordRef.current.value,
-        newPassword: newPasswordRef.current.value,
+        newPassword: newPasswordRef.current.value
       };
       const result = await resetPasswordCall(cred, token);
       if (result) {
@@ -63,7 +63,10 @@ function FanResetPassword(props) {
           <div className="nav-top">
             <Link to="/fan-dashboard" className="logo">
               {" "}
-              <img src="images/trenupp-logo.png" alt="Trendupp Logo" />{" "}
+              <img
+                src={`${front}/images/trenupp-logo.png`}
+                alt="Trendupp Logo"
+              />{" "}
             </Link>
 
             <button
@@ -83,7 +86,7 @@ function FanResetPassword(props) {
                     <figure
                       class="nav-content-image"
                       style={{
-                        backgroundImage: "url(" + img1 + ")",
+                        backgroundImage: "url(" + img1 + ")"
                       }}
                     >
                       <img
@@ -215,7 +218,7 @@ function FanResetPassword(props) {
 const mapStateToProps = (state) => {
   return {
     user: state.auth,
-    data: state.user,
+    data: state.user
   };
 };
 

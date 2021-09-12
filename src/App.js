@@ -1,5 +1,11 @@
 import React from "react";
-import { Route, Switch, HashRouter, Router, Redirect } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  HashRouter,
+  BrowserRouter as Router,
+  Redirect
+} from "react-router-dom";
 import {
   LoginPage,
   Dashboard,
@@ -47,7 +53,7 @@ function App(props) {
   }
   return (
     <div className="App color-theme-blue">
-      <HashRouter basename="/">
+      <Router>
         <Switch>
           <Route exact path="/">
             {onboarding === 1 ? (
@@ -95,7 +101,7 @@ function App(props) {
             )}
           </Route>
           <Route path="/forgot-password" component={ForgotPassword} />
-           <Route path="/reset" component={Reset} />
+          <Route path="/reset" component={Reset} />
           <PrivateRoute exact path="/step1" component={Onboard1} />
           <PrivateRoute exact path="/step2" component={Onboard2} />
           <PrivateRoute exact path="/step3" component={Onboard3} />
@@ -152,14 +158,14 @@ function App(props) {
           <Route component={NotFound} />
         </Switch>
         <NotificationContainer />
-      </HashRouter>
+      </Router>
     </div>
   );
 }
 
 const mapStateToProps = (state) => {
   return {
-    user: state.auth,
+    user: state.auth
   };
 };
 

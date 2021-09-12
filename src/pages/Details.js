@@ -29,7 +29,7 @@ function Details(props) {
     creating,
     about,
     userName,
-    onboardingStep,
+    onboardingStep
   } = props.data.user || "";
   const [modal, setModal] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -158,7 +158,7 @@ function Details(props) {
       twitterLink: twitter,
       instagramLink: instagram,
       youtubeLink: youtube,
-      creating: created,
+      creating: created
     };
 
     if (!brand || !firstname || !lastname || !number || !About) {
@@ -199,7 +199,10 @@ function Details(props) {
           <div className="nav-top">
             <Link to="/dashboard" className="logo">
               {" "}
-              <img src="images/trenupp-logo.png" alt="Trendupp Logo" />{" "}
+              <img
+                src={`${front}/images/trenupp-logo.png`}
+                alt="Trendupp Logo"
+              />{" "}
             </Link>
 
             <button
@@ -219,7 +222,7 @@ function Details(props) {
                     <figure
                       class="nav-content-image"
                       style={{
-                        backgroundImage: "url(" + img1 + ")",
+                        backgroundImage: "url(" + img1 + ")"
                       }}
                     >
                       <img
@@ -336,7 +339,7 @@ function Details(props) {
                                     marginLeft: "auto",
                                     marginRight: "auto",
                                     width: "100px",
-                                    height: "100px",
+                                    height: "100px"
                                   }}
                                 ></figure>
                               ) : (
@@ -470,7 +473,10 @@ function Details(props) {
                             <div class="col-12 mb-2">
                               <div class="form-group form-group-icon social-platform-input">
                                 <span class="input-icon">
-                                  <img src="images/icon-twitter.svg" alt="" />
+                                  <img
+                                    src={`${front}/images/icon-twitter.svg`}
+                                    alt=""
+                                  />
                                 </span>
                                 <input
                                   type="text"
@@ -490,7 +496,7 @@ function Details(props) {
                               <div class="form-group form-group-icon social-platform-input">
                                 <span class="input-icon">
                                   <img
-                                    src="images/Instagram_AppIcon_Aug2017.png"
+                                    src={`${front}/images/Instagram_AppIcon_Aug2017.png`}
                                     alt=""
                                   />
                                 </span>
@@ -511,7 +517,10 @@ function Details(props) {
                             <div class="col-12 mb-2">
                               <div class="form-group form-group-icon social-platform-input">
                                 <span class="input-icon">
-                                  <img src="images/icon-youtube.svg" alt="" />
+                                  <img
+                                    src={`${front}/images/icon-youtube.svg`}
+                                    alt=""
+                                  />
                                 </span>
                                 <input
                                   type="text"
@@ -530,7 +539,10 @@ function Details(props) {
                             <div class="col-12 mb-2">
                               <div class="form-group form-group-icon social-platform-input">
                                 <span class="input-icon">
-                                  <img src="images/icon-facebook.svg" alt="" />
+                                  <img
+                                    src={`${front}/images/icon-facebook.svg`}
+                                    alt=""
+                                  />
                                 </span>
                                 <input
                                   type="text"
@@ -549,7 +561,10 @@ function Details(props) {
                             <div class="col-12 mb-2">
                               <div class="form-group form-group-icon social-platform-input">
                                 <span class="input-icon">
-                                  <img src="images/globe.svg" alt="" />
+                                  <img
+                                    src={`${front}/images/globe.svg`}
+                                    alt=""
+                                  />
                                 </span>
                                 <input
                                   type="text"
@@ -604,7 +619,7 @@ const mapStateToProps = (state) => {
   console.log(state);
   return {
     user: state.auth,
-    data: state.user,
+    data: state.user
   };
 };
 

@@ -71,7 +71,7 @@ function SettingsLink(props) {
   const usernameCheck = async (value) => {
     setFound(null);
     let cred2 = {
-      username: value,
+      username: value
     };
     let regex = /^[a-zA-Z0-9]*$/;
 
@@ -132,7 +132,7 @@ function SettingsLink(props) {
       );
     }
     let cred = {
-      userName: username,
+      userName: username
     };
     const result = await editCall(
       cred,
@@ -150,7 +150,10 @@ function SettingsLink(props) {
           <div className="nav-top">
             <Link to="/dashboard" className="logo">
               {" "}
-              <img src="images/trenupp-logo.png" alt="Trendupp Logo" />{" "}
+              <img
+                src={`${front}/images/trenupp-logo.png`}
+                alt="Trendupp Logo"
+              />{" "}
             </Link>
 
             <button
@@ -170,7 +173,7 @@ function SettingsLink(props) {
                     <figure
                       class="nav-content-image"
                       style={{
-                        backgroundImage: "url(" + img1 + ")",
+                        backgroundImage: "url(" + img1 + ")"
                       }}
                     >
                       <img
@@ -268,7 +271,10 @@ function SettingsLink(props) {
                         <form class="mw-400 mx-auto mt-4">
                           <div class="form-group form-group-icon choose-link-input">
                             <span class="choose-link-input-icon input-icon">
-                              <img src="images/trendupp-icon.png" alt="" />
+                              <img
+                                src={`${front}/images/trendupp-icon.png`}
+                                alt=""
+                              />
                             </span>
                             <span class="choose-link-input-text">
                               trendupp.com/
@@ -284,7 +290,7 @@ function SettingsLink(props) {
                               class="choose-link-input-check input-icon-e ti-check"
                               style={{
                                 backgroundColor:
-                                  found === false ? "green" : null,
+                                  found === false ? "green" : null
                               }}
                             ></i>
                           </div>
@@ -329,7 +335,7 @@ const mapStateToProps = (state) => {
   console.log(state);
   return {
     user: state.auth,
-    data: state.user,
+    data: state.user
   };
 };
 

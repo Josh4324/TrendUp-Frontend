@@ -6,6 +6,7 @@ import { NotificationManager } from "react-notifications";
 import Post from "../components/Post";
 import { Sidebar } from "./index";
 import { useHistory } from "react-router-dom";
+import { front } from "../utils/constants";
 import "../themify-icons.css";
 import "../feather.css";
 import "../style1.css";
@@ -78,7 +79,7 @@ function ResetPassword(props) {
     } else {
       let cred = {
         oldPassword: oldPasswordRef.current.value,
-        newPassword: newPasswordRef.current.value,
+        newPassword: newPasswordRef.current.value
       };
       const result = await resetPasswordCall(cred, token);
     }
@@ -96,7 +97,10 @@ function ResetPassword(props) {
           <div className="nav-top">
             <Link to="/dashboard" className="logo">
               {" "}
-              <img src="images/trenupp-logo.png" alt="Trendupp Logo" />{" "}
+              <img
+                src={`${front}/images/trenupp-logo.png`}
+                alt="Trendupp Logo"
+              />{" "}
             </Link>
 
             <button
@@ -116,7 +120,7 @@ function ResetPassword(props) {
                     <figure
                       class="nav-content-image"
                       style={{
-                        backgroundImage: "url(" + img1 + ")",
+                        backgroundImage: "url(" + img1 + ")"
                       }}
                     >
                       <img
@@ -298,7 +302,7 @@ const mapStateToProps = (state) => {
   console.log(state);
   return {
     user: state.auth,
-    data: state.user,
+    data: state.user
   };
 };
 

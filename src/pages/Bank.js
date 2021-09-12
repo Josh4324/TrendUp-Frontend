@@ -41,7 +41,7 @@ function Bank(props) {
     bankName,
     accName,
     accNumber,
-    onboardingStep,
+    onboardingStep
   } = props.data.user || "";
   const [name, setName] = useState(accName);
   const [number, setNumber] = useState(accNumber);
@@ -135,8 +135,8 @@ function Bank(props) {
         method: "GET", // or 'PUT'
         headers: {
           "Content-Type": "application/json",
-          authorization: JWT,
-        },
+          authorization: JWT
+        }
       }
     )
       .then((response) => response.json())
@@ -165,7 +165,7 @@ function Bank(props) {
     let cred = {
       accNumber: number,
       accName: name,
-      bankName: bankCode,
+      bankName: bankCode
     };
     const result = await editCall(
       cred,
@@ -183,7 +183,10 @@ function Bank(props) {
           <div className="nav-top">
             <Link to="/dashboard" className="logo">
               {" "}
-              <img src="images/trenupp-logo.png" alt="Trendupp Logo" />{" "}
+              <img
+                src={`${front}/images/trenupp-logo.png`}
+                alt="Trendupp Logo"
+              />{" "}
             </Link>
 
             <button
@@ -203,7 +206,7 @@ function Bank(props) {
                     <figure
                       class="nav-content-image"
                       style={{
-                        backgroundImage: "url(" + img1 + ")",
+                        backgroundImage: "url(" + img1 + ")"
                       }}
                     >
                       <img
@@ -396,7 +399,7 @@ const mapStateToProps = (state) => {
   console.log(state);
   return {
     user: state.auth,
-    data: state.user,
+    data: state.user
   };
 };
 
