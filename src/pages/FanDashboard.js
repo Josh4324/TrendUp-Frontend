@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import FanSidebar from "./FanSideBar";
@@ -202,7 +203,7 @@ function FanDashboard(props) {
                                   ...
                                 </p>
                                 <a
-                                  href={`${front}/#/${item?.userName}`}
+                                  href={`${front}/${item?.userName}`}
                                   target="_blank"
                                   class="btn btn-light bt-sm"
                                 >
@@ -321,7 +322,7 @@ function FanDashboard(props) {
                                 ) : null}
                               </p>
                               <a
-                                href={`${front}/#/${item.userName}`}
+                                href={`${front}/${item.userName}`}
                                 target="_blank"
                                 class="btn btn-light bt-sm"
                               >

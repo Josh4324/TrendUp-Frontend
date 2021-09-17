@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { postCall } from "../utils/apiCalls";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { NotificationManager } from "react-notifications";
 
 function Post(props) {
   const titleRef = useRef("");
@@ -18,6 +19,13 @@ function Post(props) {
   const onPost = async (evt) => {
     evt.preventDefault();
     let postType;
+
+    if (titleRef.current.value === "" || messageRef.current.value === "") {
+      return NotificationManager.error(
+        "Please enter the title or message",
+        "Error"
+      );
+    }
     if (props.public1 === true) {
       postType = "public";
     } else if (props.support === true) {
@@ -29,7 +37,7 @@ function Post(props) {
       formData = {
         title: titleRef.current.value,
         message: messageRef.current.value,
-        postType: postType,
+        postType: postType
       };
     } else {
       formData = new FormData();
@@ -184,7 +192,7 @@ function Post(props) {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.auth,
+    user: state.auth
   };
 };
 
