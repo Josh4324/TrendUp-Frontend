@@ -20,7 +20,7 @@ function SupportedCreators(props) {
   const [creator, setCreator] = useState([]);
   const [constantCreator, setConstantCreators] = useState([]);
   const [loading, setLoading] = useState(true);
-     const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(false);
 
   const navChange = () => {
     butRef.current.classList.toggle("active");
@@ -36,36 +36,40 @@ function SupportedCreators(props) {
     setCreator(filtered);
   };
 
-  useEffect(async () => {
-    let user = JSON.parse(localStorage.getItem("trend-user"));
-    let email = localStorage.getItem('fan-email');
-    if (user !== null) {
-      const decoded = jwt_decode(user.token);
-      const expirationTime = new Date() / 1000;
+  useEffect(() => {
+    let run = async () => {
+      let user = JSON.parse(localStorage.getItem("trend-user"));
+      let email = localStorage.getItem("fan-email");
+      if (user !== null) {
+        const decoded = jwt_decode(user.token);
+        const expirationTime = new Date() / 1000;
 
-      if (expirationTime >= decoded.exp) {
-        user = null;
-        props.dispatch({ type: "LOGIN_SUCCESS", payload: null });
-        localStorage.removeItem("trend-user");
-        NotificationManager.error(
-          "Session has expired, please log in again",
-          "Error",
-          10000
-        );
-        history.push("/login");
+        if (expirationTime >= decoded.exp) {
+          user = null;
+          props.dispatch({ type: "LOGIN_SUCCESS", payload: null });
+          localStorage.removeItem("trend-user");
+          NotificationManager.error(
+            "Session has expired, please log in again",
+            "Error",
+            10000
+          );
+          history.push("/login");
+        }
+        getCallModal(setModal, props.dispatch, token);
       }
-       getCallModal(setModal, props.dispatch, token);
-    }
-    
-    if (email) {
-      let creators = await getSupportCreators(token, email);
-      if (creators) {
-        console.log(creators);
-        setLoading(false);
-        setCreator(creators);
-        setConstantCreators(creators);
+
+      if (email) {
+        let creators = await getSupportCreators(token, email);
+        if (creators) {
+          console.log(creators);
+          setLoading(false);
+          setCreator(creators);
+          setConstantCreators(creators);
+        }
       }
-    }
+    };
+
+    run();
 
     return () => {};
   }, []);
@@ -96,7 +100,7 @@ function SupportedCreators(props) {
                     <figure
                       class="nav-content-image"
                       style={{
-                        backgroundImage: "url(" + img1 + ")",
+                        backgroundImage: "url(" + img1 + ")"
                       }}
                     >
                       <img
@@ -125,7 +129,6 @@ function SupportedCreators(props) {
                   <h3 class="card-title mt-3 mb-3">Supported Creators</h3>
                 </div>
                 <div class="col-md-4 offset-md-4">
-                
                   <form action="" class="search-form-2 ms-auto">
                     <button type="submit">
                       <i class="ti-search font-xss"></i>
@@ -181,7 +184,7 @@ function SupportedCreators(props) {
                             <figure
                               class="avatar"
                               style={{
-                                backgroundImage: "url(" + item.picture + ")",
+                                backgroundImage: "url(" + item.picture + ")"
                               }}
                             >
                               <img src="images/user-11.png" alt="creator" />
@@ -194,7 +197,7 @@ function SupportedCreators(props) {
                               {item.about.split("").slice(0, 27).join("")}...
                             </p>
                             <a
-                              href={`/#/${item.userName}`}
+                              href={`/${item.userName}`}
                               target="_blank"
                               class="btn btn-light bt-sm"
                             >
@@ -218,7 +221,7 @@ function SupportedCreators(props) {
 const mapStateToProps = (state) => {
   return {
     user: state.auth,
-    data: state.user,
+    data: state.user
   };
 };
 

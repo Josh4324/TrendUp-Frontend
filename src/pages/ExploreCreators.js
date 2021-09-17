@@ -1,8 +1,9 @@
+/* eslint-disable react/jsx-no-target-blank */
 import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import FanSidebar from "./FanSideBar";
 import { connect } from "react-redux";
-import { getCreators,getCallModal } from "../utils/apiCalls";
+import { getCreators, getCallModal } from "../utils/apiCalls";
 import { front } from "../utils/constants";
 
 function ExploreCreators(props) {
@@ -32,13 +33,18 @@ function ExploreCreators(props) {
     setCreators(filtered);
   };
 
-  useEffect(async () => {
-    let creators = await getCreators(token);
-    if (creators) {
-      setLoading(false);
-      setCreators(creators);
-      setConstantCreators(creators);
-    }
+  useEffect(() => {
+    let run = async () => {
+      let creators = await getCreators(token);
+      if (creators) {
+        setLoading(false);
+        setCreators(creators);
+        setConstantCreators(creators);
+      }
+    };
+
+    run();
+
     getCallModal(setModal, props.dispatch, token);
 
     return () => {};
@@ -70,7 +76,7 @@ function ExploreCreators(props) {
                     <figure
                       class="nav-content-image"
                       style={{
-                        backgroundImage: "url(" + img1 + ")",
+                        backgroundImage: "url(" + img1 + ")"
                       }}
                     >
                       <img
@@ -135,7 +141,7 @@ function ExploreCreators(props) {
                             <figure
                               class="avatar"
                               style={{
-                                backgroundImage: "url(" + image + ")",
+                                backgroundImage: "url(" + image + ")"
                               }}
                             >
                               <img src="images/user-11.png" alt="creator" />
@@ -148,7 +154,7 @@ function ExploreCreators(props) {
                               {item?.about?.split("").slice(0, 20).join("")}...
                             </p>
                             <a
-                              href={`${front}/#/${item.userName}`}
+                              href={`${front}/${item.userName}`}
                               target="_blank"
                               class="btn btn-light bt-sm"
                             >
@@ -172,7 +178,7 @@ function ExploreCreators(props) {
 const mapStateToProps = (state) => {
   return {
     user: state.auth,
-    data: state.user,
+    data: state.user
   };
 };
 
