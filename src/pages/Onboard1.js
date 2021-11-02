@@ -181,7 +181,7 @@ function Onboard1(props) {
                             </span>
                             <span onClick={selectFan} className={ !fan ? "creator-onboard-option" : "creator-onboard-option creator-hover" }>
                                 <img src="./images/creator-opt-2.png" alt="I'm a fan" />
-                                <span>I'm a fan</span>
+                                <span>I’m a supporter</span>
                             </span>
                         </div>
                     </div>

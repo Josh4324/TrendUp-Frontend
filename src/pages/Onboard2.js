@@ -172,7 +172,7 @@ function Onboard2(props) {
             <div class="row">
                 <div class="col-lg-12 mb-2">
                     <div class="form-group">
-                        <input type="text" required class="form-control style2-input" pattern="[A-Za-z0-9 ]+" title="Only Alphanumeric Characters and space are allowed" ref={brandRef} placeholder="Brand Name" />
+                        <input type="text" required class="form-control style2-input" pattern="[A-Za-z0-9 ]+" title="Only Alphanumeric Characters and space are allowed" ref={brandRef} placeholder="Username" />
                     </div>
                 </div>
             </div>
@@ -202,7 +202,7 @@ function Onboard2(props) {
             <div class="row">
                 <div class="col-lg-12 mb-2">
                     <div class="form-group">
-                        <label class="mb-2">What are you creating?</label>
+                        <label class="mb-2">Niche</label>
                         <input type="text" required class="form-control style2-input" ref={createRef} placeholder="creating piano music, building Coronarelief.org, posting a new art everyday"/>
                     </div>
                 </div>

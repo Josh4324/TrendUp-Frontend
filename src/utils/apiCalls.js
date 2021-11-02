@@ -678,6 +678,36 @@ export const payoutCall = async (userCredential, token) => {
   }
 };
 
+export const socialSignUp = async (userCredential) => {
+  try {
+    const res = await axios.post(`${http}/api/v1/user/social-signup`, userCredential);
+    console.log(res);
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const socialCheck = async (userCredential) => {
+  try {
+    const res = await axios.post(`${http}/api/v1/user/social-check`, userCredential);
+    console.log(res);
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const socialLogin = async (userCredential) => {
+  try {
+    const res = await axios.post(`${http}/api/v1/user/social-login`, userCredential);
+    console.log(res);
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
+
 export const payoutHistoryCall = async (token) => {
   try {
     axios.defaults.headers.common["Authorization"] = "JWT " + token;
