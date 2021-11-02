@@ -20,10 +20,10 @@ function LoginPage(props) {
 
   const responseGoogle = async (response) => {
     const cred = {
-      firstName: response.profileObj.givenName,
-      lastName: response.profileObj.familyName,
-      email: response.profileObj.email,
-      picture: response.profileObj.imageUrl,
+      firstName: response?.profileObj?.givenName,
+      lastName: response?.profileObj?.familyName,
+      email: response?.profileObj?.email,
+      picture: response?.profileObj?.imageUrl,
       onboardingStep: 1,
     }
     const result = await socialCheck(

@@ -371,7 +371,7 @@ function Details(props) {
                                   onChange={(evt) => setBrand(evt.target.value)}
                                   value={brand}
                                   class="form-control style2-input"
-                                  placeholder="Brand Name"
+                                  placeholder="UserName"
                                 />
                               </div>
                             </div>
@@ -431,7 +431,7 @@ function Details(props) {
                             <div class="col-lg-12 mb-2">
                               <div class="form-group">
                                 <label class="mb-2">
-                                  What are you creating?
+                                  Niche
                                 </label>
                                 <input
                                   type="text"
