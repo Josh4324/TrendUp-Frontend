@@ -11,7 +11,7 @@ function PostView(props) {
   const [modal, setModal] = useState(false);
   const token = props.user.user.token;
   let { picture, firstName, brandName, lastName } = props.data.user || "";
-  picture = picture || "images/profile.jpg";
+  picture = picture || "images/profile-image.jpg";
 
   useEffect(async () => {
     let post = await getPost(token);
@@ -54,6 +54,12 @@ function PostView(props) {
                     ? userPost.map((item) => {
                         return (
                           <div class="single-record-row d-flex">
+                            <figure
+                              class="avatar me-3"
+                              style={{
+                                backgroundImage: "url(" + picture + ")"
+                              }}
+                            ></figure>
                             <span class=""></span>
                             <a
                               style={{ cursor: "pointer" }}

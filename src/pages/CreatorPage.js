@@ -185,9 +185,10 @@ function CreatorPage(props) {
             };
             let userCred = {
               email,
+              userType: "fan",
               firstName: firstname,
               lastName: lastname,
-              onboardingStep: 1
+              onboardingStep: 4
             };
             let createdUser = await anonSignupCall(userCred);
             if (createdUser?.data?.data) {

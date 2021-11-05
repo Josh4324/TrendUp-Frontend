@@ -111,17 +111,18 @@ function DashComponent(props) {
                         <div className="onboard-complete-share-section mt-4 mb-2">
 
                             <h4 className="font-xxs fw-600 mb-3">Share on</h4>
-                            <Link className="share-button" to="#">
-                                <img src="images/icon-twitter.svg" alt=""/>
-                            </Link>
+                            <a className="share-button" rel="noopener noreferrer"  target="_blank" href={`https://twitter.com/share?text=Support me on trendupp.com, check it out - ${newlink}`}>
+                <img src="images/icon-twitter.svg" alt="" />
+              </a>
 
-                            <Link className="share-button" to="#">
-                                <img src="images/icon-facebook.svg" alt=""/>
-                            </Link>
+              <a className="share-button" rel="noopener noreferrer"  target="_blank" href={`https://www.facebook.com/sharer.php?u=${newlink}`}>
+                <img src="images/icon-facebook.svg" alt="" />
+              </a>
 
-                            <Link className="share-button" to="#">
-                                <img src="images/icon-whatsapp.svg" alt=""/>
-                            </Link>
+              <a className="share-button" rel="noopener noreferrer"  target="_blank"   href={`whatsapp://send?text=Support me on trendupp.com, check it out - ${newlink}`}>
+                <img src="images/icon-whatsapp.svg" alt="" />
+              </a>
+
                         </div>
 
 

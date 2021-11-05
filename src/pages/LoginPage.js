@@ -30,7 +30,7 @@ function LoginPage(props) {
       cred,
     );
 
-    if (result.data.email){
+    if (result?.data?.email){
       const result = await socialSignUp(cred);
       console.log(result);
       props.dispatch({ type: "LOGIN_SUCCESS", payload: result.data });

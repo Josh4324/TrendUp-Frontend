@@ -135,7 +135,7 @@ function FanSupportHistory(props) {
                           <div class="row supporters-row">
                             <div class="col-sm-5">
                               <h4 class="post-single_title">
-                                {item.user[0].brandName}
+                                {item.user[0]?.brandName}
                                 <span class="post-single_date">
                                   {new Date(item.createdAt).toDateString()} at{" "}
                                   {new Date(

@@ -59,6 +59,7 @@ function FanDashboard(props) {
     if (email) {
       localStorage.setItem("fan-email", email);
       let fanpost = await getFanPost(token, email);
+      console.log("fan", fanpost);
       let supportedcreators = await getSupportCreators(token, email);
       if (fanpost) {
         setFanLoading(false);
@@ -252,7 +253,7 @@ function FanDashboard(props) {
                                   console.log(item);
                                 }}
                               >
-                                {item?.firstName} {item?.lastName}
+                                {item?.user.brandName}
                               </span>{" "}
                               <span class="card-creator-meta--date">
                                 {new Date(item.createdAt).toDateString()}
