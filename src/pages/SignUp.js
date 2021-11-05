@@ -1,12 +1,14 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {useState,useRef} from 'react';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import Login from '../components/Login';
-import {signupCall, verificationCall, resendCall} from '../utils/apiCalls';
+import {signupCall, verificationCall, resendCall, socialCheck, socialLogin, socialSignUp } from '../utils/apiCalls';
 import { useHistory } from "react-router-dom";
 import {connect} from 'react-redux';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import GoogleLogin from 'react-google-login';
+import { front } from "../../src/utils/constants";
 
 function SignUp(props) {
     const [loginToggle, setLoginToggle] = useState(false);
@@ -36,6 +38,39 @@ function SignUp(props) {
 
         const result = await signupCall(cred, setLoader, setError, setSuccess, setSignUp);
     }
+
+    const responseGoogle = async (response) => {
+        const cred = {
+          firstName: response?.profileObj?.givenName,
+          lastName: response?.profileObj?.familyName,
+          email: response?.profileObj?.email,
+          picture: response?.profileObj?.imageUrl,
+          onboardingStep: 1,
+        }
+        const result = await socialCheck(
+          cred,
+        );
+    
+        if (result?.data?.email){
+          const result = await socialSignUp(cred);
+          console.log(result);
+          props.dispatch({ type: "LOGIN_SUCCESS", payload: result.data });
+          localStorage.setItem("trend-user", JSON.stringify(result.data));
+          window.location.href = `${front}/step1`;
+        }else{
+          const result = await socialLogin(cred);
+          props.dispatch({ type: "LOGIN_SUCCESS", payload: result.data });
+          localStorage.setItem("trend-user", JSON.stringify(result.data));
+          const { onboardingStep } = result.data  
+          let onboard = Number(onboardingStep);
+           if (Number(onboard) === 4) {
+            window.location.href = `${front}/dashboard`;
+          } else {
+            window.location.href = `${front}/step${Number(onboard)}`;
+          }
+        }
+      }
+    
 
     const verify = async(evt) => {
         evt.preventDefault();
@@ -75,11 +110,6 @@ function SignUp(props) {
         console.log(response);
     }
 
-     const responseGoogle = (response) => {
-        console.log(response);
-    }
-
-
 
     return (
         <>
@@ -110,17 +140,22 @@ function SignUp(props) {
                         <div className="col-sm-12 social-login">
                             
                             <a href="#" className="social-login-icon">
-                                 <GoogleLogin
-                                clientId="247293153353-f740pqjuo3bmob4mjb8upd26auia6hlv.apps.googleusercontent.com"
-                                render={renderProps => (
-                                    <img onClick={renderProps.onClick} src="images/icon-google.svg" alt="google icon" className="" />
-                                )}
-                                buttonText="Login"
-                                onSuccess={responseGoogle}
-                                onFailure={responseGoogle}
-                                autoLoad={false}
-                                cookiePolicy={'single_host_origin'}
-                            />
+                            <GoogleLogin
+          clientId="247293153353-f740pqjuo3bmob4mjb8upd26auia6hlv.apps.googleusercontent.com"
+          render={renderProps => (
+      <a href="#" className="social-login-icon" onClick={renderProps.onClick}>
+      <img
+        src="images/icon-google.svg"
+        alt="google icon"
+        className=""
+      />
+    </a>
+    )}
+    buttonText="Login"
+    onSuccess={responseGoogle}
+    onFailure={responseGoogle}
+    cookiePolicy={'single_host_origin'}
+  />
                                
                             </a>
                            
