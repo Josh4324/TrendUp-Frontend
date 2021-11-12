@@ -8,7 +8,8 @@ import {
   anonSignupCall,
   initializePaymentCall,
   verifyPaymentCall,
-  getSupportCreators2
+  getSupportCreators2,
+  getSupportersCreators
 } from "../utils/apiCalls";
 import { useHistory } from "react-router-dom";
 import { front } from "../utils/constants";
@@ -34,6 +35,7 @@ function CreatorPage(props) {
   const [message, setMessage] = useState("");
   const [button, setButton] = useState(false);
   const [isFan, setIsFan] = useState(false);
+  const [follower, setFollower] = useState("");
   const messageRef = useRef("");
   const emailRef = useRef("");
   const firstNameRef = useRef("");
@@ -69,33 +71,42 @@ function CreatorPage(props) {
   let img1 = picture || "images/profile-image.jpg";
   let website = `https://${websiteUrl}`;
 
-  useEffect(async () => {
-    let username = props.match.params.username;
-    let user = localStorage.getItem("trend-fan-email");
-    let data = await getCall2(username);
-    let post = await getPost2(username);
-    console.log(data);
-    if (data) {
-      setUserData(data.data.data);
-      if (data.data.data.email === user) {
-        setIsFan(true);
-      }
+  useEffect(() => {
 
-      const support = await getSupportCreators2(user);
-
-      support.map((item) => {
-        if (item.email === data.data.data.email) {
+    let run = async () => {
+      let username = props.match.params.username;
+      console.log(username, "username");
+      let user = localStorage.getItem("trend-fan-email");
+      let data = await getCall2(username);
+      let post = await getPost2(username);
+      let newSupport = await getSupportersCreators(username);
+      setFollower(newSupport.data.supporters_number)
+      console.log(newSupport);
+      console.log(data);
+      if (data) {
+        setUserData(data.data.data);
+        if (data.data.data.email === user) {
           setIsFan(true);
         }
-      });
+  
+        const support = await getSupportCreators2(user);
+        console.log("support", support);
+  
+        support.map((item) => {
+          if (item.email === data.data.data.email) {
+            setIsFan(true);
+          }
+        });
+      }
+  
+      if (post) {
+        console.log(post);
+        setLoading(false);
+        setUserPost(post.data.data);
+      }
     }
 
-    if (post) {
-      console.log(post);
-      setLoading(false);
-      setUserPost(post.data.data);
-    }
-
+    run();
     return () => {};
   }, []);
 
@@ -244,13 +255,14 @@ function CreatorPage(props) {
                         >
                           <img src="images/profile-image.jpg" alt="" />
                         </figure>
-
+                        
                         {Object.keys(userData).length === 0 ? (
                           <div className="loader">
                             <div>Loading...</div>
                           </div>
                         ) : null}
                         <h3 class="card-creator-bio--title">{brandName}</h3>
+                        <span style={{textAlign:"center", display:"block"}}>{follower} supporters</span>
                         <p class="card-creator-bio--body">
                           {creating}
 
@@ -274,7 +286,7 @@ function CreatorPage(props) {
                             Support {brandName}
                           </a>
                         </p>
-
+                       
                         <div class="card-body card-creator-about">
                           <p class="card-creator-about-text">{about}</p>
                         </div>

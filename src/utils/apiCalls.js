@@ -718,3 +718,14 @@ export const payoutHistoryCall = async (token) => {
     return err;
   }
 };
+
+export const getSupportersCreators = async (username) => {
+  try {
+    const res = await axios.get(`${http}/api/v1/statistic/${username}`);
+    console.log(res);
+    return res.data;
+  } catch (err) {
+    return err;
+  }
+};
+
