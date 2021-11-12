@@ -70,6 +70,40 @@ function SignUp(props) {
           }
         }
       }
+
+      const responseFacebook = async (response) => {
+        const names = response.name.split(" ");
+        const cred = {
+          firstName: names[0],
+          lastName: names[1],
+          email: response?.email,
+          picture: response?.picture?.data.url,
+          onboardingStep: 1,
+        }
+        const result = await socialCheck(
+          cred,
+        );
+    
+        if (result?.data?.email){
+          const result = await socialSignUp(cred);
+          console.log(result);
+          props.dispatch({ type: "LOGIN_SUCCESS", payload: result.data });
+          localStorage.setItem("trend-user", JSON.stringify(result.data));
+          window.location.href = `${front}/step1`;
+        }else{
+          const result = await socialLogin(cred);
+          props.dispatch({ type: "LOGIN_SUCCESS", payload: result.data });
+          localStorage.setItem("trend-user", JSON.stringify(result.data));
+          const { onboardingStep } = result.data  
+          let onboard = Number(onboardingStep);
+           if (Number(onboard) === 4) {
+            window.location.href = `${front}/dashboard`;
+          } else {
+            window.location.href = `${front}/step${Number(onboard)}`;
+          }
+        }
+      }
+    
     
 
     const verify = async(evt) => {
@@ -104,10 +138,6 @@ function SignUp(props) {
         }
 
         const result = await resendCall(cred);
-    }
-
-    const responseFacebook = (response) => {
-        console.log(response);
     }
 
 
@@ -160,14 +190,22 @@ function SignUp(props) {
                             </a>
                            
                             <a href="#" className="social-login-icon">
-                                <FacebookLogin
-                                    appId="803651167213839"
-                                    autoLoad={false}
-                                    callback={responseFacebook}
-                                    render={renderProps => (
-                                          <img onClick={renderProps.onClick} src="images/icon-facebook.svg" alt="google icon" className=""/>
-                                    )}
-                                    />
+                            <FacebookLogin
+          appId="803651167213839"
+        callback={responseFacebook}
+        cookie={true}
+        fields="name,email,picture"
+    render={renderProps => (
+    <a onClick={renderProps.onClick} href="#" className="social-login-icon">
+    <img
+      src="images/icon-facebook.svg"
+      alt="google icon"
+      className=""
+    />
+  </a>
+    
+  )}
+/>
                                 
                             </a>
                            

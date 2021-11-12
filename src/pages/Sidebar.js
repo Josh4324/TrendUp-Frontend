@@ -1,16 +1,16 @@
 import React from "react";
-import { Link, NavLink, useHistory } from "react-router-dom";
+import { Link, NavLink,} from "react-router-dom";
 import { connect } from "react-redux";
+import { front} from "../utils/constants";
 
 function Sidebar(props) {
-  let history = useHistory();
   const logout = () => {
     localStorage.removeItem("trend-user");
     localStorage.removeItem("trend-fan-email");
     localStorage.removeItem("trend-fan-firstname");
     localStorage.removeItem("trend-fan-lastname");
     props.dispatch({ type: "LOGIN_FAILURE" });
-    history.push("/login");
+    window.location.href = `${front}/login`;
   };
   return (
     <div>
