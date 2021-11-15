@@ -1,6 +1,8 @@
+/* eslint-disable react/jsx-no-target-blank */
 import React, { useState, useRef, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import ReactPlayer from "react-player";
 import {
   getCall2,
   getPost2,
@@ -262,7 +264,10 @@ function CreatorPage(props) {
                           </div>
                         ) : null}
                         <h3 class="card-creator-bio--title">{brandName}</h3>
-                        <span style={{textAlign:"center", display:"block"}}>{follower} supporters</span>
+                        {
+                          follower !== "" ? (<span style={{textAlign:"center", display:"block"}}>{follower} supporters</span>) : null
+                        }
+                        
                         <p class="card-creator-bio--body">
                           {creating}
 
@@ -410,6 +415,13 @@ function CreatorPage(props) {
                                       alt="image"
                                     />
                                   ) : null}
+                                  { item.youtube ? (
+                                     <ReactPlayer
+                                     url={item.youtube}
+                                   />
+                                  )
+                                   : null
+                                  }
                                 </div>
                                 <div class="card-body p-0 me-lg-5">
                                   <a href={`post/${item.id}`}>

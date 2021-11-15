@@ -6,6 +6,7 @@ import { NotificationManager } from "react-notifications";
 
 function Post(props) {
   const titleRef = useRef("");
+  const youtubeRef = useRef("");
   const messageRef = useRef("");
   const imageRef = useRef("");
   const [loader, setLoader] = useState(false);
@@ -17,6 +18,7 @@ function Post(props) {
   };
 
   const onPost = async (evt) => {
+    console.log("youtube",youtubeRef.current.value);
     evt.preventDefault();
     let postType;
 
@@ -36,6 +38,7 @@ function Post(props) {
     if (!imageRef.current.files[0]) {
       formData = {
         title: titleRef.current.value,
+        youtube: youtubeRef.current.value,
         message: messageRef.current.value,
         postType: postType
       };
@@ -124,7 +127,24 @@ function Post(props) {
                       </div>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-lg-6 mb-2">
+                      <label class="">Youtube Link</label>
+                    </div>
+                  </div>
 
+                  <div class="row">
+                    <div class="col-lg-12 mb-2">
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          ref={youtubeRef}
+                          class="form-control style2-input"
+                          placeholder=""
+                        />
+                      </div>
+                    </div>
+                  </div>
                   <div class="row">
                     <div class="col-lg-12 mb-3">
                       <label class="mb-2">Message</label>

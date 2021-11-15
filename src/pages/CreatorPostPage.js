@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import ReactPlayer from "react-player";
 import {
   getPostAndUser,
   getCall2,
@@ -238,8 +239,13 @@ function CreatorPostPage(props) {
                           <img src={post.image} class="" alt="image" />
                         ) : null}
                       </div>
+                      {
+                        post.youtube ? (<ReactPlayer
+                          url={post.youtube}
+                        />) : null
+                      }
                       <div class="card-body p-0 me-lg-5">
-                        <h3 class="card-creator-title">{post.title}</h3>
+                        <h3 class="card-creator-title pt-2">{post.title}</h3>
                         <p class="card-creator-text">{post.message}</p>
                         <p class="text-center">
                           <span
