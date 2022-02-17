@@ -128,7 +128,7 @@ function LoginPage(props) {
                 <a
                   href="#"
                   className="social-login-icon"
-                  onClick={() => renderProps.onClick}
+                  onClick={renderProps.onClick}
                 >
                   <img
                     src="images/icon-google.svg"
@@ -150,7 +150,7 @@ function LoginPage(props) {
               fields="name,email,picture"
               render={(renderProps) => (
                 <a
-                  onClick={() => renderProps.onClick}
+                  onClick={renderProps.onClick}
                   href="#"
                   className="social-login-icon"
                 >
