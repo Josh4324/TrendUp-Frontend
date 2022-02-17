@@ -26,7 +26,7 @@ export default function Landing(props) {
                 <a
                   className="a"
                   class="d-block float-right d-md-none mt-1 nav-right-link"
-                  href="#"
+                  href={login}
                 >
                   Login
                 </a>
@@ -80,7 +80,7 @@ export default function Landing(props) {
           class="header-bottom-img m-top wow animate__animated animate__fadeInUp"
           data-parallax='{"x": 20, "y": 50}'
           style={{
-            backgroundImage: "url(" + img5 + ")"
+            backgroundImage: "url(" + img5 + ")",
           }}
         ></div>
 
@@ -104,7 +104,7 @@ export default function Landing(props) {
                   class="trip-img wow animate__animated animate__backInUp bg-image"
                   data-parallax='{"x": 100, "y": 0}'
                   style={{
-                    backgroundImage: "url(" + img6 + ")"
+                    backgroundImage: "url(" + img6 + ")",
                   }}
                 ></div>
               </div>
@@ -137,13 +137,13 @@ export default function Landing(props) {
           <div
             class="bg-img"
             style={{
-              backgroundImage: "url(" + img3 + ")"
+              backgroundImage: "url(" + img3 + ")",
             }}
           ></div>
           <div
             class="bg-img-02"
             style={{
-              backgroundImage: "url(" + img4 + ")"
+              backgroundImage: "url(" + img4 + ")",
             }}
           ></div>
           <div class="container">
