@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import {
   loginCall,
   socialCheck,
+  resendCall,
   socialLogin,
+  verificationCall,
   socialSignUp,
 } from "../utils/apiCalls";
 import { useHistory } from "react-router-dom";
@@ -18,8 +20,39 @@ function LoginPage(props) {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loader, setLoader] = useState(false);
+  const [verify, setVerify] = useState(false);
   const emailRef = useRef("");
   const passwordRef = useRef("");
+  const codeRef = useRef("");
+
+  const resend = async (evt) => {
+    evt.preventDefault();
+
+    const cred = {
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+    };
+
+    const result = await resendCall(cred);
+  };
+
+  const verify1 = async (evt) => {
+    evt.preventDefault();
+
+    const cred = {
+      email: emailRef.current.value,
+      password: passwordRef.current.value,
+      code: codeRef.current.value,
+    };
+
+    const result = await verificationCall(
+      cred,
+      setLoader,
+      setError,
+      history,
+      props.dispatch
+    );
+  };
 
   let history = useHistory();
 
@@ -99,6 +132,10 @@ function LoginPage(props) {
       setError,
       history
     );
+
+    if (result === true) {
+      setVerify(true);
+    }
   };
 
   return (
@@ -199,13 +236,42 @@ function LoginPage(props) {
             <div className={loader === true ? "loader" : "none"}>
               <div>Loading...</div>
             </div>
+            {verify === true ? (
+              <div className="form-group icon-input">
+                <input
+                  type="text"
+                  className="form-control style2-input ps-3 mb-2 bg-white"
+                  ref={codeRef}
+                  placeholder="Paste verification code"
+                />
+                <span className="form-input-btn resend" onClick={resend}>
+                  Resend
+                </span>
+                <div id="emailHelp" className="form-text">
+                  Please check your inbox for a verification code.
+                </div>
 
-            <button
-              type="submit"
-              className="form-control style2-input style2-main-button"
-            >
-              Continue with email
-            </button>
+                <div className="invalid-feedback">
+                  Your verification code is incorrect
+                </div>
+              </div>
+            ) : null}
+            {verify === true ? (
+              <button
+                type="submit"
+                onClick={verify1}
+                className="form-control style2-input style2-main-button"
+              >
+                Continue with email
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="form-control style2-input style2-main-button"
+              >
+                Continue with email
+              </button>
+            )}
 
             <Link className="text-align-center" to="/forgot-password">
               Forgot Password?

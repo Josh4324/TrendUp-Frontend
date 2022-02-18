@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import Login from "../components/Login";
 import {
   signupCall,
   verificationCall,
@@ -18,7 +16,6 @@ import GoogleLogin from "react-google-login";
 import { front } from "../../src/utils/constants";
 
 function SignUp(props) {
-  const [loginToggle, setLoginToggle] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loader, setLoader] = useState(false);

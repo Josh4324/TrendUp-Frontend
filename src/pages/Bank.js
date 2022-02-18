@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { editCall, getCallModal } from "../utils/apiCalls";
@@ -41,7 +42,7 @@ function Bank(props) {
     bankName,
     accName,
     accNumber,
-    onboardingStep
+    onboardingStep,
   } = props.data.user || "";
   const [name, setName] = useState(accName);
   const [number, setNumber] = useState(accNumber);
@@ -135,8 +136,8 @@ function Bank(props) {
         method: "GET", // or 'PUT'
         headers: {
           "Content-Type": "application/json",
-          authorization: JWT
-        }
+          authorization: JWT,
+        },
       }
     )
       .then((response) => response.json())
@@ -165,7 +166,7 @@ function Bank(props) {
     let cred = {
       accNumber: number,
       accName: name,
-      bankName: bankCode
+      bankName: bankCode,
     };
     const result = await editCall(
       cred,
@@ -206,7 +207,7 @@ function Bank(props) {
                     <figure
                       class="nav-content-image"
                       style={{
-                        backgroundImage: "url(" + img1 + ")"
+                        backgroundImage: "url(" + img1 + ")",
                       }}
                     >
                       <img
@@ -399,7 +400,7 @@ const mapStateToProps = (state) => {
   console.log(state);
   return {
     user: state.auth,
-    data: state.user
+    data: state.user,
   };
 };
 

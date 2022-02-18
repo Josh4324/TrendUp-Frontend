@@ -14,8 +14,13 @@ export const loginCall = async (
     setLoader(true);
     setError(false);
     const res = await axios.post(`${http}/api/v1/user/login`, userCredential);
+    console.log(res.data.data);
     if (res.data.code === 200) {
       setLoader(false);
+      if (res.data.data.verified === false) {
+        NotificationManager.error("User has not been verified", "Error");
+        return true;
+      }
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data.data });
       localStorage.setItem("trend-user", JSON.stringify(res.data.data));
       let onboard = Number(res.data.data.onboardingStep);
@@ -238,8 +243,8 @@ export const getCall = async (setOnboard, token) => {
     //setError(false);
     const res = await axios.get(`${http}/api/v1/user`, {
       headers: {
-        Authorization: `JWT ${token}`
-      }
+        Authorization: `JWT ${token}`,
+      },
     });
     if (res.data.code === 200) {
       //setLoader(false);
@@ -286,8 +291,8 @@ export const getCallModal = async (setModal, dispatch, token) => {
   try {
     const res = await axios.get(`${http}/api/v1/user`, {
       headers: {
-        Authorization: `JWT ${token}`
-      }
+        Authorization: `JWT ${token}`,
+      },
     });
     if (res.data.code === 200) {
       //setLoader(false);
@@ -331,8 +336,8 @@ export const getPost = async (token) => {
     //setError(false);
     const res = await axios.get(`${http}/api/v1/post/all`, {
       headers: {
-        Authorization: `JWT ${token}`
-      }
+        Authorization: `JWT ${token}`,
+      },
     });
 
     if (res.data.code === 200) {
@@ -442,8 +447,8 @@ export const getStat = async (token) => {
     //setError(false);
     const res = await axios.get(`${http}/api/v1/statistic`, {
       headers: {
-        Authorization: `JWT ${token}`
-      }
+        Authorization: `JWT ${token}`,
+      },
     });
 
     if (res.data.code === 200) {
@@ -464,8 +469,8 @@ export const getHistory = async (token, email) => {
       `${http}/api/v1/statistic/history?email=${email}`,
       {
         headers: {
-          Authorization: `JWT ${token}`
-        }
+          Authorization: `JWT ${token}`,
+        },
       }
     );
 
@@ -556,8 +561,8 @@ export const getCreators = async (token) => {
   try {
     const res = await axios.get(`${http}/api/v1/user/creators`, {
       headers: {
-        Authorization: `JWT ${token}`
-      }
+        Authorization: `JWT ${token}`,
+      },
     });
     if (res.data.code === 200) {
       return res.data.data;
@@ -582,8 +587,8 @@ export const getFanPost = async (token, email) => {
   try {
     const res = await axios.get(`${http}/api/v1/post/fanpost?email=${email}`, {
       headers: {
-        Authorization: `JWT ${token}`
-      }
+        Authorization: `JWT ${token}`,
+      },
     });
     if (res.data.code === 200) {
       return res.data.data;
@@ -599,8 +604,8 @@ export const getSupportCreators = async (token, email) => {
       `${http}/api/v1/user/support-creators?email=${email}`,
       {
         headers: {
-          Authorization: `JWT ${token}`
-        }
+          Authorization: `JWT ${token}`,
+        },
       }
     );
     if (res.data.code === 200) {
@@ -630,8 +635,8 @@ export const getPaymentHistory = async (token, email) => {
       `${http}/api/v1/statistic/payment-history?email=${email}`,
       {
         headers: {
-          Authorization: `JWT ${token}`
-        }
+          Authorization: `JWT ${token}`,
+        },
       }
     );
     if (res.data.code === 200) {
@@ -680,7 +685,10 @@ export const payoutCall = async (userCredential, token) => {
 
 export const socialSignUp = async (userCredential) => {
   try {
-    const res = await axios.post(`${http}/api/v1/user/social-signup`, userCredential);
+    const res = await axios.post(
+      `${http}/api/v1/user/social-signup`,
+      userCredential
+    );
     console.log(res);
     return res.data;
   } catch (err) {
@@ -690,7 +698,10 @@ export const socialSignUp = async (userCredential) => {
 
 export const socialCheck = async (userCredential) => {
   try {
-    const res = await axios.post(`${http}/api/v1/user/social-check`, userCredential);
+    const res = await axios.post(
+      `${http}/api/v1/user/social-check`,
+      userCredential
+    );
     console.log(res);
     return res.data;
   } catch (err) {
@@ -700,7 +711,10 @@ export const socialCheck = async (userCredential) => {
 
 export const socialLogin = async (userCredential) => {
   try {
-    const res = await axios.post(`${http}/api/v1/user/social-login`, userCredential);
+    const res = await axios.post(
+      `${http}/api/v1/user/social-login`,
+      userCredential
+    );
     console.log(res);
     return res.data;
   } catch (err) {
@@ -728,4 +742,3 @@ export const getSupportersCreators = async (username) => {
     return err;
   }
 };
-
