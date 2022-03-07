@@ -182,7 +182,6 @@ function CreatorPage(props) {
           name: firstname + " " + lastname
         },
         callback: async function (data) {
-          console.log(data);
           let cred = {
             txref: data.tx_ref,
             SECKEY: "FLWSECK_TEST-ff7d39867a3cc21da33e8dfcb7bf94c6-X"
@@ -566,7 +565,7 @@ function CreatorPage(props) {
                           ref={AmountRadio1}
                           name="support-type"
                           onChange={(evt) => {
-                            onOption("One-TIme");
+                            onOption("One-Time");
                             setPaymentPlan("");
                             AmountRadio1.current.checked = true;
                           }}

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { onDash, getCallModal, getStat, getCall } from "../utils/apiCalls";
@@ -105,12 +106,11 @@ function Dashboard(props) {
     getCallModal(setModal, props.dispatch, token);
     const stat = await getStat(token);
     setPost(stat.posts);
-    if (stat){
+    if (stat) {
       setAmount(currentAmount || 0);
       setSupportersNum(stat.supporters_number);
       setSupporters(stat.supporters.slice(0, 5));
     }
-    
 
     return () => {};
   }, []);
@@ -280,16 +280,31 @@ function Dashboard(props) {
 
             <div className="onboard-complete-share-section mt-4 pt-2">
               <h4 className="fw-600 mb-3">Share on</h4>
-              
-              <a className="share-button" rel="noopener noreferrer"  target="_blank" href={`https://twitter.com/share?text=Support me on trendupp.com, check it out - ${newlink}`}>
+
+              <a
+                className="share-button"
+                rel="noopener noreferrer"
+                target="_blank"
+                href={`https://twitter.com/share?text=Support me on trendupp.com, check it out - ${newlink}`}
+              >
                 <img src="images/icon-twitter.svg" alt="" />
               </a>
 
-              <a className="share-button" rel="noopener noreferrer"  target="_blank" href={`https://www.facebook.com/sharer.php?u=${newlink}`}>
+              <a
+                className="share-button"
+                rel="noopener noreferrer"
+                target="_blank"
+                href={`https://www.facebook.com/sharer.php?u=${newlink}`}
+              >
                 <img src="images/icon-facebook.svg" alt="" />
               </a>
 
-              <a className="share-button" rel="noopener noreferrer"  target="_blank"   href={`whatsapp://send?text=Support me on trendupp.com, check it out - ${newlink}`}>
+              <a
+                className="share-button"
+                rel="noopener noreferrer"
+                target="_blank"
+                href={`whatsapp://send?text=Support me on trendupp.com, check it out - ${newlink}`}
+              >
                 <img src="images/icon-whatsapp.svg" alt="" />
               </a>
 
@@ -311,7 +326,7 @@ function Dashboard(props) {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state)
+  console.log(state);
   return {
     user: state.auth,
     data: state.user,

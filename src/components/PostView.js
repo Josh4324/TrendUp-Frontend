@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { getPost, deletePostCall } from "../utils/apiCalls";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import InstagramEmbed from 'react-instagram-embed';
+import InstagramEmbed from "react-instagram-embed";
 import ReactPlayer from "react-player";
 
 function PostView(props) {
@@ -60,7 +60,7 @@ function PostView(props) {
                             <figure
                               class="avatar me-3"
                               style={{
-                                backgroundImage: "url(" + picture + ")"
+                                backgroundImage: "url(" + picture + ")",
                               }}
                             ></figure>
                             <span class=""></span>
@@ -175,27 +175,26 @@ function PostView(props) {
                           </div>
                         ) : null}
                         <InstagramEmbed
-                            url='https://instagr.am/p/B9tdM6XJCXV/'
-                            clientAccessToken='803651167213839|47006f4872220ab3f27da1177411f'
-                            maxWidth={320}
-                            hideCaption={false}
-                            containerTagName='div'
-                            protocol=''
-                            injectScript
-                            onLoading={() => {}}
-                            onSuccess={() => {}}
-                            onAfterRender={() => {}}
-                            onFailure={() => {}}
-                          />
-                          {
-                            viewPost?.youtube ? ( <ReactPlayer
-                              url={viewPost.youtube}
-                            />) : (null)
-                          }
-                         
+                          url="https://instagr.am/p/B9tdM6XJCXV/"
+                          clientAccessToken="803651167213839|47006f4872220ab3f27da1177411f"
+                          maxWidth={320}
+                          hideCaption={false}
+                          containerTagName="div"
+                          protocol=""
+                          injectScript
+                          onLoading={() => {}}
+                          onSuccess={() => {}}
+                          onAfterRender={() => {}}
+                          onFailure={() => {}}
+                        />
+                        {viewPost?.youtube ? (
+                          <ReactPlayer url={viewPost.youtube} />
+                        ) : null}
 
                         <div class="card-body p-0 me-lg-5">
-                          <h3 class="card-creator-title pt-2">{viewPost.title}</h3>
+                          <h3 class="card-creator-title pt-2">
+                            {viewPost.title}
+                          </h3>
                           <p class="card-creator-text">{viewPost.message}</p>
                         </div>
                       </div>
