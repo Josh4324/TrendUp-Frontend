@@ -45,6 +45,9 @@ function SignUp(props) {
   };
 
   const responseGoogle = async (response) => {
+    if (response.error) {
+      return "";
+    }
     const cred = {
       firstName: response?.profileObj?.givenName,
       lastName: response?.profileObj?.familyName,
@@ -75,6 +78,9 @@ function SignUp(props) {
   };
 
   const responseFacebook = async (response) => {
+    if (response.error) {
+      return "";
+    }
     const names = response.name.split(" ");
     const cred = {
       firstName: names[0],

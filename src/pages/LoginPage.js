@@ -57,6 +57,9 @@ function LoginPage(props) {
   let history = useHistory();
 
   const responseGoogle = async (response) => {
+    if (response.error) {
+      return "";
+    }
     const cred = {
       firstName: response?.profileObj?.givenName,
       lastName: response?.profileObj?.familyName,
@@ -87,6 +90,9 @@ function LoginPage(props) {
   };
 
   const responseFacebook = async (response) => {
+    if (response.error) {
+      return "";
+    }
     const names = response.name.split(" ");
     const cred = {
       firstName: names[0],
@@ -183,7 +189,6 @@ function LoginPage(props) {
             <FacebookLogin
               appId="803651167213839"
               callback={responseFacebook}
-              cookie={true}
               fields="name,email,picture"
               render={(renderProps) => (
                 <a

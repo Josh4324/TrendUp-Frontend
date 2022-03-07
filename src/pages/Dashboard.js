@@ -49,7 +49,7 @@ function Dashboard(props) {
   localStorage.setItem("trend-fan-firstname", firstName);
   localStorage.setItem("trend-fan-lastname", lastName);
   const link = `/${userName}`;
-  const newlink = "https://staging.trendupp.com" + link;
+  const newlink = "https://trendupp.com" + link;
 
   const setPage = (page) => {
     setView(page);
