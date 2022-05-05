@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FanSidebar from "./FanSideBar";
 import { useHistory } from "react-router-dom";
-import { getPaymentHistory,getCallModal } from "../utils/apiCalls";
+import { getPaymentHistory, getCallModal } from "../utils/apiCalls";
 import jwt_decode from "jwt-decode";
 import { NotificationManager } from "react-notifications";
 import { connect } from "react-redux";
@@ -13,7 +13,7 @@ function FanSupportHistory(props) {
   const { firstName, lastName, picture, email, userName, onboardingStep } =
     props.data.user || "";
   let img1 = picture || "images/profile-image.jpg";
-   const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(false);
   const navRef = useRef("");
   const butRef = useRef("");
   const [his, setHis] = useState([]);
@@ -22,7 +22,7 @@ function FanSupportHistory(props) {
 
   useEffect(async () => {
     let user = JSON.parse(localStorage.getItem("trend-user"));
-    let email = localStorage.getItem("fan-email")
+    let email = localStorage.getItem("fan-email");
     if (user !== null) {
       const decoded = jwt_decode(user.token);
       const expirationTime = new Date() / 1000;
@@ -42,6 +42,7 @@ function FanSupportHistory(props) {
     }
     if (email) {
       let historyData = await getPaymentHistory(token, email);
+      console.log("hd", historyData);
       if (historyData) {
         console.log("his", historyData);
         setLoading(false);
@@ -135,7 +136,7 @@ function FanSupportHistory(props) {
                           <div class="row supporters-row">
                             <div class="col-sm-5">
                               <h4 class="post-single_title">
-                                {item.user[0]?.brandName}
+                                {item.user?.brandName}
                                 <span class="post-single_date">
                                   {new Date(item.createdAt).toDateString()} at{" "}
                                   {new Date(
